@@ -4,7 +4,7 @@
 [![Forks](https://img.shields.io/github/forks/sm1ky/remnawave-api.svg?style=social)](https://github.com/sm1ky/remnawave-api/network/members)
 [![Issues](https://img.shields.io/github/issues/sm1ky/remnawave-api.svg)](https://github.com/sm1ky/remnawave-api/issues)
 [![Supported python versions](https://img.shields.io/pypi/pyversions/remnawave-api.svg)](https://pypi.python.org/pypi/remnawave-api)
-[![Downloads](https://img.shields.io/pypi/dm/marzban.svg)](https://pypi.python.org/pypi/marzban)
+[![Downloads](https://img.shields.io/pypi/dm/remnawave-api.svg)](https://pypi.python.org/pypi/remnawave-api)
 [![PyPi Package Version](https://img.shields.io/pypi/v/remnawave-api)](https://pypi.python.org/pypi/remnawave-api)
 [![Publish Python Package](https://github.com/sm1ky/remnawave-api/actions/workflows/upload.yml/badge.svg?branch=production)](https://github.com/sm1ky/remnawave-api/actions/workflows/upload.yml)
 
@@ -27,7 +27,7 @@ pip install git+https://github.com/sm1ky/remnawave-api.git
 ```
 
 ## 🔎 View on pypi
-
+[Open](https://pypi.python.org/pypi/remnawave-api)
 
 ---
 

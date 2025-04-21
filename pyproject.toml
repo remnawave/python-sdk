@@ -1,0 +1,34 @@
+[project]
+name = "remnawave_api"
+version = "1.0.0"
+description = "A Python SDK for interacting with the Remnawave API."
+authors = [
+    {name = "sm1ky",email = "sm1ky@forestsnet.com"}
+]
+license = { text = "MIT" }
+readme = "README.md"
+requires-python = ">=3.11,<4.0"
+dependencies = [
+    "rapid-api-client (==0.6.0)",
+    "orjson (>=3.10.15,<4.0.0)",
+]
+
+[tool.poetry.group.test.dependencies]
+ruff = "^0.4.4"
+black = "^24.4.2"
+pytest = ">=8.0"
+pytest-asyncio = "^0.25.3"
+pytest-mock = ">=3.9"
+httpx = ">=0.27.2,<0.28.0"
+python-dotenv = "^1.0.1"
+pytz = "^2025.1"
+
+[tool.pytest.ini_options]
+addopts = [ "-n", "logical", "-ra", "--strict-config", "--strict-markers" ]
+testpaths = ["tests"]
+log_cli_level = "INFO"
+xfail_strict = true
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

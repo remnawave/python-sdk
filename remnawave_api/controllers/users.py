@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from rapid_api_client import Path, Query
+from rapid_api_client import Path
 from rapid_api_client.annotations import PydanticBody
 
 from remnawave_api.models import (
@@ -35,8 +35,8 @@ class UsersController(BaseController):
     @get("/users/v2", response_class=UsersResponseDto)
     async def get_all_users_v2(
         self,
-        size: Annotated[int, Query(100, description="Size of the page")],
-        start: Annotated[int, Query(0, description="Start index of the page")],
+        size: int = 100,
+        start: int = 0
     ) -> UsersResponseDto:
         """
         Get a paginated list of users.

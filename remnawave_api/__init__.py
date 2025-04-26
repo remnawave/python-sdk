@@ -21,6 +21,8 @@ from remnawave_api.controllers import (
     UsersController,
     UsersStatsController,
     XrayConfigController,
+    WebhookUtility,
+    # WebhookUtility is not a controller, but it's included in the controllers module for convenience
 )
 
 

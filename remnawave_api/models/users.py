@@ -21,6 +21,8 @@ class UserLastConnectedNodeDto(BaseModel):
     connected_at: datetime = Field(alias="connectedAt")
     node_name: str = Field(alias="nodeName")
 
+class HappCrypto(BaseModel):
+    cryptoLink: str
 
 class CreateUserRequestDto(BaseModel):
     username: Annotated[
@@ -55,6 +57,9 @@ class CreateUserRequestDto(BaseModel):
     description: Optional[str] = None
     telegram_id: Optional[int] = Field(None, serialization_alias="telegramId")
     email: Optional[str] = None
+    hwidDeviceLimit: Optional[int] = Field(
+        None, serialization_alias="hwidDeviceLimit", strict=True, ge=0
+    )
     activate_all_inbounds: Optional[bool] = Field(
         None, serialization_alias="activateAllInbounds"
     )
@@ -79,6 +84,9 @@ class UpdateUserRequestDto(BaseModel):
     description: Optional[str] = None
     telegram_id: Optional[int] = Field(None, serialization_alias="telegramId")
     email: Optional[str] = None
+    hwidDeviceLimit: Optional[int] = Field(
+        None, serialization_alias="hwidDeviceLimit", strict=True, ge=0
+    )
 
 
 class UserResponseDto(BaseModel):
@@ -103,15 +111,19 @@ class UserResponseDto(BaseModel):
     description: Optional[str] = None
     telegram_id: Optional[int] = Field(None, alias="telegramId")
     email: Optional[str] = None
-    created_at: datetime = Field(alias="createdAt")
-    updated_at: datetime = Field(alias="updatedAt")
+    hwidDeviceLimit: Optional[int] = Field(
+        None, serialization_alias="hwidDeviceLimit", strict=True, ge=0
+    )
     active_user_inbounds: List[UserActiveInboundsDto] = Field(
         alias="activeUserInbounds"
     )
+    created_at: datetime = Field(alias="createdAt")
+    updated_at: datetime = Field(alias="updatedAt")
     subscription_url: str = Field(alias="subscriptionUrl")
     last_connected_node: Optional[UserLastConnectedNodeDto] = Field(
         None, alias="lastConnectedNode"
     )
+    happ: Optional[HappCrypto] = Field(None, alias="happ")
 
 
 class EmailUserResponseDto(BaseModel):

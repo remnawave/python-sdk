@@ -1,6 +1,6 @@
 [project]
 name = "remnawave-api"
-version = "1.0.7"
+version = "1.0.8"
 description = "A Python SDK for interacting with the Remnawave API."
 authors = [
     {name = "Artem",email = "sm1ky@forestsnet.com"}
@@ -12,6 +12,8 @@ dependencies = [
     "rapid-api-client (==0.6.0)",
     "orjson (>=3.10.15,<4.0.0)",
     "httpx (>=0.27.2,<0.28.0)",
+    "pydantic-core (==2.33.1)",
+    "pydantic[email]",
 ]
 keywords = ["remnawave", "api", "sdk", "proxy", "httpx", "async", "xray"]
 classifiers = [

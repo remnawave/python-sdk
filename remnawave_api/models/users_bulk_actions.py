@@ -5,6 +5,7 @@ from uuid import UUID
 from pydantic import BaseModel, Field
 
 from remnawave_api.enums import UserStatus
+from remnawave_api.enums.users import TrafficLimitStrategy
 
 
 class BulkUpdateUsersInboundsRequestDto(BaseModel):
@@ -17,7 +18,7 @@ class UpdateUserFields(BaseModel):
     traffic_limit_bytes: Optional[int] = Field(
         None, serialization_alias="trafficLimitBytes", strict=True, ge=0
     )
-    traffic_limit_strategy: Optional[str] = Field(
+    traffic_limit_strategy: Optional[TrafficLimitStrategy] = Field(
         None, serialization_alias="trafficLimitStrategy"
     )
     expire_at: Optional[datetime] = Field(None, serialization_alias="expireAt")

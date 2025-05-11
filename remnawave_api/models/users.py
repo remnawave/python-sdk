@@ -55,6 +55,7 @@ class CreateUserRequestDto(BaseModel):
         None, serialization_alias="lastTrafficResetAt"
     )
     description: Optional[str] = None
+    tag: Optional[str] = None
     telegram_id: Optional[int] = Field(None, serialization_alias="telegramId")
     email: Optional[str] = None
     hwidDeviceLimit: Optional[int] = Field(
@@ -82,6 +83,7 @@ class UpdateUserRequestDto(BaseModel):
         None, serialization_alias="lastTrafficResetAt"
     )
     description: Optional[str] = None
+    tag: Optional[str] = None
     telegram_id: Optional[int] = Field(None, serialization_alias="telegramId")
     email: Optional[str] = None
     hwidDeviceLimit: Optional[int] = Field(

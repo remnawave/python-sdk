@@ -148,3 +148,11 @@ class UsersController(BaseController):
     ) -> EmailUserResponseDto:
         """Get Users By Email"""
         ...
+
+    @get("/users/by-tag/{tag}", response_class=UsersResponseDto)
+    async def get_users_by_tag(
+        self,
+        tag: Annotated[str, Path(description="Tag of the user")],
+    ) -> UsersResponseDto:
+        """Get Users By Tag"""
+        ...

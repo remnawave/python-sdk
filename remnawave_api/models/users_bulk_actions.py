@@ -23,6 +23,7 @@ class UpdateUserFields(BaseModel):
     )
     expire_at: Optional[datetime] = Field(None, serialization_alias="expireAt")
     description: Optional[str] = None
+    tag: Optional[str] = None
     telegram_id: Optional[int] = Field(None, serialization_alias="telegramId")
     email: Optional[str] = None
 
@@ -37,6 +38,7 @@ class BulkAllUpdateUsersRequestDto(BaseModel):
     )
     expire_at: Optional[datetime] = Field(None, serialization_alias="expireAt")
     description: Optional[str] = None
+    tag: Optional[str] = None
     telegram_id: Optional[int] = Field(None, serialization_alias="telegramId")
     email: Optional[str] = None
 

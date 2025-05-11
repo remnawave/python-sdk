@@ -32,7 +32,7 @@ classifiers = [
 
 [project.urls]
 Homepage = "https://github.com/sm1ky/remnawave-api"
-Documentation-EN = "https://github.com/sm1ky/remnawave-api/blob/production/README.md"
+Panel Page = "https://remna.st/"
 Developer = "https://t.me/forests_dev"
 
 [tool.poetry.group.test.dependencies]

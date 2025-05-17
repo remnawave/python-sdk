@@ -10,6 +10,7 @@ from .auth import (
     RegisterRequestDto,
     RegisterResponseDto,
     StatusResponseDto,
+    LoginTelegramRequestDto
 )
 from .bandwidthstats import NodesUsageResponseDto, NodeUsageResponseDto, NodesRealtimeUsageResponseDto, NodeRealtimeUsageResponseDto
 from .hosts import (
@@ -81,6 +82,8 @@ from .users import (
     UserLastConnectedNodeDto,
     UserResponseDto,
     UsersResponseDto,
+    TagsResponseDto,
+    RevokeUserRequestDto
 )
 from .users_bulk_actions import (
     BulkAllResetTrafficUsersResponseDto,
@@ -181,5 +184,8 @@ __all__ = [
     "CreateHWIDUser",
     "HWIDUserResponseDto",
     "HWIDUserResponseDtoList",
-    "HWIDDeleteRequest"
+    "HWIDDeleteRequest",
+    "LoginTelegramRequestDto",
+    "TagsResponseDto",
+    "RevokeUserRequestDto"
 ]

@@ -24,3 +24,12 @@ class RegisterRequestDto(BaseModel):
 class StatusResponseDto(BaseModel):
     is_login_allowed: bool = Field(alias="isLoginAllowed")
     is_register_allowed: bool = Field(alias="isRegisterAllowed")
+
+class LoginTelegramRequestDto(BaseModel):
+    id: int
+    first_name: str
+    last_name: str
+    username: str
+    photo_url: str
+    auth_date: int
+    hash: str

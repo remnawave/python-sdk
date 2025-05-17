@@ -1,6 +1,6 @@
 [project]
 name = "remnawave-api"
-version = "1.1.1"
+version = "1.1.2"
 description = "A Python SDK for interacting with the Remnawave API."
 authors = [
     {name = "Artem",email = "sm1ky@forestsnet.com"}
@@ -32,8 +32,10 @@ classifiers = [
 
 [project.urls]
 Homepage = "https://github.com/sm1ky/remnawave-api"
-Panel Page = "https://remna.st/"
+"Panel Page" = "https://remna.st/"
 Developer = "https://t.me/forests_dev"
+"Community Chat" = "https://t.me/+xQs17zMzwCY1NzYy"
+"Update Channel" = "https://t.me/remnawave"
 
 [tool.poetry.group.test.dependencies]
 ruff = "^0.4.4"

@@ -14,6 +14,8 @@ from remnawave_api.models import (
     UpdateUserRequestDto,
     UserResponseDto,
     UsersResponseDto,
+    TagsResponseDto,
+    RevokeUserRequestDto
 )
 from tests.utils import generate_email, generate_random_string
 
@@ -118,7 +120,10 @@ async def test_users(remnawave) -> None:
     assert update_user.description == update_description
 
     revoke_user_subscription = await remnawave.users.revoke_user_subscription(
-        uuid=string_uuid
+        uuid=string_uuid,
+        # body=RevokeUserRequestDto(
+        #     short_uuid="fokfaa"
+        # )
     )
     assert isinstance(revoke_user_subscription, UserResponseDto)
     assert revoke_user_subscription.uuid == create_user.uuid
@@ -127,3 +132,6 @@ async def test_users(remnawave) -> None:
     delete_user = await remnawave.users.delete_user(uuid=string_uuid)
     assert isinstance(delete_user, DeleteUserResponseDto)
     assert delete_user.is_deleted is True
+
+    users_tags = await remnawave.users.get_all_tags()
+    assert isinstance(users_tags, TagsResponseDto)

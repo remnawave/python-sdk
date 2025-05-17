@@ -1,4 +1,4 @@
-from typing import Annotated
+from typing import Annotated, Optional
 
 from rapid_api_client import Path, Query
 from rapid_api_client.annotations import PydanticBody
@@ -11,6 +11,8 @@ from remnawave_api.models import (
     UpdateUserRequestDto,
     UserResponseDto,
     UsersResponseDto,
+    TagsResponseDto,
+    RevokeUserRequestDto
 )
 from remnawave_api.rapid import BaseController, delete, get, patch, post
 
@@ -62,6 +64,7 @@ class UsersController(BaseController):
     async def revoke_user_subscription(
         self,
         uuid: Annotated[str, Path(description="UUID of the user")],
+        body: Optional[Annotated[RevokeUserRequestDto, PydanticBody()]] = None,
     ) -> UserResponseDto:
         """Revoke User Subscription"""
         ...
@@ -155,4 +158,11 @@ class UsersController(BaseController):
         tag: Annotated[str, Path(description="Tag of the user")],
     ) -> UsersResponseDto:
         """Get Users By Tag"""
+        ...
+        
+    @get("/users/tags", response_class=TagsResponseDto)
+    async def get_all_tags(
+        self,
+    ) -> TagsResponseDto:
+        """Get All Tags"""
         ...

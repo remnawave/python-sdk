@@ -15,6 +15,8 @@ class UserActiveInboundsDto(BaseModel):
     uuid: UUID
     tag: str
     type: str
+    network: Optional[str] = None
+    security: Optional[str] = None
 
 
 class UserLastConnectedNodeDto(BaseModel):
@@ -119,13 +121,17 @@ class UserResponseDto(BaseModel):
     active_user_inbounds: List[UserActiveInboundsDto] = Field(
         alias="activeUserInbounds"
     )
-    created_at: datetime = Field(alias="createdAt")
-    updated_at: datetime = Field(alias="updatedAt")
     subscription_url: str = Field(alias="subscriptionUrl")
+    first_connected: Optional[datetime] = Field(None, alias="firstConnectedAt")
+    last_trigger_threshold: Optional[int] = Field(
+        None, alias="lastTriggeredThreshold"
+    )
     last_connected_node: Optional[UserLastConnectedNodeDto] = Field(
         None, alias="lastConnectedNode"
     )
     happ: Optional[HappCrypto] = Field(None, alias="happ")
+    created_at: datetime = Field(alias="createdAt")
+    updated_at: datetime = Field(alias="updatedAt")
 
 
 class EmailUserResponseDto(BaseModel):

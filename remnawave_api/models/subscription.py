@@ -1,9 +1,13 @@
 from datetime import datetime
-from typing import Optional
+from typing import Any, Dict, List, Optional
 
 from pydantic import BaseModel, Field
 
 from remnawave_api.enums import TrafficLimitStrategy, UserStatus
+
+
+class HappCrypto(BaseModel):
+    crypto_link: str = Field(alias="cryptoLink")
 
 
 class UserSubscription(BaseModel):
@@ -18,9 +22,44 @@ class UserSubscription(BaseModel):
     is_active: bool = Field(alias="isActive")
 
 
-class SubscriptionInfoResponseDto(BaseModel):
+class SubscriptionInfoData(BaseModel):
     is_found: bool = Field(alias="isFound")
-    user: Optional[UserSubscription] = None
-    links: list[str]
-    ss_conf_links: dict = Field(alias="ssConfLinks")
+    user: UserSubscription
+    links: List[str]
+    ss_conf_links: Dict[str, str] = Field(alias="ssConfLinks")
     subscription_url: str = Field(alias="subscriptionUrl")
+    happ: HappCrypto
+
+
+class GetSubscriptionInfoResponseDto(BaseModel):
+    is_found: bool = Field(alias="isFound")
+    user: UserSubscription
+    links: List[str]
+    ss_conf_links: Dict[str, str] = Field(alias="ssConfLinks")
+    subscription_url: str = Field(alias="subscriptionUrl")
+    happ: HappCrypto
+
+
+class SubscriptionWithoutHapp(BaseModel):
+    is_found: bool = Field(alias="isFound")
+    user: UserSubscription
+    links: List[str]
+    ss_conf_links: Dict[str, str] = Field(alias="ssConfLinks")
+    subscription_url: str = Field(alias="subscriptionUrl")
+
+
+class GetAllSubscriptionsResponseDto(BaseModel):
+    subscriptions: List[SubscriptionWithoutHapp]
+    total: float
+
+
+class GetSubscriptionByUsernameResponseDto(BaseModel):
+    is_found: bool = Field(alias="isFound")
+    user: UserSubscription
+    links: List[str]
+    ss_conf_links: Dict[str, str] = Field(alias="ssConfLinks")
+    subscription_url: str = Field(alias="subscriptionUrl")
+
+
+# Legacy alias for backward compatibility
+SubscriptionInfoResponseDto = GetSubscriptionInfoResponseDto

@@ -2,22 +2,22 @@ from typing import Annotated
 
 from rapid_api_client.annotations import JsonBody
 
-from remnawave_api.models import ConfigResponseDto
+from remnawave_api.models import GetConfigResponseDto, UpdateConfigResponseDto
 from remnawave_api.rapid import BaseController, get, put
 
 
 class XrayConfigController(BaseController):
-    @get("/xray", response_class=ConfigResponseDto)
+    @get("/xray", response_class=GetConfigResponseDto)
     async def get_config(
         self,
-    ) -> ConfigResponseDto:
+    ) -> GetConfigResponseDto:
         """Get Xray Config"""
         ...
 
-    @put("/xray", response_class=ConfigResponseDto)
+    @put("/xray", response_class=UpdateConfigResponseDto)
     async def update_config(
         self,
         body: Annotated[dict, JsonBody()],
-    ) -> ConfigResponseDto:
+    ) -> UpdateConfigResponseDto:
         """Update Xray Config"""
         ...

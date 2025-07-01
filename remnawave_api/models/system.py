@@ -61,6 +61,10 @@ class OnlineStatistic(BaseModel):
     online_now: int = Field(alias="onlineNow")
 
 
+class NodesStatistic(BaseModel):
+    total_online: int = Field(alias="totalOnline")
+
+
 class StatisticResponseDto(BaseModel):
     cpu: CPUStatistic
     memory: MemoryStatistic
@@ -68,3 +72,34 @@ class StatisticResponseDto(BaseModel):
     timestamp: int
     users: UsersStatistic
     online_stats: OnlineStatistic = Field(alias="onlineStats")
+    nodes: NodesStatistic
+
+
+class PM2Stat(BaseModel):
+    name: str
+    memory: str
+    cpu: str
+
+
+class RemnawaveHealthData(BaseModel):
+    pm2_stats: List[PM2Stat] = Field(alias="pm2Stats")
+
+
+class GetStatsResponseDto(StatisticResponseDto):
+    pass
+
+
+class GetBandwidthStatsResponseDto(BaseModel):
+    last_two_days: BandwidthStatistic = Field(alias="bandwidthLastTwoDays")
+    last_seven_days: BandwidthStatistic = Field(alias="bandwidthLastSevenDays")
+    last_30_days: BandwidthStatistic = Field(alias="bandwidthLast30Days")
+    calendar_month: BandwidthStatistic = Field(alias="bandwidthCalendarMonth")
+    current_year: BandwidthStatistic = Field(alias="bandwidthCurrentYear")
+
+
+class GetNodesStatisticsResponseDto(BaseModel):
+    last_seven_days: List[NodeStatistic] = Field(alias="lastSevenDays")
+
+
+class GetRemnawaveHealthResponseDto(BaseModel):
+    pm2_stats: List[PM2Stat] = Field(alias="pm2Stats")

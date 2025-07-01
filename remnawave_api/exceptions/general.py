@@ -5,15 +5,21 @@ from pydantic import AliasChoices, BaseModel, Field
 from remnawave_api.enums import ErrorCode
 
 
+from typing import Any, List, Optional
+
+
 class ApiErrorResponse(BaseModel):
-    timestamp: datetime = Field(..., description="Время возникновения ошибки")
-    path: str = Field(..., description="Путь запроса")
+    timestamp: Optional[datetime] = Field(None, description="Время возникновения ошибки")
+    path: Optional[str] = Field(None, description="Путь запроса")
     message: str = Field(..., description="Сообщение об ошибке")
-    code: ErrorCode | str = Field(
-        ...,
+    code: Optional[ErrorCode | str] = Field(
+        None,
         validation_alias=AliasChoices("errorCode", "code", "error_code"),
         description="Код ошибки",
     )
+    # Support for API v2 error format
+    status_code: Optional[int] = Field(None, alias="statusCode")
+    errors: Optional[List[Any]] = Field(None, description="Детали ошибок валидации")
 
 
 class ApiError(Exception):

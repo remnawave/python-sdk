@@ -1,41 +1,47 @@
-from typing import Annotated, List
+from typing import Annotated
 
 from rapid_api_client import Path
 from rapid_api_client.annotations import PydanticBody
 
 from remnawave_api.models import (
     CreateNodeRequestDto,
+    CreateNodeResponseDto,
     DeleteNodeResponseDto,
-    NodeResponseDto,
-    NodesResponseDto,
+    DisableNodeResponseDto,
+    EnableNodeResponseDto,
+    GetAllNodesResponseDto,
+    GetOneNodeResponseDto,
     ReorderNodeRequestDto,
+    ReorderNodeResponseDto,
+    RestartAllNodesResponseDto,
     RestartNodeResponseDto,
     UpdateNodeRequestDto,
+    UpdateNodeResponseDto,
 )
-from remnawave_api.rapid import AttributeBody, BaseController, delete, get, patch, post
+from remnawave_api.rapid import BaseController, delete, get, patch, post
 
 
 class NodesController(BaseController):
-    @post("/nodes", response_class=NodeResponseDto)
+    @post("/nodes", response_class=CreateNodeResponseDto)
     async def create_node(
         self,
         body: Annotated[CreateNodeRequestDto, PydanticBody()],
-    ) -> NodeResponseDto:
+    ) -> CreateNodeResponseDto:
         """Create Node"""
         ...
 
-    @get("/nodes", response_class=NodesResponseDto)
+    @get("/nodes", response_class=GetAllNodesResponseDto)
     async def get_all_nodes(
         self,
-    ) -> NodesResponseDto:
+    ) -> GetAllNodesResponseDto:
         """Get All Nodes"""
         ...
 
-    @get("/nodes/{uuid}", response_class=NodeResponseDto)
+    @get("/nodes/{uuid}", response_class=GetOneNodeResponseDto)
     async def get_one_node(
         self,
         uuid: Annotated[str, Path(description="Node UUID")],
-    ) -> NodeResponseDto:
+    ) -> GetOneNodeResponseDto:
         """Get One Node"""
         ...
         
@@ -47,27 +53,27 @@ class NodesController(BaseController):
         """Delete Node"""
         ...
         
-    @patch("/nodes", response_class=NodeResponseDto)
+    @patch("/nodes", response_class=UpdateNodeResponseDto)
     async def update_node(
         self,
         body: Annotated[UpdateNodeRequestDto, PydanticBody()],
-    ) -> NodeResponseDto:
+    ) -> UpdateNodeResponseDto:
         """Update Node"""
         ...
 
-    @post("/nodes/{uuid}/actions/enable", response_class=NodeResponseDto)
+    @post("/nodes/{uuid}/actions/enable", response_class=EnableNodeResponseDto)
     async def enable_node(
         self,
         uuid: Annotated[str, Path(description="Node UUID")],
-    ) -> NodeResponseDto:
+    ) -> EnableNodeResponseDto:
         """Enable Node"""
         ...
 
-    @post("/nodes/{uuid}/actions/disable", response_class=NodeResponseDto)
+    @post("/nodes/{uuid}/actions/disable", response_class=DisableNodeResponseDto)
     async def disable_node(
         self,
         uuid: Annotated[str, Path(description="Node UUID")],
-    ) -> NodeResponseDto:
+    ) -> DisableNodeResponseDto:
         """Disable Node"""
         ...
 
@@ -79,17 +85,17 @@ class NodesController(BaseController):
         """Restart Node"""
         ...
 
-    @post("/nodes/actions/restart-all", response_class=RestartNodeResponseDto)
+    @post("/nodes/actions/restart-all", response_class=RestartAllNodesResponseDto)
     async def restart_all_nodes(
         self,
-    ) -> RestartNodeResponseDto:
+    ) -> RestartAllNodesResponseDto:
         """Restart All Nodes"""
         ...
 
-    @post("/nodes/actions/reorder", response_class=NodesResponseDto)
+    @post("/nodes/actions/reorder", response_class=ReorderNodeResponseDto)
     async def reorder_nodes(
         self,
-        nodes: Annotated[List[ReorderNodeRequestDto], AttributeBody()],
-    ) -> NodesResponseDto:
+        body: Annotated[ReorderNodeRequestDto, PydanticBody()],
+    ) -> ReorderNodeResponseDto:
         """Reorder Nodes"""
         ...

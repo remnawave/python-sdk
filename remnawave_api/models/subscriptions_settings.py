@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Annotated, List, Optional
+from typing import Annotated, Dict, List, Optional
 from uuid import UUID
 
 from pydantic import BaseModel, Field, StringConstraints
@@ -23,12 +23,21 @@ class SubscriptionSettingsResponseDto(BaseModel):
     expired_users_remarks: List[str] = Field(alias="expiredUsersRemarks")
     limited_users_remarks: List[str] = Field(alias="limitedUsersRemarks")
     disabled_users_remarks: List[str] = Field(alias="disabledUsersRemarks")
-    custom_response_headers: Optional[dict] = Field(
+    custom_response_headers: Optional[Dict[str, str]] = Field(
         None, alias="customResponseHeaders"
     )
     randomize_hosts: bool = Field(alias="randomizeHosts")
     created_at: datetime = Field(alias="createdAt")
     updated_at: datetime = Field(alias="updatedAt")
+
+
+class GetSubscriptionSettingsResponseDto(SubscriptionSettingsResponseDto):
+    pass
+
+
+class UpdateSubscriptionSettingsResponseDto(SubscriptionSettingsResponseDto):
+    pass
+
 
 class UpdateSubscriptionSettingsRequestDto(BaseModel):
     uuid: UUID
@@ -62,7 +71,7 @@ class UpdateSubscriptionSettingsRequestDto(BaseModel):
     disabled_users_remarks: Optional[List[str]] = Field(
         None, serialization_alias="disabledUsersRemarks"
     )
-    custom_response_headers: Optional[dict] = Field(
+    custom_response_headers: Optional[Dict[str, str]] = Field(
         None, serialization_alias="customResponseHeaders"
     )
     randomize_hosts: Optional[bool] = Field(None, serialization_alias="randomizeHosts")

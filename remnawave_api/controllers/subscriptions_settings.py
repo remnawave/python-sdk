@@ -3,27 +3,28 @@ from typing import Annotated
 from rapid_api_client.annotations import PydanticBody
 
 from remnawave_api.models import (
-    SubscriptionSettingsResponseDto,
+    GetSubscriptionSettingsResponseDto,
     UpdateSubscriptionSettingsRequestDto,
+    UpdateSubscriptionSettingsResponseDto,
 )
 from remnawave_api.rapid import BaseController, get, patch
 
 
 class SubscriptionsSettingsController(BaseController):
-    @get("/subscription-settings", response_class=SubscriptionSettingsResponseDto)
+    @get("/subscription-settings", response_class=GetSubscriptionSettingsResponseDto)
     async def get_settings(
         self,
-    ) -> SubscriptionSettingsResponseDto:
+    ) -> GetSubscriptionSettingsResponseDto:
         """Get Subscription Settings"""
         ...
 
     @patch(
         "/subscription-settings",
-        response_class=SubscriptionSettingsResponseDto,
+        response_class=UpdateSubscriptionSettingsResponseDto,
     )
     async def update_settings(
         self,
         body: Annotated[UpdateSubscriptionSettingsRequestDto, PydanticBody()],
-    ) -> SubscriptionSettingsResponseDto:
+    ) -> UpdateSubscriptionSettingsResponseDto:
         """Update Subscription Settings"""
         ...

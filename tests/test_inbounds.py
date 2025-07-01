@@ -1,12 +1,14 @@
 import pytest
 
-from remnawave_api.models import FullInboundsResponseDto, InboundsResponseDto
+from remnawave_api.models import GetAllInboundsResponseDto
 
 
 @pytest.mark.asyncio
 async def test_inbounds(remnawave):
-    full_inbounds = await remnawave.inbounds.get_full_inbounds()
-    assert isinstance(full_inbounds, FullInboundsResponseDto)
-
-    inbounds = await remnawave.inbounds.get_inbounds()
-    assert isinstance(inbounds, InboundsResponseDto)
+    # Test new API v2 endpoint
+    all_inbounds = await remnawave.inbounds.get_all_inbounds()
+    assert isinstance(all_inbounds, GetAllInboundsResponseDto)
+    assert hasattr(all_inbounds, 'total')
+    assert hasattr(all_inbounds, 'inbounds')
+    assert isinstance(all_inbounds.total, (int, float))
+    assert isinstance(all_inbounds.inbounds, list)

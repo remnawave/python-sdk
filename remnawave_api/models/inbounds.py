@@ -1,20 +1,45 @@
 from typing import Any, List, Optional
 from uuid import UUID
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, RootModel
 
 
 class InboundResponseDto(BaseModel):
     uuid: UUID
+    profile_uuid: UUID = Field(alias="profileUuid")
     tag: str
     type: str
-    port: float
     network: Optional[str] = None
     security: Optional[str] = None
+    port: Optional[float] = None
+    raw_inbound: Optional[Any] = Field(None, alias="rawInbound")
 
 
-class InboundsResponseDto(BaseModel):
-    response: List[InboundResponseDto]
+class AllInboundsData(BaseModel):
+    total: float
+    inbounds: List[InboundResponseDto]
+
+
+class GetAllInboundsResponseDto(AllInboundsData):
+    pass
+
+
+class InboundsByProfileData(BaseModel):
+    total: float
+    inbounds: List[InboundResponseDto]
+
+
+class GetInboundsByProfileUuidResponseDto(InboundsByProfileData):
+    pass
+
+
+# Legacy models for backward compatibility
+class GetInboundsResponseDto(RootModel[List[InboundResponseDto]]):
+    def __iter__(self):
+        return iter(self.root)
+
+    def __getitem__(self, item):
+        return self.root[item]
 
 
 class FullInboundStatistic(BaseModel):
@@ -34,5 +59,14 @@ class FullInboundResponseDto(BaseModel):
     nodes: FullInboundStatistic
 
 
-class FullInboundsResponseDto(BaseModel):
-    response: List[FullInboundResponseDto]
+class GetFullInboundsResponseDto(RootModel[List[FullInboundResponseDto]]):
+    def __iter__(self):
+        return iter(self.root)
+
+    def __getitem__(self, item):
+        return self.root[item]
+
+
+# Legacy aliases for backward compatibility
+InboundsResponseDto = GetInboundsResponseDto
+FullInboundsResponseDto = GetFullInboundsResponseDto

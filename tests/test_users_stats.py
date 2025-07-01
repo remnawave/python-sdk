@@ -1,6 +1,6 @@
 import pytest
 
-from remnawave_api.models import UserUsageByRangeResponseDto
+from remnawave_api.models import GetUserUsageByRangeResponseDto
 from tests.conftest import REMNAWAVE_USER_UUID
 from tests.utils import generate_isoformat_range
 
@@ -11,4 +11,4 @@ async def test_users_stats(remnawave):
     user_usage_by_range = await remnawave.users_stats.get_user_usage_by_range(
         uuid=REMNAWAVE_USER_UUID, start=start, end=end
     )
-    assert isinstance(user_usage_by_range, UserUsageByRangeResponseDto)
+    assert isinstance(user_usage_by_range, GetUserUsageByRangeResponseDto)

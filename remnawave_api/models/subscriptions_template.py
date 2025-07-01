@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Any, Optional
 from uuid import UUID
 
 from pydantic import BaseModel, Field
@@ -9,8 +9,12 @@ from remnawave_api.enums import TemplateType
 class TemplateResponseDto(BaseModel):
     uuid: UUID
     template_type: TemplateType = Field(alias="templateType")
-    template_json: Optional[dict] = Field(None, alias="templateJson")
+    template_json: Optional[Any] = Field(None, alias="templateJson")
     encoded_template_yaml: Optional[str] = Field(None, alias="encodedTemplateYaml")
+
+
+class GetTemplateResponseDto(TemplateResponseDto):
+    pass
 
 
 class UpdateTemplateRequestDto(BaseModel):
@@ -19,3 +23,7 @@ class UpdateTemplateRequestDto(BaseModel):
     encoded_template_yaml: Optional[str] = Field(
         None, serialization_alias="encodedTemplateYaml"
     )
+
+
+class UpdateTemplateResponseDto(TemplateResponseDto):
+    pass

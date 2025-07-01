@@ -3,12 +3,13 @@ from typing import Annotated
 from rapid_api_client.annotations import PydanticBody
 
 from remnawave_api.models import (
+    GetStatusResponseDto,
     LoginRequestDto,
     LoginResponseDto,
     RegisterRequestDto,
     RegisterResponseDto,
-    StatusResponseDto,
-    LoginTelegramRequestDto,
+    TelegramCallbackRequestDto,
+    TelegramCallbackResponseDto,
 )
 from remnawave_api.rapid import BaseController, get, post
 
@@ -30,17 +31,17 @@ class AuthController(BaseController):
         """Register"""
         ...
 
-    @get("/auth/status", response_class=StatusResponseDto)
+    @get("/auth/status", response_class=GetStatusResponseDto)
     async def get_status(
         self,
-    ) -> StatusResponseDto:
+    ) -> GetStatusResponseDto:
         """Get status"""
         ...
 
-    @post("/auth/oauth2/tg/callback", response_class=LoginResponseDto)
+    @post("/auth/oauth2/tg/callback", response_class=TelegramCallbackResponseDto)
     async def oauth2_tg_callback(
         self,
-        body: Annotated[LoginTelegramRequestDto, PydanticBody()],
-    ) -> LoginResponseDto:
+        body: Annotated[TelegramCallbackRequestDto, PydanticBody()],
+    ) -> TelegramCallbackResponseDto:
         """OAuth2 Telegram callback"""
         ...

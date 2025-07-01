@@ -1,18 +1,23 @@
-from remnawave_api.models import FullInboundsResponseDto, InboundsResponseDto
+from typing import Annotated, Optional
+from uuid import UUID
+
+from rapid_api_client import Path
+from remnawave_api.models import GetAllInboundsResponseDto, GetInboundsByProfileUuidResponseDto
 from remnawave_api.rapid import BaseController, get
 
 
 class InboundsController(BaseController):
-    @get("/inbounds", response_class=InboundsResponseDto)
-    async def get_inbounds(
+    @get("/config-profiles/inbounds", response_class=GetAllInboundsResponseDto)
+    async def get_all_inbounds(
         self,
-    ) -> InboundsResponseDto:
-        """Get Inbounds"""
+    ) -> GetAllInboundsResponseDto:
+        """Get all inbounds from all config profiles"""
         ...
 
-    @get("/inbounds/full", response_class=FullInboundsResponseDto)
-    async def get_full_inbounds(
+    @get("/config-profiles/{uuid}/inbounds", response_class=GetInboundsByProfileUuidResponseDto)
+    async def get_inbounds_by_profile_uuid(
         self,
-    ) -> FullInboundsResponseDto:
-        """Get Full Inbounds"""
+        uuid: Annotated[str, Path(description="UUID of the config profile")],
+    ) -> GetInboundsByProfileUuidResponseDto:
+        """Get inbounds by profile uuid"""
         ...

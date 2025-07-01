@@ -11,21 +11,20 @@ class SetInboundToManyHostsRequestDto(BaseModel):
     inbound_uuid: UUID = Field(serialization_alias="inboundUuid")
 
 
-class BulkDeleteHostsResponseDto(BaseModel):
-    response: List[HostResponseDto]
+class BulkDeleteHostsResponseDto(List[HostResponseDto]):
+    pass
 
 
-class BulkDisableHostsResponseDto(BaseModel):
-    response: List[HostResponseDto]
+class BulkDisableHostsResponseDto(List[HostResponseDto]):
+    pass
 
 
-class BulkEnableHostsResponseDto(BaseModel):
-    response: List[HostResponseDto]
+class BulkEnableHostsResponseDto(List[HostResponseDto]):
+    pass
 
 
-class SetInboundToManyHostsResponseDto(BaseModel):
-    response: List[HostResponseDto]
+class SetInboundToManyHostsResponseDto(List[HostResponseDto]):
+    pass
 
-
-class SetPortToManyHostsResponseDto(BaseModel):
-    response: List[HostResponseDto]
+class SetPortToManyHostsResponseDto(List[HostResponseDto]):
+    pass

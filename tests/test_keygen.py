@@ -1,9 +1,9 @@
 import pytest
 
-from remnawave_api.models import PubKeyResponseDto
+from remnawave_api.models import GetPubKeyResponseDto
 
 
 @pytest.mark.asyncio
 async def test_keygen(remnawave):
     key = await remnawave.keygen.generate_key()
-    assert isinstance(key, PubKeyResponseDto)
+    assert isinstance(key, GetPubKeyResponseDto)

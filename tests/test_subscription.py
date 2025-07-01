@@ -1,7 +1,7 @@
 import pytest
 
 from remnawave_api.enums import ClientType
-from remnawave_api.models import SubscriptionInfoResponseDto
+from remnawave_api.models import GetSubscriptionInfoResponseDto
 from tests.conftest import REMNAWAVE_SHORT_UUID
 
 
@@ -12,7 +12,7 @@ async def test_subscriptions(remnawave):
             short_uuid=REMNAWAVE_SHORT_UUID
         )
     )
-    assert isinstance(subscription_info, SubscriptionInfoResponseDto)
+    assert isinstance(subscription_info, GetSubscriptionInfoResponseDto)
     assert subscription_info.is_found is True
 
     subscription = await remnawave.subscription.get_subscription(

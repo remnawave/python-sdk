@@ -98,6 +98,18 @@ def handle_api_error(response: httpx.Response) -> None:
         try:
             error_data = response.json()
             error_response = ApiErrorResponse(**error_data)
+            
+            # Fill missing fields for API v2 format
+            if error_response.timestamp is None:
+                error_response.timestamp = datetime.now()
+            if error_response.path is None:
+                error_response.path = response.request.url.path
+            if error_response.code is None:
+                # Use status_code or default to UNKNOWN
+                if error_response.status_code:
+                    error_response.code = f"HTTP_{error_response.status_code}"
+                else:
+                    error_response.code = "UNKNOWN"
 
             if error_response.code in ERRORS:
                 exception_class = ERRORS[error_response.code]

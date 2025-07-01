@@ -2,7 +2,7 @@ import datetime
 from typing import List
 from uuid import UUID
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, RootModel
 
 
 class NodeUsageResponseDto(BaseModel):
@@ -17,8 +17,20 @@ class NodeUsageResponseDto(BaseModel):
     date: datetime.date
 
 
-class NodesUsageResponseDto(BaseModel):
-    response: List[NodeUsageResponseDto]
+class NodesUsageResponseDto(RootModel[List[NodeUsageResponseDto]]):
+    def __iter__(self):
+        return iter(self.root)
+
+    def __getitem__(self, item):
+        return self.root[item]
+
+
+class GetNodesUsageByRangeResponseDto(RootModel[List[NodeUsageResponseDto]]):
+    def __iter__(self):
+        return iter(self.root)
+
+    def __getitem__(self, item):
+        return self.root[item]
 
 
 class NodeRealtimeUsageResponseDto(BaseModel):
@@ -32,5 +44,50 @@ class NodeRealtimeUsageResponseDto(BaseModel):
     upload_speed_bps: float = Field(alias="uploadSpeedBps")
     total_speed_bps: float = Field(alias="totalSpeedBps")
 
-class NodesRealtimeUsageResponseDto(BaseModel):
-    response: List[NodeRealtimeUsageResponseDto]
+
+class NodesRealtimeUsageResponseDto(RootModel[List[NodeRealtimeUsageResponseDto]]):
+    def __iter__(self):
+        return iter(self.root)
+
+    def __getitem__(self, item):
+        return self.root[item]
+
+
+class GetNodesRealtimeUsageResponseDto(RootModel[List[NodeRealtimeUsageResponseDto]]):
+    def __iter__(self):
+        return iter(self.root)
+
+    def __getitem__(self, item):
+        return self.root[item]
+
+
+class UserUsageByRangeItem(BaseModel):
+    user_uuid: UUID = Field(alias="userUuid")
+    node_uuid: UUID = Field(alias="nodeUuid")
+    node_name: str = Field(alias="nodeName")
+    total: float
+    date: str
+
+
+class GetUserUsageByRangeResponseDto(RootModel[List[UserUsageByRangeItem]]):
+    def __iter__(self):
+        return iter(self.root)
+
+    def __getitem__(self, item):
+        return self.root[item]
+
+
+class NodeUserUsageItem(BaseModel):
+    user_uuid: UUID = Field(alias="userUuid")
+    username: str
+    node_uuid: UUID = Field(alias="nodeUuid")
+    total: float
+    date: str
+
+
+class GetNodeUserUsageByRangeResponseDto(RootModel[List[NodeUserUsageItem]]):
+    def __iter__(self):
+        return iter(self.root)
+
+    def __getitem__(self, item):
+        return self.root[item]

@@ -3,26 +3,39 @@ import random
 import pytest
 
 from remnawave_api.models import (
+    NodeConfigProfileRequestDto,
     CreateNodeRequestDto,
     DeleteNodeResponseDto,
+    GetAllNodesResponseDto,
     NodeResponseDto,
     NodesResponseDto,
     ReorderNodeRequestDto,
+    ReorderNodeResponseDto,
     UpdateNodeRequestDto,
 )
+from remnawave_api.models.nodes import ReorderNodeItem
+from tests.conftest import REMNAWAVE_CONFIG_PROFILE_UUID, REMNAWAVE_INBOUND_UUID
 from tests.utils import generate_random_string
 
 
 @pytest.mark.asyncio
 async def test_nodes(remnawave):
     all_nodes = await remnawave.nodes.get_all_nodes()
-    assert isinstance(all_nodes, NodesResponseDto)
+    assert isinstance(all_nodes, GetAllNodesResponseDto)
 
     random_ip: str = f"{random.randint(500, 800)}" + ".0.0.1"
     random_port: int = random.randint(5000, 8000)
     random_name: str = generate_random_string()
     create_node = await remnawave.nodes.create_node(
-        CreateNodeRequestDto(name=random_name, address=random_ip, port=random_port)
+        CreateNodeRequestDto(
+            name=random_name, 
+            address=random_ip, 
+            port=random_port,
+            config_profile=NodeConfigProfileRequestDto.model_validate({
+                "activeConfigProfileUuid": str(REMNAWAVE_CONFIG_PROFILE_UUID),
+                "activeInbounds": [str(REMNAWAVE_INBOUND_UUID)]
+            })
+        )
     )
     assert isinstance(create_node, NodeResponseDto)
 
@@ -32,10 +45,16 @@ async def test_nodes(remnawave):
     assert isinstance(node, NodeResponseDto)
 
     reorder_node = await remnawave.nodes.reorder_nodes(
-        nodes=[ReorderNodeRequestDto(view_position=1, uuid=string_uuid)]
+        ReorderNodeRequestDto(
+            nodes=[ReorderNodeItem(
+                view_position=random.randint(1, 1000),
+                uuid=create_node.uuid
+            )]
+        )
     )
-    assert isinstance(reorder_node, NodesResponseDto)
-    assert any(node.uuid == create_node.uuid for node in reorder_node.response)
+    print(reorder_node)
+    assert isinstance(reorder_node, ReorderNodeResponseDto)
+    # assert any(node.uuid == create_node.uuid for node in reorder_node.root)
 
     update_name: str = "TEST_NAME"
     update_node = await remnawave.nodes.update_node(

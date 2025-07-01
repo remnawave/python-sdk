@@ -1,29 +1,29 @@
 from remnawave_api.models import (
-    BandwidthStatisticResponseDto,
-    NodesStatisticResponseDto,
-    StatisticResponseDto,
+    GetBandwidthStatsResponseDto,
+    GetNodesStatisticsResponseDto,
+    GetStatsResponseDto,
 )
 from remnawave_api.rapid import BaseController, get
 
 
 class SystemController(BaseController):
-    @get("/system/stats", response_class=StatisticResponseDto)
+    @get("/system/stats", response_class=GetStatsResponseDto)
     async def get_stats(
         self,
-    ) -> StatisticResponseDto:
+    ) -> GetStatsResponseDto:
         """Get System Stats"""
         ...
 
-    @get("/system/stats/bandwidth", response_class=BandwidthStatisticResponseDto)
+    @get("/system/stats/bandwidth", response_class=GetBandwidthStatsResponseDto)
     async def get_bandwidth_stats(
         self,
-    ) -> BandwidthStatisticResponseDto:
+    ) -> GetBandwidthStatsResponseDto:
         """Get System Bandwidth Statistics"""
         ...
 
-    @get("/system/stats/nodes", response_class=NodesStatisticResponseDto)
+    @get("/system/stats/nodes", response_class=GetNodesStatisticsResponseDto)
     async def get_nodes_statistics(
         self,
-    ) -> NodesStatisticResponseDto:
+    ) -> GetNodesStatisticsResponseDto:
         """Get Nodes Statistics"""
         ...

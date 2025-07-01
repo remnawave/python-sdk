@@ -11,13 +11,17 @@ class CreateApiTokenRequestDto(BaseModel):
     )
 
 
-class CreateApiTokenResponseDto(BaseModel):
+class CreateApiTokenResponseData(BaseModel):
     token: str
     uuid: str
 
 
+class CreateApiTokenResponseDto(CreateApiTokenResponseData):
+    pass
+
+
 class DeleteApiTokenResponseDto(BaseModel):
-    response: bool
+    is_deleted: bool = Field(..., alias="isDeleted")
 
 
 class ApiTokenDto(BaseModel):
@@ -35,8 +39,10 @@ class DocsInfoDto(BaseModel):
     swagger_path: Optional[str] = Field(None, alias="swaggerPath")
 
 
-class FindAllApiTokensResponseDto(BaseModel):
+class FindAllApiTokensResponseData(BaseModel):
     api_keys: List[ApiTokenDto] = Field(..., alias="apiKeys")
     docs: DocsInfoDto
 
-    model_config = ConfigDict(populate_by_name=True)
+
+class FindAllApiTokensResponseDto(FindAllApiTokensResponseData):
+    pass

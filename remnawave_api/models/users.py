@@ -5,6 +5,7 @@ from uuid import UUID
 from pydantic import (
     BaseModel,
     Field,
+    RootModel,
     StringConstraints,
 )
 
@@ -22,6 +23,12 @@ class UserActiveInboundsDto(BaseModel):
 class UserLastConnectedNodeDto(BaseModel):
     connected_at: datetime = Field(alias="connectedAt")
     node_name: str = Field(alias="nodeName")
+
+
+class ActiveInternalSquadDto(BaseModel):
+    uuid: UUID
+    name: str
+
 
 class HappCrypto(BaseModel):
     cryptoLink: str
@@ -66,6 +73,9 @@ class CreateUserRequestDto(BaseModel):
     activate_all_inbounds: Optional[bool] = Field(
         None, serialization_alias="activateAllInbounds"
     )
+    active_internal_squads: Optional[List[str]] = Field(
+        None, serialization_alias="activeInternalSquads"
+    )
 
 
 class UpdateUserRequestDto(BaseModel):
@@ -91,11 +101,14 @@ class UpdateUserRequestDto(BaseModel):
     hwidDeviceLimit: Optional[int] = Field(
         None, serialization_alias="hwidDeviceLimit", strict=True, ge=0
     )
+    active_internal_squads: Optional[List[str]] = Field(
+        None, serialization_alias="activeInternalSquads"
+    )
 
 
 class UserResponseDto(BaseModel):
     uuid: UUID
-    subscription_uuid: UUID = Field(alias="subscriptionUuid")
+    subscription_uuid: Optional[UUID] = Field(None, alias="subscriptionUuid")
     short_uuid: str = Field(alias="shortUuid")
     username: str
     status: Optional[UserStatus] = None
@@ -118,8 +131,11 @@ class UserResponseDto(BaseModel):
     hwidDeviceLimit: Optional[int] = Field(
         None, serialization_alias="hwidDeviceLimit", strict=True, ge=0
     )
-    active_user_inbounds: List[UserActiveInboundsDto] = Field(
-        alias="activeUserInbounds"
+    active_user_inbounds: Optional[List[UserActiveInboundsDto]] = Field(
+        None, alias="activeUserInbounds"
+    )
+    active_internal_squads: Optional[List[ActiveInternalSquadDto]] = Field(
+        None, alias="activeInternalSquads"
     )
     subscription_url: str = Field(alias="subscriptionUrl")
     first_connected: Optional[datetime] = Field(None, alias="firstConnectedAt")
@@ -134,12 +150,20 @@ class UserResponseDto(BaseModel):
     updated_at: datetime = Field(alias="updatedAt")
 
 
-class EmailUserResponseDto(BaseModel):
-    response: List[UserResponseDto]
+class EmailUserResponseDto(RootModel[List[UserResponseDto]]):
+    def __iter__(self):
+        return iter(self.root)
+
+    def __getitem__(self, item):
+        return self.root[item]
 
 
-class TelegramUserResponseDto(BaseModel):
-    response: List[UserResponseDto]
+class TelegramUserResponseDto(RootModel[List[UserResponseDto]]):
+    def __iter__(self):
+        return iter(self.root)
+
+    def __getitem__(self, item):
+        return self.root[item]
 
 
 class UsersResponseDto(BaseModel):
@@ -150,8 +174,49 @@ class UsersResponseDto(BaseModel):
 class DeleteUserResponseDto(BaseModel):
     is_deleted: bool = Field(alias="isDeleted")
 
+
 class TagsResponseDto(BaseModel):
     tags: List[str]
+
+
+class CreateUserResponseDto(UserResponseDto):
+    pass
+
+
+class UpdateUserResponseDto(UserResponseDto):
+    pass
+
+
+class DisableUserResponseDto(UserResponseDto):
+    pass
+
+
+class EnableUserResponseDto(UserResponseDto):
+    pass
+
+
+class ResetUserTrafficResponseDto(UserResponseDto):
+    pass
+
+
+class RevokeUserSubscriptionResponseDto(UserResponseDto):
+    pass
+
+
+class ActivateAllInboundsResponseDto(UserResponseDto):
+    pass
+
+
+class GetUserByUuidResponseDto(UserResponseDto):
+    pass
+
+
+class GetUserByShortUuidResponseDto(UserResponseDto):
+    pass
+
+
+class GetUserByUsernameResponseDto(UserResponseDto):
+    pass
     
 class RevokeUserRequestDto(BaseModel):
     short_uuid: Optional[str] = Field(

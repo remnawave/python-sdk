@@ -3,16 +3,16 @@ from typing import Annotated
 from rapid_api_client import Path
 
 from remnawave_api.enums import ClientType
-from remnawave_api.models import SubscriptionInfoResponseDto
+from remnawave_api.models import GetSubscriptionInfoResponseDto
 from remnawave_api.rapid import BaseController, get
 
 
 class SubscriptionController(BaseController):
-    @get("/sub/{short_uuid}/info", response_class=SubscriptionInfoResponseDto)
+    @get("/sub/{short_uuid}/info", response_class=GetSubscriptionInfoResponseDto)
     async def get_subscription_info_by_short_uuid(
         self,
         short_uuid: Annotated[str, Path(description="Short UUID of the user")],
-    ) -> SubscriptionInfoResponseDto:
+    ) -> GetSubscriptionInfoResponseDto:
         """None"""
         ...
 

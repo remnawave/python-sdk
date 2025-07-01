@@ -7,6 +7,7 @@ from remnawave_api.models import (
     CreateUserRequestDto,
     DeleteUserResponseDto,
     EmailUserResponseDto,
+    GetUserAccessibleNodesResponseDto,
     TelegramUserResponseDto,
     UpdateUserRequestDto,
     UserResponseDto,
@@ -165,4 +166,12 @@ class UsersController(BaseController):
         self,
     ) -> TagsResponseDto:
         """Get All Tags"""
+        ...
+
+    @get("/users/{uuid}/accessible-nodes", response_class=GetUserAccessibleNodesResponseDto)
+    async def get_user_accessible_nodes(
+        self,
+        uuid: Annotated[str, Path(description="UUID of the user")],
+    ) -> GetUserAccessibleNodesResponseDto:
+        """Get User Accessible Nodes"""
         ...

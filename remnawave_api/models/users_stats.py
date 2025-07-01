@@ -13,5 +13,5 @@ class UserUsageByRange(BaseModel):
     date: datetime.date
 
 
-class UserUsageByRangeResponseDto(BaseModel):
-    response: List[UserUsageByRange]
+class UserUsageByRangeResponseDto(List[UserUsageByRange]):
+    pass

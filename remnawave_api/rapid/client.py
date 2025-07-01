@@ -7,7 +7,7 @@ from typing import Any, Dict, Mapping, Self, Tuple, Type
 import httpx
 import orjson
 from httpx import Request, Response
-from pydantic import BaseModel, TypeAdapter
+from pydantic import BaseModel, RootModel, TypeAdapter
 from rapid_api_client import (
     Body,
     FileBody,
@@ -91,11 +91,45 @@ class BaseController(RapidApi):
         ):
             return response_class.from_xml(response.content)
         if issubclass(response_class, BaseModel):
-            data: dict = response.json()
-            api_response: dict | list = data.get("response")
-            if isinstance(api_response, list):
-                return response_class.model_validate(data)
-            return response_class.model_validate(api_response)
+            data = response.json()
+            
+            # Check if this is a RootModel (list response)
+            if issubclass(response_class, RootModel):
+                # This is a RootModel - needs the list data, not the wrapper
+                if isinstance(data, dict) and "response" in data:
+                    return response_class.model_validate(data["response"])
+                else:
+                    # API returns list directly
+                    return response_class.model_validate(data)
+            else:
+                # This is a regular BaseModel
+                # Auto-unwrap single response field for convenience
+                if (isinstance(data, dict) and 
+                    len(data) == 1 and 
+                    "response" in data and
+                    hasattr(response_class, 'model_fields') and 
+                    len(response_class.model_fields) == 1 and
+                    'response' in response_class.model_fields):
+                    # This is a wrapper model with single "response" field
+                    # Return the inner data directly for convenience
+                    inner_field = response_class.model_fields['response']
+                    inner_type = inner_field.annotation
+                    
+                    # If it's a simple type annotation, use it directly
+                    if hasattr(inner_type, 'model_validate'):
+                        return inner_type.model_validate(data["response"])
+                    else:
+                        # Fallback to original behavior
+                        return response_class.model_validate(data)
+                elif hasattr(response_class, 'model_fields') and 'response' in response_class.model_fields:
+                    # Model expects full data with response wrapper
+                    return response_class.model_validate(data)
+                elif isinstance(data, dict) and "response" in data:
+                    # Extract response data for models that don't expect wrapper
+                    return response_class.model_validate(data["response"])
+                else:
+                    # API returns data directly (no wrapper)
+                    return response_class.model_validate(data)
         raise ValueError(f"Response class not supported: {response_class}")
 
 

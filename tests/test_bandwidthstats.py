@@ -1,4 +1,4 @@
-from remnawave_api.models import NodesUsageResponseDto
+from remnawave_api.models import GetNodesUsageByRangeResponseDto, GetNodesRealtimeUsageResponseDto
 from tests.utils import generate_isoformat_range
 
 
@@ -7,4 +7,8 @@ async def test_bandwidthstats(remnawave):
     nodes_usage_by_range = await remnawave.bandwidthstats.get_nodes_usage_by_range(
         start=start, end=end
     )
-    assert isinstance(nodes_usage_by_range, NodesUsageResponseDto)
+    assert isinstance(nodes_usage_by_range, GetNodesUsageByRangeResponseDto)
+    
+    # Test realtime usage
+    realtime_usage = await remnawave.bandwidthstats.get_nodes_usage_realtime()
+    assert isinstance(realtime_usage, GetNodesRealtimeUsageResponseDto)

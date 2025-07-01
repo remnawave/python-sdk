@@ -5,37 +5,39 @@ from rapid_api_client.annotations import PydanticBody
 
 from remnawave_api.models import (
     CreateHostRequestDto,
+    CreateHostResponseDto,
     DeleteHostResponseDto,
-    HostResponseDto,
-    HostsResponseDto,
+    GetAllHostsResponseDto,
+    GetOneHostResponseDto,
     ReorderHostRequestDto,
     ReorderHostResponseDto,
     UpdateHostRequestDto,
+    UpdateHostResponseDto,
 )
 from remnawave_api.rapid import AttributeBody, BaseController, delete, get, post, patch
 
 
 class HostsController(BaseController):
-    @post("/hosts", response_class=HostResponseDto)
+    @post("/hosts", response_class=CreateHostResponseDto)
     async def create_host(
         self,
         body: Annotated[CreateHostRequestDto, PydanticBody()],
-    ) -> HostResponseDto:
+    ) -> CreateHostResponseDto:
         """Create Host"""
         ...
 
-    @patch("/hosts", response_class=HostResponseDto)
+    @patch("/hosts", response_class=UpdateHostResponseDto)
     async def update_host(
         self,
         body: Annotated[UpdateHostRequestDto, PydanticBody()],
-    ) -> HostResponseDto:
+    ) -> UpdateHostResponseDto:
         """Update Host"""
         ...
 
-    @get("/hosts", response_class=HostsResponseDto)
+    @get("/hosts", response_class=GetAllHostsResponseDto)
     async def get_all_hosts(
         self,
-    ) -> HostsResponseDto:
+    ) -> GetAllHostsResponseDto:
         """Get All Hosts"""
         ...
         
@@ -47,18 +49,18 @@ class HostsController(BaseController):
         """Delete Host"""
         ...
 
-    @get("/hosts/{uuid}", response_class=HostResponseDto)
+    @get("/hosts/{uuid}", response_class=GetOneHostResponseDto)
     async def get_one_host(
         self,
         uuid: Annotated[str, Path(description="UUID of the host")],
-    ) -> HostResponseDto:
+    ) -> GetOneHostResponseDto:
         """Get One Host"""
         ...
 
     @post("/hosts/actions/reorder", response_class=ReorderHostResponseDto)
     async def reorder_hosts(
         self,
-        hosts: Annotated[List[ReorderHostRequestDto], AttributeBody()],
+        data: Annotated[ReorderHostRequestDto, PydanticBody()],
     ) -> ReorderHostResponseDto:
         """Reorder Hosts"""
         ...

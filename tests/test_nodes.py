@@ -2,7 +2,7 @@ import random
 
 import pytest
 
-from remnawave_api.models import (
+from remnawave.models import (
     NodeConfigProfileRequestDto,
     CreateNodeRequestDto,
     DeleteNodeResponseDto,
@@ -13,7 +13,7 @@ from remnawave_api.models import (
     ReorderNodeResponseDto,
     UpdateNodeRequestDto,
 )
-from remnawave_api.models.nodes import ReorderNodeItem
+from remnawave.models.nodes import ReorderNodeItem
 from tests.conftest import REMNAWAVE_CONFIG_PROFILE_UUID, REMNAWAVE_INBOUND_UUID
 from tests.utils import generate_random_string
 

@@ -1,7 +1,7 @@
 import pytest
 
-from remnawave_api.models import LoginRequestDto, LoginResponseDto, LoginTelegramRequestDto
-from remnawave_api.exceptions import ForbiddenError, ApiError
+from remnawave.models import LoginRequestDto, LoginResponseDto, LoginTelegramRequestDto
+from remnawave.exceptions import ForbiddenError, ApiError
 from tests.conftest import REMNAWAVE_ADMIN_PASSWORD, REMNAWAVE_ADMIN_USERNAME
 
 

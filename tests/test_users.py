@@ -4,9 +4,9 @@ from datetime import datetime, timedelta
 import pytest
 import pytz
 
-from remnawave_api.enums import ErrorCode, UserStatus
-from remnawave_api.exceptions import ApiError
-from remnawave_api.models import (
+from remnawave.enums import ErrorCode, UserStatus
+from remnawave.exceptions import ApiError
+from remnawave.models import (
     CreateUserRequestDto,
     DeleteUserResponseDto,
     EmailUserResponseDto,

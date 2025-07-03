@@ -1,7 +1,7 @@
 from uuid import UUID
 import pytest
 
-from remnawave_api.models import (
+from remnawave.models import (
     AddUsersToInternalSquadRequestDto,
     AddUsersToInternalSquadResponseDto,
     CreateInternalSquadRequestDto,

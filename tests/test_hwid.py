@@ -3,7 +3,7 @@ import uuid
 
 import pytest
 
-from remnawave_api.models import (
+from remnawave.models import (
     CreateUserHwidDeviceRequestDto,
     DeleteUserHwidDeviceRequestDto,
     CreateUserHwidDeviceResponseDto,

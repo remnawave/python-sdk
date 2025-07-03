@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 
 import pytest
 
-from remnawave_api.models import (
+from remnawave.models import (
     GetNodeUserUsageByRangeResponseDto,
     GetNodesUsageByRangeResponseDto,
 )

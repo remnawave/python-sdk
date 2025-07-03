@@ -1,6 +1,6 @@
 import pytest
 
-from remnawave_api.models import GetPubKeyResponseDto
+from remnawave.models import GetPubKeyResponseDto
 
 
 @pytest.mark.asyncio

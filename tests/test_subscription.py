@@ -1,7 +1,7 @@
 import pytest
 
-from remnawave_api.enums import ClientType
-from remnawave_api.models import GetSubscriptionInfoResponseDto
+from remnawave.enums import ClientType
+from remnawave.models import GetSubscriptionInfoResponseDto
 from tests.conftest import REMNAWAVE_SHORT_UUID
 
 

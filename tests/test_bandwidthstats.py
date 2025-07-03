@@ -1,4 +1,4 @@
-from remnawave_api.models import GetNodesUsageByRangeResponseDto, GetNodesRealtimeUsageResponseDto
+from remnawave.models import GetNodesUsageByRangeResponseDto, GetNodesRealtimeUsageResponseDto
 from tests.utils import generate_isoformat_range
 
 

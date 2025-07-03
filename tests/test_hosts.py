@@ -2,8 +2,8 @@ import random
 
 import pytest
 
-from remnawave_api.enums import ALPN, Fingerprint
-from remnawave_api.models import (
+from remnawave.enums import ALPN, Fingerprint
+from remnawave.models import (
     CreateHostRequestDto,
     CreateHostResponseDto,
     DeleteHostResponseDto,

@@ -3,7 +3,7 @@ import os
 import pytest
 from dotenv import load_dotenv
 
-from remnawave_api import RemnawaveSDK
+from remnawave import RemnawaveSDK
 
 load_dotenv()
 REMNAWAVE_BASE_URL = os.getenv("REMNAWAVE_BASE_URL")

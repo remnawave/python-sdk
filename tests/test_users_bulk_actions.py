@@ -4,7 +4,7 @@ from typing import List
 import pytest
 import pytz
 
-from remnawave_api.models import BulkResponseDto, UpdateUserFields
+from remnawave.models import BulkResponseDto, UpdateUserFields
 from tests.conftest import REMNAWAVE_USER_UUID
 
 

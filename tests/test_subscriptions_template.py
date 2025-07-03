@@ -1,7 +1,7 @@
 import pytest
 
-from remnawave_api.enums import TemplateType
-from remnawave_api.models import GetTemplateResponseDto, UpdateTemplateRequestDto, UpdateTemplateResponseDto
+from remnawave.enums import TemplateType
+from remnawave.models import GetTemplateResponseDto, UpdateTemplateRequestDto, UpdateTemplateResponseDto
 
 
 @pytest.mark.asyncio

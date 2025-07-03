@@ -1,0 +1,66 @@
+from typing import Annotated, List
+
+from rapid_api_client import Path
+from rapid_api_client.annotations import PydanticBody
+
+from remnawave.models import (
+    CreateHostRequestDto,
+    CreateHostResponseDto,
+    DeleteHostResponseDto,
+    GetAllHostsResponseDto,
+    GetOneHostResponseDto,
+    ReorderHostRequestDto,
+    ReorderHostResponseDto,
+    UpdateHostRequestDto,
+    UpdateHostResponseDto,
+)
+from remnawave.rapid import AttributeBody, BaseController, delete, get, post, patch
+
+
+class HostsController(BaseController):
+    @post("/hosts", response_class=CreateHostResponseDto)
+    async def create_host(
+        self,
+        body: Annotated[CreateHostRequestDto, PydanticBody()],
+    ) -> CreateHostResponseDto:
+        """Create Host"""
+        ...
+
+    @patch("/hosts", response_class=UpdateHostResponseDto)
+    async def update_host(
+        self,
+        body: Annotated[UpdateHostRequestDto, PydanticBody()],
+    ) -> UpdateHostResponseDto:
+        """Update Host"""
+        ...
+
+    @get("/hosts", response_class=GetAllHostsResponseDto)
+    async def get_all_hosts(
+        self,
+    ) -> GetAllHostsResponseDto:
+        """Get All Hosts"""
+        ...
+        
+    @delete("/hosts/{uuid}", response_class=DeleteHostResponseDto)
+    async def delete_host(
+        self,
+        uuid: Annotated[str, Path(description="UUID of the host")],
+    ) -> DeleteHostResponseDto:
+        """Delete Host"""
+        ...
+
+    @get("/hosts/{uuid}", response_class=GetOneHostResponseDto)
+    async def get_one_host(
+        self,
+        uuid: Annotated[str, Path(description="UUID of the host")],
+    ) -> GetOneHostResponseDto:
+        """Get One Host"""
+        ...
+
+    @post("/hosts/actions/reorder", response_class=ReorderHostResponseDto)
+    async def reorder_hosts(
+        self,
+        data: Annotated[ReorderHostRequestDto, PydanticBody()],
+    ) -> ReorderHostResponseDto:
+        """Reorder Hosts"""
+        ...

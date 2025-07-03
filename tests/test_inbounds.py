@@ -1,6 +1,6 @@
 import pytest
 
-from remnawave_api.models import GetAllInboundsResponseDto
+from remnawave.models import GetAllInboundsResponseDto
 
 
 @pytest.mark.asyncio

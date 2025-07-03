@@ -1,6 +1,6 @@
 import pytest
 
-from remnawave_api.models import (
+from remnawave.models import (
     GetBandwidthStatsResponseDto,
     GetNodesStatisticsResponseDto,
     GetStatsResponseDto,

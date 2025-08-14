@@ -4,6 +4,7 @@ from uuid import UUID
 
 from pydantic import BaseModel, Field
 
+
 class InboundsDto(BaseModel):
     uuid: UUID
     profile_uuid: UUID = Field(alias="profileUuid")
@@ -14,9 +15,11 @@ class InboundsDto(BaseModel):
     port: Optional[float] = Field(default=None)
     raw_inbound: Optional[dict] = Field(default=None, alias="rawInbound")
 
+
 class InfoDto(BaseModel):
     members_count: int = Field(alias="membersCount")
     inbounds_count: int = Field(alias="inboundsCount")
+
 
 class InternalSquadDto(BaseModel):
     uuid: UUID
@@ -39,14 +42,17 @@ class CreateInternalSquadResponseDto(InternalSquadDto):
 class UpdateInternalSquadRequestDto(BaseModel):
     uuid: UUID
     inbounds: List[UUID] = Field(default_factory=list)
+    name: Optional[str] = Field(None, pattern=r"^[A-Za-z0-9_-]+$")
 
 
 class UpdateInternalSquadResponseDto(InternalSquadDto):
     pass
 
+
 class GetAllInternalSquadsResponse(BaseModel):
     total: int
     internal_squads: List[InternalSquadDto] = Field(alias="internalSquads")
+
 
 class GetAllInternalSquadsResponseDto(GetAllInternalSquadsResponse):
     pass
@@ -63,8 +69,10 @@ class DeleteInternalSquadResponseDto(BaseModel):
 class AddUsersToInternalSquadRequestDto(BaseModel):
     user_uuids: List[UUID] = Field(alias="userUuids")
 
+
 class BulkActionsResponseDto(BaseModel):
     event_sent: bool = Field(alias="eventSent")
+
 
 class AddUsersToInternalSquadResponseDto(BulkActionsResponseDto):
     pass

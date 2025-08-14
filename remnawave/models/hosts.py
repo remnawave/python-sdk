@@ -39,6 +39,28 @@ class UpdateHostRequestDto(BaseModel):
     security_layer: Optional[SecurityLayer] = Field(
         None, serialization_alias="securityLayer"
     )
+    server_description: Optional[str] = Field(
+        None, alias="serverDescription", max_length=30
+    )
+    muxParams: Optional[str] = Field(
+        None,
+        serialization_alias="muxParams",
+    )
+    sockopt_params: Optional[str] = Field(
+        None,
+        serialization_alias="sockoptParams",
+    )
+    tag: Optional[Annotated[str, StringConstraints(max_length=32)]] = Field(
+        None, serialization_alias="tag"
+    )
+    is_hidden: Optional[bool] = Field(
+        None,
+        serialization_alias="isHidden",
+    )
+    override_sni_from_address: Optional[bool] = Field(
+        None,
+        serialization_alias="overrideSniFromAddress",
+    )
 
 
 class HostInboundData(BaseModel):
@@ -70,11 +92,29 @@ class HostResponseDto(BaseModel):
         alias="xHttpExtraParams",
     )
     server_description: Optional[str] = Field(
-        None,
-        alias="serverDescription",
+        None, alias="serverDescription", max_length=30
     )
     inbound: HostInboundData
-    
+    muxParams: Optional[str] = Field(
+        None,
+        serialization_alias="muxParams",
+    )
+    sockopt_params: Optional[str] = Field(
+        None,
+        serialization_alias="sockoptParams",
+    )
+    tag: Optional[Annotated[str, StringConstraints(max_length=32)]] = Field(
+        None, serialization_alias="tag"
+    )
+    is_hidden: Optional[bool] = Field(
+        None,
+        serialization_alias="isHidden",
+    )
+    override_sni_from_address: Optional[bool] = Field(
+        None,
+        serialization_alias="overrideSniFromAddress",
+    )
+
     # Legacy compatibility property
     @property
     def inbound_uuid(self) -> UUID:
@@ -91,6 +131,10 @@ class CreateHostResponseDto(HostResponseDto):
 
 class UpdateHostResponseDto(HostResponseDto):
     pass
+
+
+class GetAllHostTagsResponseDto(BaseModel):
+    tags: list[str] = None
 
 
 class GetAllHostsResponseDto(RootModel[List[HostResponseDto]]):
@@ -117,7 +161,9 @@ class DeleteHostResponseDto(BaseModel):
 
 class CreateHostInboundData(BaseModel):
     config_profile_uuid: UUID = Field(serialization_alias="configProfileUuid")
-    config_profile_inbound_uuid: UUID = Field(serialization_alias="configProfileInboundUuid")
+    config_profile_inbound_uuid: UUID = Field(
+        serialization_alias="configProfileInboundUuid"
+    )
 
 
 class CreateHostRequestDto(BaseModel):
@@ -142,14 +188,47 @@ class CreateHostRequestDto(BaseModel):
         None,
         serialization_alias="securityLayer",
     )
-    
+    muxParams: Optional[str] = Field(
+        None,
+        serialization_alias="muxParams",
+    )
+    sockopt_params: Optional[str] = Field(
+        None,
+        serialization_alias="sockoptParams",
+    )
+    tag: Optional[Annotated[str, StringConstraints(max_length=32)]] = Field(
+        None, serialization_alias="tag"
+    )
+    is_hidden: Optional[bool] = Field(
+        None,
+        serialization_alias="isHidden",
+    )
+    override_sni_from_address: Optional[bool] = Field(
+        None,
+        serialization_alias="overrideSniFromAddress",
+    )
+    server_description: Optional[str] = Field(
+        None, alias="serverDescription", max_length=30
+    )
+
+    # Legacy compatibility property
+    @property
+    def inbound_uuid(self) -> UUID:
+        return self.inbound.config_profile_inbound_uuid
+
     # Constructor compatibility - support old-style inbound_uuid
-    def __init__(self, inbound_uuid: Optional[UUID] = None, config_profile_uuid: Optional[UUID] = None, **data):
-        if inbound_uuid is not None and 'inbound' not in data:
+    def __init__(
+        self,
+        inbound_uuid: Optional[UUID] = None,
+        config_profile_uuid: Optional[UUID] = None,
+        **data,
+    ):
+        if inbound_uuid is not None and "inbound" not in data:
             # Legacy mode: create inbound object from UUID
             # Use hardcoded config_profile_uuid from API response for compatibility
-            data['inbound'] = CreateHostInboundData(
-                config_profile_uuid=config_profile_uuid or UUID("107541f1-ae1a-4e2d-9dec-7297557b5125"),
-                config_profile_inbound_uuid=inbound_uuid
+            data["inbound"] = CreateHostInboundData(
+                config_profile_uuid=config_profile_uuid
+                or UUID("107541f1-ae1a-4e2d-9dec-7297557b5125"),
+                config_profile_inbound_uuid=inbound_uuid,
             )
         super().__init__(**data)

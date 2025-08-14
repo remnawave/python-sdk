@@ -37,7 +37,7 @@ class CreateConfigProfileResponseDto(ConfigProfileDto):
 
 class UpdateConfigProfileRequestDto(BaseModel):
     uuid: UUID
-    # name: Optional[str] = None
+    name: Optional[str] = Field(None, pattern=r"^[A-Za-z0-9_-]+$")
     config: Optional[Dict[str, Any]] = None
 
 
@@ -52,6 +52,7 @@ class GetAllConfigProfilesResponsePaginated(BaseModel):
 
 class GetAllConfigProfilesResponseDto(GetAllConfigProfilesResponsePaginated):
     pass
+
 
 class GetConfigProfileByUuidResponseDto(ConfigProfileDto):
     pass

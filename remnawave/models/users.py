@@ -33,9 +33,10 @@ class ActiveInternalSquadDto(BaseModel):
 class HappCrypto(BaseModel):
     cryptoLink: str
 
+
 class CreateUserRequestDto(BaseModel):
     username: Annotated[
-        str, StringConstraints(pattern=r"^[a-zA-Z0-9_-]+$", min_length=6, max_length=36)
+        str, StringConstraints(pattern=r"^[a-zA-Z0-9_-]+$", min_length=3, max_length=36)
     ]
     status: Optional[UserStatus] = None
     subscription_uuid: Optional[str] = Field(
@@ -139,9 +140,7 @@ class UserResponseDto(BaseModel):
     )
     subscription_url: str = Field(alias="subscriptionUrl")
     first_connected: Optional[datetime] = Field(None, alias="firstConnectedAt")
-    last_trigger_threshold: Optional[int] = Field(
-        None, alias="lastTriggeredThreshold"
-    )
+    last_trigger_threshold: Optional[int] = Field(None, alias="lastTriggeredThreshold")
     last_connected_node: Optional[UserLastConnectedNodeDto] = Field(
         None, alias="lastConnectedNode"
     )
@@ -217,7 +216,8 @@ class GetUserByShortUuidResponseDto(UserResponseDto):
 
 class GetUserByUsernameResponseDto(UserResponseDto):
     pass
-    
+
+
 class RevokeUserRequestDto(BaseModel):
     short_uuid: Optional[str] = Field(
         None,

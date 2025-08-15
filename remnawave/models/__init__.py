@@ -129,6 +129,7 @@ from .internal_squads import (
     InternalSquadDto,
     UpdateInternalSquadRequestDto,
     UpdateInternalSquadResponseDto,
+    GetInternalSquadAccessibleNodesResponseDto,
 )
 from .keygen import GetPubKeyResponseDto, PubKeyResponseDto  # Legacy alias
 from .nodes import (
@@ -274,6 +275,7 @@ __all__ = [
     "GetInboundsResponseDto",
     "InboundResponseDto",
     "InboundsResponseDto",  # Legacy alias
+    "GetInternalSquadAccessibleNodesResponseDto",
     # Keygen models
     "GetPubKeyResponseDto",
     "PubKeyResponseDto",  # Legacy alias

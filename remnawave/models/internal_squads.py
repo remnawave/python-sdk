@@ -4,6 +4,7 @@ from uuid import UUID
 
 from pydantic import BaseModel, Field
 
+
 class InboundsDto(BaseModel):
     uuid: UUID
     profile_uuid: UUID = Field(alias="profileUuid")
@@ -14,9 +15,11 @@ class InboundsDto(BaseModel):
     port: Optional[float] = Field(default=None)
     raw_inbound: Optional[dict] = Field(default=None, alias="rawInbound")
 
+
 class InfoDto(BaseModel):
     members_count: int = Field(alias="membersCount")
     inbounds_count: int = Field(alias="inboundsCount")
+
 
 class InternalSquadDto(BaseModel):
     uuid: UUID
@@ -39,14 +42,17 @@ class CreateInternalSquadResponseDto(InternalSquadDto):
 class UpdateInternalSquadRequestDto(BaseModel):
     uuid: UUID
     inbounds: List[UUID] = Field(default_factory=list)
+    name: Optional[str] = Field(None, pattern=r"^[A-Za-z0-9_-]+$")
 
 
 class UpdateInternalSquadResponseDto(InternalSquadDto):
     pass
 
+
 class GetAllInternalSquadsResponse(BaseModel):
     total: int
     internal_squads: List[InternalSquadDto] = Field(alias="internalSquads")
+
 
 class GetAllInternalSquadsResponseDto(GetAllInternalSquadsResponse):
     pass
@@ -63,8 +69,10 @@ class DeleteInternalSquadResponseDto(BaseModel):
 class AddUsersToInternalSquadRequestDto(BaseModel):
     user_uuids: List[UUID] = Field(alias="userUuids")
 
+
 class BulkActionsResponseDto(BaseModel):
     event_sent: bool = Field(alias="eventSent")
+
 
 class AddUsersToInternalSquadResponseDto(BulkActionsResponseDto):
     pass
@@ -76,3 +84,19 @@ class DeleteUsersFromInternalSquadRequestDto(BaseModel):
 
 class DeleteUsersFromInternalSquadResponseDto(BulkActionsResponseDto):
     pass
+
+
+class AccessibleNodeDto(BaseModel):
+    uuid: UUID
+    name: str = Field(alias="nodeName")
+    country_code: Optional[str] = Field(default=None, alias="countryCode")
+    config_profile_uuid: Optional[UUID] = Field(default=None, alias="configProfileUuid")
+    config_profile_name: Optional[str] = Field(default=None, alias="configProfileName")
+    active_inbounds: List[Optional[UUID]] = Field(
+        default_factory=list, alias="activeInbounds"
+    )
+
+
+class GetInternalSquadAccessibleNodesResponseDto(BaseModel):
+    squad_uuid: UUID = Field(alias="squadUuid")
+    accessible_nodes: List[AccessibleNodeDto] = Field(alias="accessibleNodes")

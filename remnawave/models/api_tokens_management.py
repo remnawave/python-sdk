@@ -6,9 +6,6 @@ from pydantic import BaseModel, ConfigDict, Field
 
 class CreateApiTokenRequestDto(BaseModel):
     token_name: str = Field(serialization_alias="tokenName")
-    token_description: Optional[str] = Field(
-        None, serialization_alias="tokenDescription"
-    )
 
 
 class CreateApiTokenResponseData(BaseModel):
@@ -28,7 +25,6 @@ class ApiTokenDto(BaseModel):
     uuid: str
     token: str
     token_name: str = Field(..., alias="tokenName")
-    token_description: Optional[str] = Field(None, alias="tokenDescription")
     created_at: datetime = Field(..., alias="createdAt")
     updated_at: datetime = Field(..., alias="updatedAt")
 

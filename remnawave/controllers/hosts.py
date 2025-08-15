@@ -13,6 +13,7 @@ from remnawave.models import (
     ReorderHostResponseDto,
     UpdateHostRequestDto,
     UpdateHostResponseDto,
+    GetAllHostTagsResponseDto,
 )
 from remnawave.rapid import AttributeBody, BaseController, delete, get, post, patch
 
@@ -40,7 +41,14 @@ class HostsController(BaseController):
     ) -> GetAllHostsResponseDto:
         """Get All Hosts"""
         ...
-        
+
+    @get("/hosts/tags", response_class=GetAllHostTagsResponseDto)
+    async def get_hosts_tags(
+        self,
+    ) -> GetAllHostTagsResponseDto:
+        """Get Hosts Tags"""
+        ...
+
     @delete("/hosts/{uuid}", response_class=DeleteHostResponseDto)
     async def delete_host(
         self,

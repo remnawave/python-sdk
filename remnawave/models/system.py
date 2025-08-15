@@ -103,3 +103,21 @@ class GetNodesStatisticsResponseDto(BaseModel):
 
 class GetRemnawaveHealthResponseDto(BaseModel):
     pm2_stats: List[PM2Stat] = Field(alias="pm2Stats")
+
+
+class NodeMetric(BaseModel):
+    uuid: str
+    name: str
+    address: str
+    is_online: bool = Field(alias="isOnline")
+    cpu_usage: float = Field(alias="cpuUsage")
+    memory_usage: float = Field(alias="memoryUsage")
+    network_upload: int = Field(alias="networkUpload")
+    network_download: int = Field(alias="networkDownload")
+    uptime: int
+    last_seen: datetime.datetime = Field(alias="lastSeen")
+    connected_users: int = Field(alias="connectedUsers")
+
+
+class GetNodesMetricsResponseDto(BaseModel):
+    response: List[NodeMetric]

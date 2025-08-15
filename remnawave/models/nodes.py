@@ -39,7 +39,7 @@ class NodeConfigProfileRequestDto(BaseModel):
 
 
 class CreateNodeRequestDto(BaseModel):
-    name: Annotated[str, StringConstraints(min_length=5)]
+    name: Annotated[str, StringConstraints(min_length=3)]
     address: Annotated[str, StringConstraints(min_length=2)]
     port: Optional[int] = Field(None, strict=True, ge=1)
     is_traffic_tracking_active: Optional[bool] = Field(
@@ -64,13 +64,15 @@ class CreateNodeRequestDto(BaseModel):
     consumption_multiplier: Optional[float] = Field(
         None, serialization_alias="consumptionMultiplier"
     )
-    config_profile: NodeConfigProfileRequestDto = Field(serialization_alias="configProfile")
+    config_profile: NodeConfigProfileRequestDto = Field(
+        serialization_alias="configProfile"
+    )
     provider_uuid: Optional[UUID] = Field(None, serialization_alias="providerUuid")
 
 
 class UpdateNodeRequestDto(BaseModel):
     uuid: UUID
-    name: Annotated[Optional[str], StringConstraints(min_length=5)] = None
+    name: Annotated[Optional[str], StringConstraints(min_length=3)] = None
     address: Annotated[Optional[str], StringConstraints(min_length=2)] = None
     port: Optional[int] = None
     is_traffic_tracking_active: Optional[bool] = Field(

@@ -54,6 +54,7 @@ from .hosts import (
     ReorderHostResponseDto,
     UpdateHostRequestDto,
     UpdateHostResponseDto,
+    GetAllHostTagsResponseDto,
 )
 from .hosts_bulk_actions import (
     BulkDeleteHostsResponseDto,
@@ -128,6 +129,7 @@ from .internal_squads import (
     InternalSquadDto,
     UpdateInternalSquadRequestDto,
     UpdateInternalSquadResponseDto,
+    GetInternalSquadAccessibleNodesResponseDto,
 )
 from .keygen import GetPubKeyResponseDto, PubKeyResponseDto  # Legacy alias
 from .nodes import (
@@ -192,6 +194,7 @@ from .system import (
     StatisticResponseDto,
     StatusCounts,
     UsersStatistic,
+    GetNodesMetricsResponseDto,
 )
 from .users import (
     ActiveInternalSquadDto,
@@ -205,7 +208,7 @@ from .users import (
     UserResponseDto,
     UsersResponseDto,
     TagsResponseDto,
-    RevokeUserRequestDto
+    RevokeUserRequestDto,
 )
 from .users_bulk_actions import (
     BulkAllResetTrafficUsersResponseDto,
@@ -234,7 +237,6 @@ __all__ = [
     "TelegramCallbackRequestDto",
     "TelegramCallbackResponseDto",
     "LoginTelegramRequestDto",  # Legacy alias
-    
     # Nodes models
     "CreateNodeRequestDto",
     "CreateNodeResponseDto",
@@ -252,7 +254,6 @@ __all__ = [
     "RestartNodeResponseDto",
     "UpdateNodeRequestDto",
     "UpdateNodeResponseDto",
-    
     # Hosts models
     "CreateHostRequestDto",
     "CreateHostResponseDto",
@@ -265,7 +266,7 @@ __all__ = [
     "ReorderHostResponseDto",
     "UpdateHostRequestDto",
     "UpdateHostResponseDto",
-    
+    "GetAllHostTagsResponseDto",
     # Inbounds models
     "FullInboundResponseDto",
     "FullInboundStatistic",
@@ -274,30 +275,26 @@ __all__ = [
     "GetInboundsResponseDto",
     "InboundResponseDto",
     "InboundsResponseDto",  # Legacy alias
-    
+    "GetInternalSquadAccessibleNodesResponseDto",
     # Keygen models
     "GetPubKeyResponseDto",
     "PubKeyResponseDto",  # Legacy alias
-    
     # Subscription models
     "GetAllSubscriptionsResponseDto",
     "GetSubscriptionByUsernameResponseDto",
     "GetSubscriptionInfoResponseDto",
     "SubscriptionInfoResponseDto",  # Legacy alias
     "UserSubscription",
-    
     # Subscription settings models
     "GetSubscriptionSettingsResponseDto",
     "SubscriptionSettingsResponseDto",
     "UpdateSubscriptionSettingsRequestDto",
     "UpdateSubscriptionSettingsResponseDto",
-    
     # Subscription template models
     "GetTemplateResponseDto",
     "TemplateResponseDto",
     "UpdateTemplateRequestDto",
     "UpdateTemplateResponseDto",
-    
     # System models
     "BandwidthStatistic",
     "BandwidthStatisticResponseDto",
@@ -313,13 +310,12 @@ __all__ = [
     "StatisticResponseDto",
     "StatusCounts",
     "UsersStatistic",
-    
+    "GetNodesMetricsResponseDto",
     # XRay config models
     "ConfigResponseDto",  # Legacy alias
     "GetConfigResponseDto",
     "UpdateConfigRequestDto",
     "UpdateConfigResponseDto",
-    
     # HWID models
     "CreateHWIDUser",  # Legacy alias
     "CreateUserHwidDeviceRequestDto",
@@ -330,7 +326,6 @@ __all__ = [
     "HWIDDeleteRequest",  # Legacy alias
     "HWIDUserResponseDto",  # Legacy alias
     "HWIDUserResponseDtoList",  # Legacy alias
-    
     # Bandwidth stats models
     "GetNodeUserUsageByRangeResponseDto",
     "GetNodesRealtimeUsageResponseDto",
@@ -340,19 +335,16 @@ __all__ = [
     "NodeUsageResponseDto",
     "NodesRealtimeUsageResponseDto",  # Legacy alias
     "NodesUsageResponseDto",  # Legacy alias
-    
     # API Tokens models
     "CreateApiTokenRequestDto",
     "CreateApiTokenResponseDto",
     "DeleteApiTokenResponseDto",
     "FindAllApiTokensResponseDto",
-    
     # Inbound bulk actions models
     "AddInboundToNodesResponseDto",
     "AddInboundToUsersResponseDto",
     "RemoveInboundFromNodesResponseDto",
     "RemoveInboundFromUsersResponseDto",
-    
     # Host bulk actions models
     "BulkDeleteHostsResponseDto",
     "BulkDisableHostsResponseDto",
@@ -360,7 +352,6 @@ __all__ = [
     "SetInboundToManyHostsRequestDto",
     "SetInboundToManyHostsResponseDto",
     "SetPortToManyHostsResponseDto",
-    
     # Users models
     "ActiveInternalSquadDto",
     "CreateUserRequestDto",
@@ -388,7 +379,6 @@ __all__ = [
     "UserLastConnectedNodeDto",
     "UserResponseDto",
     "UsersResponseDto",
-    
     # Users bulk actions models
     "BulkAllResetTrafficUsersResponseDto",
     "BulkAllUpdateUsersRequestDto",
@@ -396,11 +386,9 @@ __all__ = [
     "BulkResponseDto",
     "BulkUpdateUsersInboundsRequestDto",
     "UpdateUserFields",
-    
     # Users stats models
     "UserUsageByRange",
     "UserUsageByRangeResponseDto",
-    
     # Config profiles models
     "ConfigProfileDto",
     "CreateConfigProfileRequestDto",
@@ -413,7 +401,6 @@ __all__ = [
     "InboundDto",
     "UpdateConfigProfileRequestDto",
     "UpdateConfigProfileResponseDto",
-    
     # Infra billing models
     "CreateInfraBillingNodeRequestDto",
     "CreateInfraBillingNodeResponseDto",
@@ -435,7 +422,6 @@ __all__ = [
     "UpdateInfraBillingNodeResponseDto",
     "UpdateInfraProviderRequestDto",
     "UpdateInfraProviderResponseDto",
-    
     # Internal squads models
     "AddUsersToInternalSquadRequestDto",
     "AddUsersToInternalSquadResponseDto",
@@ -449,7 +435,6 @@ __all__ = [
     "InternalSquadDto",
     "UpdateInternalSquadRequestDto",
     "UpdateInternalSquadResponseDto",
-    
     # Nodes usage history models
     "GetNodeUserUsageByRangeResponseDto",
     "GetNodesUsageByRangeResponseDto",

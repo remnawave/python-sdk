@@ -93,14 +93,6 @@ class UsersController(BaseController):
     ) -> UserResponseDto:
         """Reset User Traffic"""
         ...
-        
-    @post("/users/{uuid}/actions/activate-all-inbounds", response_class=UserResponseDto)
-    async def activate_all_inbounds(
-        self,
-        uuid: Annotated[str, Path(description="UUID of the user")],
-    ) -> UserResponseDto:
-        """Activate All Inbounds"""
-        ...
 
     @get("/users/by-short-uuid/{short_uuid}", response_class=UserResponseDto)
     async def get_user_by_short_uuid(

@@ -34,7 +34,6 @@ async def test_users(remnawave) -> None:
             email=email,
             telegram_id=telegram_id,
             expire_at=expire_at,
-            activate_all_inbounds=True,
         )
     )
 

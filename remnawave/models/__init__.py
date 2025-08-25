@@ -208,6 +208,7 @@ from .users import (
     UserResponseDto,
     UsersResponseDto,
     TagsResponseDto,
+    TagUserResponseDto,
     RevokeUserRequestDto,
 )
 from .users_bulk_actions import (
@@ -379,6 +380,7 @@ __all__ = [
     "UserLastConnectedNodeDto",
     "UserResponseDto",
     "UsersResponseDto",
+    "TagUserResponseDto",
     # Users bulk actions models
     "BulkAllResetTrafficUsersResponseDto",
     "BulkAllUpdateUsersRequestDto",

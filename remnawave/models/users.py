@@ -154,6 +154,14 @@ class EmailUserResponseDto(RootModel[List[UserResponseDto]]):
         return self.root[item]
 
 
+class TagUserResponseDto(RootModel[List[UserResponseDto]]):
+    def __iter__(self):
+        return iter(self.root)
+
+    def __getitem__(self, item):
+        return self.root[item]
+
+
 class TelegramUserResponseDto(RootModel[List[UserResponseDto]]):
     def __iter__(self):
         return iter(self.root)

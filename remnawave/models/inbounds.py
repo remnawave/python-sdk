@@ -13,6 +13,7 @@ class InboundResponseDto(BaseModel):
     security: Optional[str] = None
     port: Optional[float] = None
     raw_inbound: Optional[Any] = Field(None, alias="rawInbound")
+    active_squads: Optional[list[UUID]] = Field(None, alias="activeSquads")
 
 
 class AllInboundsData(BaseModel):

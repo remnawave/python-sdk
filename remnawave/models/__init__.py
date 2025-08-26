@@ -151,6 +151,7 @@ from .nodes import (
     RestartNodeResponseDto,
     UpdateNodeRequestDto,
     UpdateNodeResponseDto,
+    RestartAllNodesRequestDto,
 )
 from .nodes_usage_history import (
     GetNodeUserUsageByRangeResponseDto,
@@ -166,6 +167,7 @@ from .subscription import (
     GetSubscriptionInfoResponseDto,
     SubscriptionInfoResponseDto,  # Legacy alias
     UserSubscription,
+    GetRawSubscriptionByShortUuidResponseDto,
 )
 from .subscriptions_settings import (
     GetSubscriptionSettingsResponseDto,
@@ -208,6 +210,7 @@ from .users import (
     UserResponseDto,
     UsersResponseDto,
     TagsResponseDto,
+    TagUserResponseDto,
     RevokeUserRequestDto,
 )
 from .users_bulk_actions import (
@@ -254,6 +257,9 @@ __all__ = [
     "RestartNodeResponseDto",
     "UpdateNodeRequestDto",
     "UpdateNodeResponseDto",
+    "NodeConfigProfileDto",
+    "NodeConfigProfileRequestDto",
+    "RestartAllNodesRequestDto",
     # Hosts models
     "CreateHostRequestDto",
     "CreateHostResponseDto",
@@ -267,7 +273,11 @@ __all__ = [
     "UpdateHostRequestDto",
     "UpdateHostResponseDto",
     "GetAllHostTagsResponseDto",
+    "CreateHostInboundData",
+    "HostInboundData",
+    "ReorderHostItem",
     # Inbounds models
+    "AllInboundsData",
     "FullInboundResponseDto",
     "FullInboundStatistic",
     "FullInboundsResponseDto",
@@ -276,6 +286,7 @@ __all__ = [
     "InboundResponseDto",
     "InboundsResponseDto",  # Legacy alias
     "GetInternalSquadAccessibleNodesResponseDto",
+    "InboundsByProfileData",
     # Keygen models
     "GetPubKeyResponseDto",
     "PubKeyResponseDto",  # Legacy alias
@@ -285,6 +296,7 @@ __all__ = [
     "GetSubscriptionInfoResponseDto",
     "SubscriptionInfoResponseDto",  # Legacy alias
     "UserSubscription",
+    "GetRawSubscriptionByShortUuidResponseDto",
     # Subscription settings models
     "GetSubscriptionSettingsResponseDto",
     "SubscriptionSettingsResponseDto",
@@ -379,6 +391,7 @@ __all__ = [
     "UserLastConnectedNodeDto",
     "UserResponseDto",
     "UsersResponseDto",
+    "TagUserResponseDto",
     # Users bulk actions models
     "BulkAllResetTrafficUsersResponseDto",
     "BulkAllUpdateUsersRequestDto",
@@ -401,6 +414,7 @@ __all__ = [
     "InboundDto",
     "UpdateConfigProfileRequestDto",
     "UpdateConfigProfileResponseDto",
+    "GetAllConfigProfilesResponsePaginated",
     # Infra billing models
     "CreateInfraBillingNodeRequestDto",
     "CreateInfraBillingNodeResponseDto",

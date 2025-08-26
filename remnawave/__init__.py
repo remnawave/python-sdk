@@ -39,20 +39,26 @@ class RemnawaveSDK:
         base_url: Optional[str] = None,
         token: Optional[str] = None,
         caddy_token: Optional[str] = None,
+        ssl_ignore: Optional[bool] = False,
+        custom_headers: Optional[dict] = None,
     ):
         """
         Remnawave SDK init
 
         Args:
-            client (Optional[httpx.AsyncClient]): - Default client. 
+            client (Optional[httpx.AsyncClient]): - Default client.
             base_url (Optional[str]): - Base url of the Remnawave panel. Defaults to None.
-            token (Optional[str]): - Token for authorization. 
+            token (Optional[str]): - Token for authorization.
             caddy_token (Optional[str]): - Token for Caddy Auth (Headers). Defaults to None.
+            ssl_ignore (Optional[bool]): - Whether to ignore SSL certificate errors. Defaults to False.
+            custom_headers (Optional[dict]): - Custom headers to include in the requests. Defaults to None.
         """
         self._client = client
         self._token = token
         self.base_url = base_url
         self.caddy_token = caddy_token
+        self.ssl_ignore = ssl_ignore
+        self.custom_headers = custom_headers
 
         self._validate_params()
 
@@ -98,20 +104,27 @@ class RemnawaveSDK:
 
     def _prepare_client(self) -> httpx.AsyncClient:
         return httpx.AsyncClient(
-            base_url=self._prepare_url(), headers=self._prepare_headers()
+            base_url=self._prepare_url(),
+            headers=self._prepare_headers(),
+            verify=not self.ssl_ignore,
         )
 
     def _prepare_headers(self) -> dict:
         headers = {}
         if self._token:
             headers["Authorization"] = (
-                self._token if self._token.startswith("Bearer ") else f"Bearer {self._token}"
+                self._token
+                if self._token.startswith("Bearer ")
+                else f"Bearer {self._token}"
             )
-        
+
         # X-Api-Key for Caddy (https://remna.st/security/caddy-with-custom-path#issuing-api-keys)
         if self.caddy_token is not None:
             headers["X-Api-Key"] = self.caddy_token
-        
+
+        if self.custom_headers:
+            headers.update(self.custom_headers)
+
         return headers
 
     def _prepare_url(self) -> str:

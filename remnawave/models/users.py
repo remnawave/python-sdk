@@ -71,9 +71,6 @@ class CreateUserRequestDto(BaseModel):
     hwidDeviceLimit: Optional[int] = Field(
         None, serialization_alias="hwidDeviceLimit", strict=True, ge=0
     )
-    activate_all_inbounds: Optional[bool] = Field(
-        None, serialization_alias="activateAllInbounds"
-    )
     active_internal_squads: Optional[List[str]] = Field(
         None, serialization_alias="activeInternalSquads"
     )
@@ -150,6 +147,14 @@ class UserResponseDto(BaseModel):
 
 
 class EmailUserResponseDto(RootModel[List[UserResponseDto]]):
+    def __iter__(self):
+        return iter(self.root)
+
+    def __getitem__(self, item):
+        return self.root[item]
+
+
+class TagUserResponseDto(RootModel[List[UserResponseDto]]):
     def __iter__(self):
         return iter(self.root)
 

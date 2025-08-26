@@ -17,6 +17,7 @@ from remnawave.models import (
     RestartNodeResponseDto,
     UpdateNodeRequestDto,
     UpdateNodeResponseDto,
+    RestartAllNodesRequestDto,
 )
 from remnawave.rapid import BaseController, delete, get, patch, post
 
@@ -44,7 +45,7 @@ class NodesController(BaseController):
     ) -> GetOneNodeResponseDto:
         """Get One Node"""
         ...
-        
+
     @delete("/nodes/{uuid}", response_class=DeleteNodeResponseDto)
     async def delete_node(
         self,
@@ -52,7 +53,7 @@ class NodesController(BaseController):
     ) -> DeleteNodeResponseDto:
         """Delete Node"""
         ...
-        
+
     @patch("/nodes", response_class=UpdateNodeResponseDto)
     async def update_node(
         self,
@@ -88,6 +89,7 @@ class NodesController(BaseController):
     @post("/nodes/actions/restart-all", response_class=RestartAllNodesResponseDto)
     async def restart_all_nodes(
         self,
+        body: Annotated[RestartAllNodesRequestDto, PydanticBody()],
     ) -> RestartAllNodesResponseDto:
         """Restart All Nodes"""
         ...

@@ -13,7 +13,8 @@ from remnawave.models import (
     UserResponseDto,
     UsersResponseDto,
     TagsResponseDto,
-    RevokeUserRequestDto
+    TagUserResponseDto,
+    RevokeUserRequestDto,
 )
 from remnawave.rapid import BaseController, delete, get, patch, post
 
@@ -38,8 +39,12 @@ class UsersController(BaseController):
     @get("/users", response_class=UsersResponseDto)
     async def get_all_users_v2(
         self,
-        start: Annotated[int, Query(default=0, ge=0, description="Index to start pagination from")],
-        size: Annotated[int, Query(default=25, ge=1, description="Number of users per page")],
+        start: Annotated[
+            int, Query(default=0, ge=0, description="Index to start pagination from")
+        ],
+        size: Annotated[
+            int, Query(default=25, ge=1, description="Number of users per page")
+        ],
     ) -> UsersResponseDto:
         """
         Get users page from the end.
@@ -52,7 +57,7 @@ class UsersController(BaseController):
             UsersResponseDto
         """
         ...
-        
+
     @delete("/users/{uuid}", response_class=DeleteUserResponseDto)
     async def delete_user(
         self,
@@ -93,14 +98,6 @@ class UsersController(BaseController):
     ) -> UserResponseDto:
         """Reset User Traffic"""
         ...
-        
-    @post("/users/{uuid}/actions/activate-all-inbounds", response_class=UserResponseDto)
-    async def activate_all_inbounds(
-        self,
-        uuid: Annotated[str, Path(description="UUID of the user")],
-    ) -> UserResponseDto:
-        """Activate All Inbounds"""
-        ...
 
     @get("/users/by-short-uuid/{short_uuid}", response_class=UserResponseDto)
     async def get_user_by_short_uuid(
@@ -110,7 +107,10 @@ class UsersController(BaseController):
         """Get User By Short UUID"""
         ...
 
-    @get("/users/by-subscription-uuid/{subscription_uuid}", response_class=UserResponseDto)
+    @get(
+        "/users/by-subscription-uuid/{subscription_uuid}",
+        response_class=UserResponseDto,
+    )
     async def get_user_by_subscription_uuid(
         self,
         subscription_uuid: Annotated[str, Path(description="UUID of the subscription")],
@@ -153,14 +153,14 @@ class UsersController(BaseController):
         """Get Users By Email"""
         ...
 
-    @get("/users/by-tag/{tag}", response_class=UsersResponseDto)
+    @get("/users/by-tag/{tag}", response_class=TagUserResponseDto)
     async def get_users_by_tag(
         self,
         tag: Annotated[str, Path(description="Tag of the user")],
-    ) -> UsersResponseDto:
+    ) -> TagUserResponseDto:
         """Get Users By Tag"""
         ...
-        
+
     @get("/users/tags", response_class=TagsResponseDto)
     async def get_all_tags(
         self,
@@ -168,7 +168,10 @@ class UsersController(BaseController):
         """Get All Tags"""
         ...
 
-    @get("/users/{uuid}/accessible-nodes", response_class=GetUserAccessibleNodesResponseDto)
+    @get(
+        "/users/{uuid}/accessible-nodes",
+        response_class=GetUserAccessibleNodesResponseDto,
+    )
     async def get_user_accessible_nodes(
         self,
         uuid: Annotated[str, Path(description="UUID of the user")],

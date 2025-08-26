@@ -151,6 +151,7 @@ from .nodes import (
     RestartNodeResponseDto,
     UpdateNodeRequestDto,
     UpdateNodeResponseDto,
+    RestartAllNodesRequestDto,
 )
 from .nodes_usage_history import (
     GetNodeUserUsageByRangeResponseDto,
@@ -256,6 +257,9 @@ __all__ = [
     "RestartNodeResponseDto",
     "UpdateNodeRequestDto",
     "UpdateNodeResponseDto",
+    "NodeConfigProfileDto",
+    "NodeConfigProfileRequestDto",
+    "RestartAllNodesRequestDto",
     # Hosts models
     "CreateHostRequestDto",
     "CreateHostResponseDto",
@@ -269,7 +273,11 @@ __all__ = [
     "UpdateHostRequestDto",
     "UpdateHostResponseDto",
     "GetAllHostTagsResponseDto",
+    "CreateHostInboundData",
+    "HostInboundData",
+    "ReorderHostItem",
     # Inbounds models
+    "AllInboundsData",
     "FullInboundResponseDto",
     "FullInboundStatistic",
     "FullInboundsResponseDto",
@@ -278,6 +286,7 @@ __all__ = [
     "InboundResponseDto",
     "InboundsResponseDto",  # Legacy alias
     "GetInternalSquadAccessibleNodesResponseDto",
+    "InboundsByProfileData",
     # Keygen models
     "GetPubKeyResponseDto",
     "PubKeyResponseDto",  # Legacy alias
@@ -405,6 +414,7 @@ __all__ = [
     "InboundDto",
     "UpdateConfigProfileRequestDto",
     "UpdateConfigProfileResponseDto",
+    "GetAllConfigProfilesResponsePaginated",
     # Infra billing models
     "CreateInfraBillingNodeRequestDto",
     "CreateInfraBillingNodeResponseDto",

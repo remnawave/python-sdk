@@ -192,3 +192,7 @@ class DeleteNodeResponseDto(BaseModel):
 
     def __bool__(self):
         return self.is_deleted
+
+
+class RestartAllNodesRequestDto(BaseModel):
+    force_restart: bool = Field(default=False, alias="forceRestart")

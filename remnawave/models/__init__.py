@@ -168,6 +168,8 @@ from .subscription import (
     SubscriptionInfoResponseDto,  # Legacy alias
     UserSubscription,
     GetRawSubscriptionByShortUuidResponseDto,
+    GetSubscriptionByShortUUIDResponseDto,
+    GetSubscriptionByUUIDResponseDto,
 )
 from .subscriptions_settings import (
     GetSubscriptionSettingsResponseDto,
@@ -293,6 +295,8 @@ __all__ = [
     # Subscription models
     "GetAllSubscriptionsResponseDto",
     "GetSubscriptionByUsernameResponseDto",
+    "GetSubscriptionByShortUUIDResponseDto",
+    "GetSubscriptionByUUIDResponseDto",
     "GetSubscriptionInfoResponseDto",
     "SubscriptionInfoResponseDto",  # Legacy alias
     "UserSubscription",

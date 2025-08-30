@@ -20,6 +20,7 @@ from remnawave.controllers import (
     NodesUsageHistoryController,
     NodesUserUsageHistoryController,
     SubscriptionController,
+    SubscriptionsController,
     SubscriptionsSettingsController,
     SubscriptionsTemplateController,
     SystemController,
@@ -81,6 +82,7 @@ class RemnawaveSDK:
         self.nodes_usage_history = NodesUsageHistoryController(self._client)
         self.nodes_user_usage_history = NodesUserUsageHistoryController(self._client)
         self.subscription = SubscriptionController(self._client)
+        self.subscriptions = SubscriptionsController(self._client)
         self.subscriptions_settings = SubscriptionsSettingsController(self._client)
         self.subscriptions_template = SubscriptionsTemplateController(self._client)
         self.system = SystemController(self._client)

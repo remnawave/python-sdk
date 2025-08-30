@@ -127,6 +127,11 @@ class GetSubscriptionByUsernameResponseDto(BaseModel):
     ss_conf_links: Dict[str, str] = Field(alias="ssConfLinks")
     subscription_url: str = Field(alias="subscriptionUrl")
 
+class GetSubscriptionByShortUUIDResponseDto(GetSubscriptionByUsernameResponseDto):
+    pass
+
+class GetSubscriptionByUUIDResponseDto(GetSubscriptionByUsernameResponseDto):
+    pass
 
 # Legacy alias for backward compatibility
 SubscriptionInfoResponseDto = GetSubscriptionInfoResponseDto

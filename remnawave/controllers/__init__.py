@@ -13,6 +13,7 @@ from .keygen import KeygenController
 from .nodes import NodesController
 from .nodes_usage_history import NodesUsageHistoryController, NodesUserUsageHistoryController
 from .subscription import SubscriptionController
+from .subscriptions_controller import SubscriptionsController
 from .subscriptions_settings import SubscriptionsSettingsController
 from .subscriptions_template import SubscriptionsTemplateController
 from .system import SystemController
@@ -39,6 +40,7 @@ __all__ = [
     "NodesUsageHistoryController",
     "NodesUserUsageHistoryController",
     "SubscriptionController",
+    "SubscriptionsController",
     "SubscriptionsSettingsController",
     "SubscriptionsTemplateController",
     "SystemController",

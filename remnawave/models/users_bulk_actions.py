@@ -8,9 +8,9 @@ from remnawave.enums import UserStatus
 from remnawave.enums.users import TrafficLimitStrategy
 
 
-class BulkUpdateUsersInboundsRequestDto(BaseModel):
+class BulkUpdateUsersInternalSquadsRequestDto(BaseModel):
     uuids: List[UUID]
-    active_user_inbounds: List[UUID] = Field(serialization_alias="activeUserInbounds")
+    active_internal_squads: List[UUID] = Field(serialization_alias="activeInternalSquads")
 
 TagStr = Annotated[
     str,

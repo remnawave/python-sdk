@@ -35,9 +35,11 @@ class HappCrypto(BaseModel):
 
 
 class CreateUserRequestDto(BaseModel):
+    expire_at: datetime = Field(..., serialization_alias="expireAt")
     username: Annotated[
         str, StringConstraints(pattern=r"^[a-zA-Z0-9_-]+$", min_length=3, max_length=36)
     ]
+    created_at: Optional[datetime] = Field(None, serialization_alias="createdAt")
     status: Optional[UserStatus] = None
     subscription_uuid: Optional[str] = Field(
         None, serialization_alias="subscriptionUuid"
@@ -56,11 +58,6 @@ class CreateUserRequestDto(BaseModel):
     traffic_limit_strategy: Optional[TrafficLimitStrategy] = Field(
         None, serialization_alias="trafficLimitStrategy"
     )
-    active_user_inbounds: Optional[List[str]] = Field(
-        None, serialization_alias="activeUserInbounds"
-    )
-    expire_at: datetime = Field(..., serialization_alias="expireAt")
-    created_at: Optional[datetime] = Field(None, serialization_alias="createdAt")
     last_traffic_reset_at: Optional[datetime] = Field(
         None, serialization_alias="lastTrafficResetAt"
     )
@@ -78,29 +75,23 @@ class CreateUserRequestDto(BaseModel):
 
 class UpdateUserRequestDto(BaseModel):
     uuid: UUID
+    active_internal_squads: Optional[List[str]] = Field(
+        None, serialization_alias="activeInternalSquads"
+    )
+    description: Optional[str] = None
+    email: Optional[str] = None
+    expire_at: Optional[datetime] = Field(None, serialization_alias="expireAt")
+    hwidDeviceLimit: Optional[int] = Field(
+        None, serialization_alias="hwidDeviceLimit", strict=True, ge=0
+    )
     status: Optional[UserStatus] = None
+    tag: Optional[str] = None
+    telegram_id: Optional[int] = Field(None, serialization_alias="telegramId")
     traffic_limit_bytes: Optional[int] = Field(
         None, serialization_alias="trafficLimitBytes", strict=True, ge=0
     )
     traffic_limit_strategy: Optional[TrafficLimitStrategy] = Field(
         None, serialization_alias="trafficLimitStrategy"
-    )
-    active_user_inbounds: Optional[List[str]] = Field(
-        None, serialization_alias="activeUserInbounds"
-    )
-    expire_at: Optional[datetime] = Field(None, serialization_alias="expireAt")
-    last_traffic_reset_at: Optional[datetime] = Field(
-        None, serialization_alias="lastTrafficResetAt"
-    )
-    description: Optional[str] = None
-    tag: Optional[str] = None
-    telegram_id: Optional[int] = Field(None, serialization_alias="telegramId")
-    email: Optional[str] = None
-    hwidDeviceLimit: Optional[int] = Field(
-        None, serialization_alias="hwidDeviceLimit", strict=True, ge=0
-    )
-    active_internal_squads: Optional[List[str]] = Field(
-        None, serialization_alias="activeInternalSquads"
     )
 
 
@@ -128,9 +119,6 @@ class UserResponseDto(BaseModel):
     email: Optional[str] = None
     hwidDeviceLimit: Optional[int] = Field(
         None, serialization_alias="hwidDeviceLimit", strict=True, ge=0
-    )
-    active_user_inbounds: Optional[List[UserActiveInboundsDto]] = Field(
-        None, alias="activeUserInbounds"
     )
     active_internal_squads: Optional[List[ActiveInternalSquadDto]] = Field(
         None, alias="activeInternalSquads"

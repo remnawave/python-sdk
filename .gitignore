@@ -180,3 +180,4 @@ openapi/
 .DS_Store
 requirements.txt 
 requirements.in
+test_raw.py

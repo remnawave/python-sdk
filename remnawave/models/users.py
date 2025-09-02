@@ -130,6 +130,7 @@ class UserResponseDto(BaseModel):
         None, alias="lastConnectedNode"
     )
     happ: Optional[HappCrypto] = Field(None, alias="happ")
+    tag: Optional[str] = Field(None, alias="tag")
     created_at: datetime = Field(alias="createdAt")
     updated_at: datetime = Field(alias="updatedAt")
 

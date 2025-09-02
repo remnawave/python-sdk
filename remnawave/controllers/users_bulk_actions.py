@@ -9,7 +9,7 @@ from remnawave.models import (
     BulkAllUpdateUsersRequestDto,
     BulkAllUpdateUsersResponseDto,
     BulkResponseDto,
-    BulkUpdateUsersInboundsRequestDto,
+    BulkUpdateUsersInternalSquadsRequestDto,
     UpdateUserFields,
 )
 from remnawave.rapid import AttributeBody, BaseController, patch, post
@@ -62,12 +62,12 @@ class UsersBulkActionsController(BaseController):
         """Bulk Update Users"""
         ...
 
-    @post("/users/bulk/update-inbounds", response_class=BulkResponseDto)
-    async def bulk_update_users_inbounds(
+    @post("/users/bulk/update-squads", response_class=BulkResponseDto)
+    async def bulk_update_users_internal_squads(
         self,
-        body: Annotated[BulkUpdateUsersInboundsRequestDto, PydanticBody()],
+        body: Annotated[BulkUpdateUsersInternalSquadsRequestDto, PydanticBody()],
     ) -> BulkResponseDto:
-        """Bulk Update Users Inbounds"""
+        """Bulk Update Users Internal Squads"""
         ...
 
     @post("/users/bulk/all/update", response_class=BulkAllUpdateUsersResponseDto)

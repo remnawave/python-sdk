@@ -220,7 +220,7 @@ from .users_bulk_actions import (
     BulkAllUpdateUsersRequestDto,
     BulkAllUpdateUsersResponseDto,
     BulkResponseDto,
-    BulkUpdateUsersInboundsRequestDto,
+    BulkUpdateUsersInternalSquadsRequestDto,
     UpdateUserFields,
 )
 from .users_stats import UserUsageByRange, UserUsageByRangeResponseDto
@@ -401,7 +401,7 @@ __all__ = [
     "BulkAllUpdateUsersRequestDto",
     "BulkAllUpdateUsersResponseDto",
     "BulkResponseDto",
-    "BulkUpdateUsersInboundsRequestDto",
+    "BulkUpdateUsersInternalSquadsRequestDto",
     "UpdateUserFields",
     # Users stats models
     "UserUsageByRange",

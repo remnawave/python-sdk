@@ -199,6 +199,8 @@ from .system import (
     StatusCounts,
     UsersStatistic,
     GetNodesMetricsResponseDto,
+    GetX25519KeyPairResponseDto, 
+    X25519KeyPair,
 )
 from .users import (
     ActiveInternalSquadDto,
@@ -327,6 +329,8 @@ __all__ = [
     "StatusCounts",
     "UsersStatistic",
     "GetNodesMetricsResponseDto",
+    "GetX25519KeyPairResponseDto",
+    "X25519KeyPair",
     # XRay config models
     "ConfigResponseDto",  # Legacy alias
     "GetConfigResponseDto",

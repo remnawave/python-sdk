@@ -1,5 +1,6 @@
 from datetime import datetime
 from typing import Any, Dict, List, Optional
+from uuid import UUID
 
 from pydantic import BaseModel, Field
 
@@ -25,7 +26,6 @@ class UserSubscription(BaseModel):
     user_status: UserStatus = Field(alias="userStatus")
     is_active: bool = Field(alias="isActive")
 
-
 class SubscriptionInfoData(BaseModel):
     is_found: bool = Field(alias="isFound")
     user: UserSubscription
@@ -42,6 +42,63 @@ class GetSubscriptionInfoResponseDto(BaseModel):
     ss_conf_links: Dict[str, str] = Field(alias="ssConfLinks")
     subscription_url: str = Field(alias="subscriptionUrl")
     happ: HappCrypto
+
+class UserLastConnectedNodeDto(BaseModel):
+    connected_at: datetime = Field(alias="connectedAt")
+    node_name: str = Field(alias="nodeName")
+    country_code: Optional[str] = Field(None, alias="countryCode")  # новое поле
+
+class ActiveInternalSquadDto(BaseModel):
+    uuid: UUID
+    name: str
+
+class HappCrypto(BaseModel):
+    crypto_link: str = Field(alias="cryptoLink")
+
+class UserResponseDto(BaseModel):
+    uuid: UUID
+    short_uuid: str = Field(alias="shortUuid")
+    username: str
+    status: str
+    used_traffic_bytes: float = Field(alias="usedTrafficBytes")
+    lifetime_used_traffic_bytes: float = Field(alias="lifetimeUsedTrafficBytes")
+    traffic_limit_bytes: int = Field(alias="trafficLimitBytes")
+    traffic_limit_strategy: str = Field(alias="trafficLimitStrategy")
+    sub_last_user_agent: Optional[str] = Field(None, alias="subLastUserAgent")
+    sub_last_opened_at: Optional[datetime] = Field(None, alias="subLastOpenedAt")
+    expire_at: datetime = Field(alias="expireAt")
+    online_at: Optional[datetime] = Field(None, alias="onlineAt")
+    sub_revoked_at: Optional[datetime] = Field(None, alias="subRevokedAt")
+    last_traffic_reset_at: Optional[datetime] = Field(None, alias="lastTrafficResetAt")
+    trojan_password: str = Field(alias="trojanPassword")
+    vless_uuid: UUID = Field(alias="vlessUuid")
+    ss_password: str = Field(alias="ssPassword")
+    description: Optional[str] = None
+    tag: Optional[str] = None
+    telegram_id: Optional[int] = Field(None, alias="telegramId")
+    email: Optional[str] = None
+    hwidDeviceLimit: Optional[int] = Field(None, alias="hwidDeviceLimit")
+    first_connected_at: Optional[datetime] = Field(None, alias="firstConnectedAt")
+    last_triggered_threshold: int = Field(alias="lastTriggeredThreshold")
+    created_at: datetime = Field(alias="createdAt")
+    updated_at: datetime = Field(alias="updatedAt")
+    active_internal_squads: List[ActiveInternalSquadDto] = Field(alias="activeInternalSquads")
+    subscription_url: str = Field(alias="subscriptionUrl")
+    last_connected_node: Optional[UserLastConnectedNodeDto] = Field(None, alias="lastConnectedNode")
+    happ: Optional[HappCrypto] = Field(None, alias="happ")
+
+class ConvertedUserInfo(BaseModel):
+    days_left: int = Field(alias="daysLeft")
+    traffic_limit: str = Field(alias="trafficLimit")
+    traffic_used: str = Field(alias="trafficUsed")
+    lifetime_traffic_used: str = Field(alias="lifetimeTrafficUsed")
+    is_hwid_limited: bool = Field(alias="isHwidLimited")
+
+class Passwords(BaseModel):
+    ss_password: Optional[str] = Field(None, alias="ssPassword")
+    trojan_password: Optional[str] = Field(None, alias="trojanPassword")
+    vless_password: Optional[str] = Field(None, alias="vlessPassword")
+
 
 
 class RawHostAdditionalParams(BaseModel):
@@ -68,14 +125,13 @@ class RawHostDbData(BaseModel):
     is_hidden: bool = Field(alias="isHidden")
     tag: Optional[str] = None
 
-
 class RawHost(BaseModel):
     address: Optional[str] = None
     alpn: Optional[str] = None
     fingerprint: Optional[str] = None
     host: Optional[str] = None
     network: Optional[str] = None
-    password: Optional[str] = None
+    password: Optional[Passwords] = None 
     path: Optional[str] = None
     public_key: Optional[str] = Field(None, alias="publicKey")
     port: Optional[int] = None
@@ -95,14 +151,11 @@ class RawHost(BaseModel):
     protocol_options: Optional[RawHostProtocolOptions] = Field(None, alias="protocolOptions")
     db_data: RawHostDbData = Field(alias="dbData")
 
-
 class RawSubscriptionResponse(BaseModel):
-    user: UserSubscription
-    subscription_url: str = Field(alias="subscriptionUrl")
-    raw_hosts: List[RawHost] = Field(alias="rawHosts")
+    user: UserResponseDto
+    converted_user_info: ConvertedUserInfo = Field(alias="convertedUserInfo")
     headers: Dict[str, str]
-    is_hwid_limited: bool = Field(alias="isHwidLimited")
-
+    raw_hosts: List[RawHost] = Field(alias="rawHosts")
 
 class GetRawSubscriptionByShortUuidResponseDto(RawSubscriptionResponse):
     pass

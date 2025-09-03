@@ -121,3 +121,10 @@ class NodeMetric(BaseModel):
 
 class GetNodesMetricsResponseDto(BaseModel):
     response: List[NodeMetric]
+
+class X25519KeyPair(BaseModel):
+    public_key: str = Field(alias="publicKey")
+    private_key: str = Field(alias="privateKey")
+
+class GetX25519KeyPairResponseDto(BaseModel):
+    key_pairs: List[X25519KeyPair] = Field(alias="keyPairs")

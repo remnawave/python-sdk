@@ -3,11 +3,13 @@ from typing import Annotated
 from rapid_api_client import Path, Query
 
 from remnawave.enums import ClientType
+from remnawave.models.subscription import GetRawSubscriptionByShortUuidResponseDto
 from remnawave.rapid import BaseController, get
 from remnawave.models import GetAllSubscriptionsResponseDto, GetSubscriptionByUsernameResponseDto, GetSubscriptionByShortUUIDResponseDto, GetSubscriptionByUUIDResponseDto
 
 
 class SubscriptionsController(BaseController):
+    # Protected endpoints below
     @get("/subscriptions", response_class=GetAllSubscriptionsResponseDto)
     async def get_all_subscriptions(
         self,
@@ -42,5 +44,14 @@ class SubscriptionsController(BaseController):
         self,
         uuid: Annotated[str, Path(description="UUID of the user")],
     ) -> GetSubscriptionByUUIDResponseDto:
+        """None"""
+        ...
+
+    @get("/subscriptions/by-short-uuid/{short_uuid}/raw", response_class=GetRawSubscriptionByShortUuidResponseDto)
+    async def get_raw_subscription(
+        self,
+        short_uuid: Annotated[str, Path(description="Short UUID of the user")],
+        withDisabledHosts: Annotated[Annotated[bool, Path(description="Include disabled hosts")], bool] = False,
+    ) -> GetRawSubscriptionByShortUuidResponseDto:
         """None"""
         ...

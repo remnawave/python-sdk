@@ -4,6 +4,7 @@ from remnawave.models import (
     GetStatsResponseDto,
     GetNodesMetricsResponseDto,
     GetRemnawaveHealthResponseDto,
+    GetX25519KeyPairResponseDto
 )
 from remnawave.rapid import BaseController, get
 
@@ -42,4 +43,11 @@ class SystemController(BaseController):
         self,
     ) -> GetNodesMetricsResponseDto:
         """Get Nodes Metrics"""
+        ...
+
+    @get("/system/tools/x25519/generate", response_class=GetX25519KeyPairResponseDto)
+    async def get_x25519_key_pair(
+        self,
+    ) -> GetX25519KeyPairResponseDto:
+        """Get X25519 Key Pair"""
         ...

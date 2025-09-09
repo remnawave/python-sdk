@@ -61,6 +61,12 @@ class UpdateHostRequestDto(BaseModel):
         None,
         serialization_alias="overrideSniFromAddress",
     )
+    vless_route_id: Optional[int] = Field(
+        None,
+        serialization_alias="vlessRouteId",
+        ge=0,
+        le=65535
+    )
 
 
 class HostInboundData(BaseModel):
@@ -113,6 +119,10 @@ class HostResponseDto(BaseModel):
     override_sni_from_address: Optional[bool] = Field(
         None,
         serialization_alias="overrideSniFromAddress",
+    )
+    vless_route_id: Optional[int] = Field(
+        None,
+        serialization_alias="vlessRouteId",
     )
 
     # Legacy compatibility property
@@ -209,6 +219,12 @@ class CreateHostRequestDto(BaseModel):
     )
     server_description: Optional[str] = Field(
         None, alias="serverDescription", max_length=30
+    )
+    vless_route_id: Optional[int] = Field(
+        None,
+        serialization_alias="vlessRouteId",
+        ge=0,
+        le=65535
     )
 
     # Legacy compatibility property

@@ -31,22 +31,22 @@ class HwidDeviceDto(BaseModel):
 
 
 class HwidDevicesData(BaseModel):
-    total: float
+    total: int
     devices: List[HwidDeviceDto]
 
 
 class CreateUserHwidDeviceResponseDto(BaseModel):
-    total: float
+    total: int
     devices: List[HwidDeviceDto]
 
 
 class DeleteUserHwidDeviceResponseDto(BaseModel):
-    total: float
+    total: int
     devices: List[HwidDeviceDto]
 
 
 class GetUserHwidDevicesResponseDto(BaseModel):
-    total: float
+    total: int
     devices: List[HwidDeviceDto]
 
 
@@ -55,4 +55,3 @@ CreateHWIDUser = CreateUserHwidDeviceRequestDto
 HWIDUserResponseDto = HwidDeviceDto
 HWIDUserResponseDtoList = HwidDevicesData
 HWIDDeleteRequest = DeleteUserHwidDeviceRequestDto
-    

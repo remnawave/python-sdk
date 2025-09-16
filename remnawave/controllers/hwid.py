@@ -20,7 +20,7 @@ class HWIDUserController(BaseController):
     ) -> CreateUserHwidDeviceResponseDto:
         """Create a user HWID device"""
         ...
-        
+
     @post("/hwid/devices/delete", response_class=DeleteUserHwidDeviceResponseDto)
     async def delete_hwid_to_user(
         self,
@@ -28,7 +28,15 @@ class HWIDUserController(BaseController):
     ) -> DeleteUserHwidDeviceResponseDto:
         """Delete a user HWID device"""
         ...
-    
+
+    @post("/hwid/devices/delete-all", response_class=CreateUserHwidDeviceResponseDto)
+    async def delete_all_hwid_user(
+        self,
+        uuid: Annotated[str, Path(description="UUID of the User")],
+    ) -> CreateUserHwidDeviceResponseDto:
+        """Delete all user HWID devices"""
+        ...
+
     @get("/hwid/devices/{uuid}", response_class=GetUserHwidDevicesResponseDto)
     async def get_hwid_user(
         self,

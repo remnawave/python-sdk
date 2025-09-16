@@ -74,6 +74,8 @@ from .hwid import (
     HWIDDeleteRequest,  # Legacy alias
     HWIDUserResponseDto,  # Legacy alias
     HWIDUserResponseDtoList,  # Legacy alias
+    GetHwidStatisticsResponseDto,
+    DeleteUserAllHwidDeviceRequestDto
 )
 from .inbounds import (
     AllInboundsData,
@@ -346,6 +348,8 @@ __all__ = [
     "HWIDDeleteRequest",  # Legacy alias
     "HWIDUserResponseDto",  # Legacy alias
     "HWIDUserResponseDtoList",  # Legacy alias
+    "GetHwidStatisticsResponseDto",
+    "DeleteUserAllHwidDeviceRequestDto",
     # Bandwidth stats models
     "GetNodeUserUsageByRangeResponseDto",
     "GetNodesRealtimeUsageResponseDto",

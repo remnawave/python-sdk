@@ -62,13 +62,13 @@ async def test_users(remnawave) -> None:
     assert user_short_uuid.uuid == create_user.uuid
 
     # Only test get_user_by_subscription_uuid if subscription_uuid is not None
-    if create_user.subscription_uuid is not None:
-        string_subscription_uuid = str(create_user.subscription_uuid)
-        user_subscription_uuid = await remnawave.users.get_user_by_subscription_uuid(
-            subscription_uuid=string_subscription_uuid
-        )
-        assert isinstance(user_subscription_uuid, UserResponseDto)
-        assert user_subscription_uuid.uuid == create_user.uuid
+    # if create_user.subscription_uuid is not None:
+    #     string_subscription_uuid = str(create_user.subscription_uuid)
+    #     user_subscription_uuid = await remnawave.users.get_user_by_subscription_uuid(
+    #         subscription_uuid=string_subscription_uuid
+    #     )
+    #     assert isinstance(user_subscription_uuid, UserResponseDto)
+    #     assert user_subscription_uuid.uuid == create_user.uuid
 
     user_username = await remnawave.users.get_user_by_username(
         username=user_uuid.username

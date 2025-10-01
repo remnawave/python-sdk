@@ -68,7 +68,7 @@ class HostsController(BaseController):
     @post("/hosts/actions/reorder", response_class=ReorderHostResponseDto)
     async def reorder_hosts(
         self,
-        data: Annotated[ReorderHostRequestDto, PydanticBody()],
+        body: Annotated[ReorderHostRequestDto, PydanticBody()],
     ) -> ReorderHostResponseDto:
         """Reorder Hosts"""
         ...

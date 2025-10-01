@@ -29,9 +29,10 @@ from remnawave.controllers import (
     UsersStatsController,
     WebhookUtility,
     XrayConfigController,
+    SubscriptionRequestHistoryController
     # WebhookUtility is not a controller, but it's included in the controllers module for convenience
 )
-
+    
 
 class RemnawaveSDK:
     def __init__(
@@ -85,6 +86,7 @@ class RemnawaveSDK:
         self.subscriptions = SubscriptionsController(self._client)
         self.subscriptions_settings = SubscriptionsSettingsController(self._client)
         self.subscriptions_template = SubscriptionsTemplateController(self._client)
+        self.subscription_request_history = SubscriptionRequestHistoryController(self._client)
         self.system = SystemController(self._client)
         self.users = UsersController(self._client)
         self.users_bulk_actions = UsersBulkActionsController(self._client)

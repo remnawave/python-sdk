@@ -22,6 +22,7 @@ from .users_bulk_actions import UsersBulkActionsController
 from .users_stats import UsersStatsController
 from .webhooks import WebhookUtility
 from .xray_config import XrayConfigController
+from .subscriptions_request import SubscriptionRequestHistoryController
 
 __all__ = [
     "APITokensManagementController",
@@ -48,5 +49,6 @@ __all__ = [
     "UsersBulkActionsController",
     "UsersStatsController",
     "WebhookUtility",
-    "XrayConfigController"
+    "XrayConfigController",
+    "SubscriptionRequestHistoryController",
 ]

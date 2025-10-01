@@ -120,7 +120,7 @@ class NodeMetric(BaseModel):
 
 
 class GetNodesMetricsResponseDto(BaseModel):
-    response: List[NodeMetric]
+    nodes: List[NodeMetric]
 
 class X25519KeyPair(BaseModel):
     public_key: str = Field(alias="publicKey")

@@ -8,3 +8,4 @@ class ClientType(StrEnum):
     MIHOMO = "mihomo"
     JSON = "json"
     CLASH = "clash"
+    V2RAY_JSON = "v2ray-json"

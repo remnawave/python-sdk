@@ -67,6 +67,14 @@ class UpdateHostRequestDto(BaseModel):
         ge=0,
         le=65535
     )
+    shuffle_host: bool = Field(
+        False,
+        serialization_alias="shuffleHost",
+    )
+    mihomo_x25519: bool = Field(
+        False,
+        serialization_alias="mihomoX25519",
+    )
 
 
 class HostInboundData(BaseModel):
@@ -123,6 +131,14 @@ class HostResponseDto(BaseModel):
     vless_route_id: Optional[int] = Field(
         None,
         serialization_alias="vlessRouteId",
+    )
+    shuffle_host: bool = Field(
+        False,
+        serialization_alias="shuffleHost",
+    )
+    mihomo_x25519: bool = Field(
+        False,
+        serialization_alias="mihomoX25519",
     )
 
     # Legacy compatibility property
@@ -186,16 +202,16 @@ class CreateHostRequestDto(BaseModel):
     host: Optional[str] = None
     alpn: Optional[ALPN] = None
     fingerprint: Optional[Fingerprint] = None
-    allow_insecure: Optional[bool] = Field(
-        None,
+    allow_insecure: bool = Field(
+        False,
         serialization_alias="allowInsecure",
     )
-    is_disabled: Optional[bool] = Field(
-        None,
+    is_disabled: bool = Field(
+        False, 
         serialization_alias="isDisabled",
     )
     security_layer: Optional[SecurityLayer] = Field(
-        None,
+        SecurityLayer.DEFAULT, 
         serialization_alias="securityLayer",
     )
     muxParams: Optional[str] = Field(
@@ -206,15 +222,15 @@ class CreateHostRequestDto(BaseModel):
         None,
         serialization_alias="sockoptParams",
     )
-    tag: Optional[Annotated[str, StringConstraints(max_length=32)]] = Field(
+    tag: Optional[Annotated[str, StringConstraints(max_length=32, pattern="^[A-Z0-9_:]+$")]] = Field(
         None, serialization_alias="tag"
     )
-    is_hidden: Optional[bool] = Field(
-        None,
+    is_hidden: bool = Field(
+        False,
         serialization_alias="isHidden",
     )
-    override_sni_from_address: Optional[bool] = Field(
-        None,
+    override_sni_from_address: bool = Field(
+        False, 
         serialization_alias="overrideSniFromAddress",
     )
     server_description: Optional[str] = Field(
@@ -225,6 +241,14 @@ class CreateHostRequestDto(BaseModel):
         serialization_alias="vlessRouteId",
         ge=0,
         le=65535
+    )
+    shuffle_host: bool = Field(
+        False,
+        serialization_alias="shuffleHost",
+    )
+    mihomo_x25519: bool = Field(
+        False,
+        serialization_alias="mihomoX25519",
     )
 
     # Legacy compatibility property

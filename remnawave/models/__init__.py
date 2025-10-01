@@ -218,6 +218,7 @@ from .users import (
     TagsResponseDto,
     TagUserResponseDto,
     RevokeUserRequestDto,
+    GetSubscriptionRequestsResponseDto,
 )
 from .users_bulk_actions import (
     BulkAllResetTrafficUsersResponseDto,
@@ -233,6 +234,15 @@ from .xray_config import (
     GetConfigResponseDto,
     UpdateConfigRequestDto,
     UpdateConfigResponseDto,
+)
+from .subscription_request_history import (
+    GetAllSubscriptionRequestHistoryResponseDto,
+    GetSubscriptionRequestHistoryStatsResponseDto,
+    SubscriptionRequestHistoryRecord,
+    SubscriptionRequestHistoryData,
+    AppStatItem,
+    HourlyRequestStat,
+    SubscriptionRequestHistoryStatsData
 )
 
 __all__ = [
@@ -404,6 +414,7 @@ __all__ = [
     "UserResponseDto",
     "UsersResponseDto",
     "TagUserResponseDto",
+    "GetSubscriptionRequestsResponseDto",
     # Users bulk actions models
     "BulkAllResetTrafficUsersResponseDto",
     "BulkAllUpdateUsersRequestDto",
@@ -468,4 +479,12 @@ __all__ = [
     "NodeInfoDto",
     "NodeUsageDto",
     "UserUsageDto",
+    # Subscription request history models
+    "GetAllSubscriptionRequestHistoryResponseDto",
+    "GetSubscriptionRequestHistoryStatsResponseDto",
+    "SubscriptionRequestHistoryRecord",
+    "SubscriptionRequestHistoryData",
+    "AppStatItem",
+    "HourlyRequestStat", 
+    "SubscriptionRequestHistoryStatsData",
 ]

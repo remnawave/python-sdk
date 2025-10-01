@@ -15,6 +15,7 @@ from remnawave.models import (
     TagsResponseDto,
     TagUserResponseDto,
     RevokeUserRequestDto,
+    GetSubscriptionRequestsResponseDto
 )
 from remnawave.rapid import BaseController, delete, get, patch, post
 
@@ -177,4 +178,12 @@ class UsersController(BaseController):
         uuid: Annotated[str, Path(description="UUID of the user")],
     ) -> GetUserAccessibleNodesResponseDto:
         """Get User Accessible Nodes"""
+        ...
+
+    @get("/users/{uuid}/subscription-request-history", response_class=GetSubscriptionRequestsResponseDto)
+    async def get_subscription_requests(
+        self,
+        uuid: Annotated[str, Path(description="UUID of the user")],
+    ) -> GetSubscriptionRequestsResponseDto:
+        """Get Subscription Requests History"""
         ...

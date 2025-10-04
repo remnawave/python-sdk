@@ -245,14 +245,22 @@ from .subscription_request_history import (
     SubscriptionRequestHistoryStatsData
 )
 from .webhook import (
-    InboundWebhookDto,
-    WebhookUserWebhookDto,
-    WebhookNodeWebhookDto,
-    WebhookHeadersWebhookDto,
-    WebhookPayloadWebhookDto,
-    InfraBillingSummaryWebhookDto,
-    LoginAttemptWebhookDto,
-    WebhookServiceWebhookDto,
+    UserEventDto, 
+    UserHwidDeviceEventDto,
+    HwidUserDeviceDto,
+    LastConnectedNodeDto,
+    InternalSquadDto,
+    BaseUserDto,
+    UserDto,
+    NodesDto,
+    ConfigProfileInboundDto,
+    InfraProviderDto,
+    LoginAttemptDto,
+    ServiceEventDto,
+    NodeEventDto,
+    CustomErrorEventDto,
+    CrmEventDto,
+    WebhookPayloadDto,
 )
 
 __all__ = [
@@ -498,12 +506,33 @@ __all__ = [
     "HourlyRequestStat", 
     "SubscriptionRequestHistoryStatsData",
     # Webhook models
-    "InboundWebhookDto",
-    "WebhookUserWebhookDto",
-    "WebhookNodeWebhookDto",
-    "WebhookHeadersWebhookDto",
-    "WebhookPayloadWebhookDto",
-    "InfraBillingSummaryWebhookDto",
-    "LoginAttemptWebhookDto",
-    "WebhookServiceWebhookDto",
+     # USER
+    "LastConnectedNodeDto",
+    "InternalSquadDto",
+    "BaseUserDto",
+    "UserDto",
+    "UserEventDto",
+
+    # HWID DEVICES
+    "HwidUserDeviceDto",
+    "UserHwidDeviceEventDto",
+
+    # SERVICE EVENTS
+    "LoginAttemptDto",
+    "ServiceEventDto",
+
+    # NODE ENTITIES
+    "ConfigProfileInboundDto",
+    "InfraProviderDto",
+    "NodesDto",
+    "NodeEventDto",
+
+    # ERROR EVENTS
+    "CustomErrorEventDto",
+
+    # CRM EVENTS
+    "CrmEventDto",
+
+    # WEBHOOK PAYLOAD
+    "WebhookPayloadDto",
 ]

@@ -244,6 +244,24 @@ from .subscription_request_history import (
     HourlyRequestStat,
     SubscriptionRequestHistoryStatsData
 )
+from .webhook import (
+    UserEventDto, 
+    UserHwidDeviceEventDto,
+    HwidUserDeviceDto,
+    LastConnectedNodeDto,
+    InternalSquadDto,
+    BaseUserDto,
+    UserDto,
+    NodesDto,
+    ConfigProfileInboundDto,
+    InfraProviderDto,
+    LoginAttemptDto,
+    ServiceEventDto,
+    NodeEventDto,
+    CustomErrorEventDto,
+    CrmEventDto,
+    WebhookPayloadDto,
+)
 
 __all__ = [
     # Auth models
@@ -487,4 +505,34 @@ __all__ = [
     "AppStatItem",
     "HourlyRequestStat", 
     "SubscriptionRequestHistoryStatsData",
+    # Webhook models
+     # USER
+    "LastConnectedNodeDto",
+    "InternalSquadDto",
+    "BaseUserDto",
+    "UserDto",
+    "UserEventDto",
+
+    # HWID DEVICES
+    "HwidUserDeviceDto",
+    "UserHwidDeviceEventDto",
+
+    # SERVICE EVENTS
+    "LoginAttemptDto",
+    "ServiceEventDto",
+
+    # NODE ENTITIES
+    "ConfigProfileInboundDto",
+    "InfraProviderDto",
+    "NodesDto",
+    "NodeEventDto",
+
+    # ERROR EVENTS
+    "CustomErrorEventDto",
+
+    # CRM EVENTS
+    "CrmEventDto",
+
+    # WEBHOOK PAYLOAD
+    "WebhookPayloadDto",
 ]

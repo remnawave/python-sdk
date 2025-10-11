@@ -40,9 +40,9 @@ class UpdateHostRequestDto(BaseModel):
         None, serialization_alias="securityLayer"
     )
     server_description: Optional[str] = Field(
-        None, alias="serverDescription", max_length=30
+        None, serialization_alias="serverDescription", max_length=30
     )
-    muxParams: Optional[str] = Field(
+    mux_params: Optional[str] = Field(
         None,
         serialization_alias="muxParams",
     )
@@ -67,19 +67,24 @@ class UpdateHostRequestDto(BaseModel):
         ge=0,
         le=65535
     )
-    shuffle_host: bool = Field(
-        False,
+    shuffle_host: Optional[bool] = Field(
+        None,
         serialization_alias="shuffleHost",
     )
-    mihomo_x25519: bool = Field(
-        False,
+    mihomo_x25519: Optional[bool] = Field(
+        None,
         serialization_alias="mihomoX25519",
     )
+    x_http_extra_params: Optional[str] = Field(
+        None,
+        serialization_alias="xHttpExtraParams",
+    )
+    nodes: Optional[List[str]] = None
 
 
 class HostInboundData(BaseModel):
-    config_profile_uuid: UUID = Field(alias="configProfileUuid")
-    config_profile_inbound_uuid: UUID = Field(alias="configProfileInboundUuid")
+    config_profile_uuid: Optional[UUID] = Field(alias="configProfileUuid")
+    config_profile_inbound_uuid: Optional[UUID] = Field(alias="configProfileInboundUuid")
 
 
 class HostResponseDto(BaseModel):
@@ -93,57 +98,54 @@ class HostResponseDto(BaseModel):
     host: Optional[str] = None
     alpn: Optional[ALPN] = None
     fingerprint: Optional[Fingerprint] = None
-    is_disabled: Optional[bool] = Field(
-        None,
-        alias="isDisabled",
-    )
-    security_layer: Optional[SecurityLayer] = Field(
-        None,
-        alias="securityLayer",
-    )
     x_http_extra_params: Optional[str] = Field(
         None,
         alias="xHttpExtraParams",
     )
-    server_description: Optional[str] = Field(
-        None, alias="serverDescription", max_length=30
-    )
-    inbound: HostInboundData
-    muxParams: Optional[str] = Field(
+    mux_params: Optional[str] = Field(
         None,
-        serialization_alias="muxParams",
+        alias="muxParams",
     )
     sockopt_params: Optional[str] = Field(
         None,
-        serialization_alias="sockoptParams",
+        alias="sockoptParams",
     )
-    tag: Optional[Annotated[str, StringConstraints(max_length=32)]] = Field(
-        None, serialization_alias="tag"
+    inbound: HostInboundData
+    server_description: Optional[str] = Field(
+        None, alias="serverDescription"
     )
-    is_hidden: Optional[bool] = Field(
-        None,
-        serialization_alias="isHidden",
-    )
-    override_sni_from_address: Optional[bool] = Field(
-        None,
-        serialization_alias="overrideSniFromAddress",
-    )
+    tag: Optional[str] = None
     vless_route_id: Optional[int] = Field(
         None,
-        serialization_alias="vlessRouteId",
+        alias="vlessRouteId",
     )
-    shuffle_host: bool = Field(
-        False,
-        serialization_alias="shuffleHost",
+    shuffle_host: bool = Field(alias="shuffleHost")
+    mihomo_x25519: bool = Field(alias="mihomoX25519")
+    nodes: List[str]
+    is_disabled: bool = Field(
+        default=False,
+        alias="isDisabled",
     )
-    mihomo_x25519: bool = Field(
-        False,
-        serialization_alias="mihomoX25519",
+    security_layer: SecurityLayer = Field(
+        default=SecurityLayer.DEFAULT,
+        alias="securityLayer",
+    )
+    is_hidden: bool = Field(
+        default=False,
+        alias="isHidden",
+    )
+    override_sni_from_address: bool = Field(
+        default=False,
+        alias="overrideSniFromAddress",
+    )
+    allow_insecure: bool = Field(
+        default=False,
+        alias="allowInsecure",
     )
 
     # Legacy compatibility property
     @property
-    def inbound_uuid(self) -> UUID:
+    def inbound_uuid(self) -> Optional[UUID]:
         return self.inbound.config_profile_inbound_uuid
 
 
@@ -186,8 +188,8 @@ class DeleteHostResponseDto(BaseModel):
 
 
 class CreateHostInboundData(BaseModel):
-    config_profile_uuid: UUID = Field(serialization_alias="configProfileUuid")
-    config_profile_inbound_uuid: UUID = Field(
+    config_profile_uuid: Optional[UUID] = Field(serialization_alias="configProfileUuid")
+    config_profile_inbound_uuid: Optional[UUID] = Field(
         serialization_alias="configProfileInboundUuid"
     )
 
@@ -202,19 +204,11 @@ class CreateHostRequestDto(BaseModel):
     host: Optional[str] = None
     alpn: Optional[ALPN] = None
     fingerprint: Optional[Fingerprint] = None
-    allow_insecure: bool = Field(
-        False,
-        serialization_alias="allowInsecure",
+    x_http_extra_params: Optional[str] = Field(
+        None,
+        serialization_alias="xHttpExtraParams",
     )
-    is_disabled: bool = Field(
-        False, 
-        serialization_alias="isDisabled",
-    )
-    security_layer: Optional[SecurityLayer] = Field(
-        SecurityLayer.DEFAULT, 
-        serialization_alias="securityLayer",
-    )
-    muxParams: Optional[str] = Field(
+    mux_params: Optional[str] = Field(
         None,
         serialization_alias="muxParams",
     )
@@ -222,19 +216,11 @@ class CreateHostRequestDto(BaseModel):
         None,
         serialization_alias="sockoptParams",
     )
-    tag: Optional[Annotated[str, StringConstraints(max_length=32, pattern="^[A-Z0-9_:]+$")]] = Field(
-        None, serialization_alias="tag"
-    )
-    is_hidden: bool = Field(
-        False,
-        serialization_alias="isHidden",
-    )
-    override_sni_from_address: bool = Field(
-        False, 
-        serialization_alias="overrideSniFromAddress",
-    )
     server_description: Optional[str] = Field(
-        None, alias="serverDescription", max_length=30
+        None, serialization_alias="serverDescription", max_length=30
+    )
+    tag: Optional[Annotated[str, StringConstraints(max_length=32)]] = Field(
+        None, serialization_alias="tag"
     )
     vless_route_id: Optional[int] = Field(
         None,
@@ -250,10 +236,31 @@ class CreateHostRequestDto(BaseModel):
         False,
         serialization_alias="mihomoX25519",
     )
+    nodes: List[str] = Field(default_factory=list)
+    allow_insecure: bool = Field(
+        False,
+        serialization_alias="allowInsecure",
+    )
+    is_disabled: bool = Field(
+        False, 
+        serialization_alias="isDisabled",
+    )
+    security_layer: SecurityLayer = Field(
+        SecurityLayer.DEFAULT, 
+        serialization_alias="securityLayer",
+    )
+    is_hidden: bool = Field(
+        False,
+        serialization_alias="isHidden",
+    )
+    override_sni_from_address: bool = Field(
+        False, 
+        serialization_alias="overrideSniFromAddress",
+    )
 
     # Legacy compatibility property
     @property
-    def inbound_uuid(self) -> UUID:
+    def inbound_uuid(self) -> Optional[UUID]:
         return self.inbound.config_profile_inbound_uuid
 
     # Constructor compatibility - support old-style inbound_uuid

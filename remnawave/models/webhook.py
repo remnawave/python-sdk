@@ -19,7 +19,6 @@ class LastConnectedNodeDto(BaseModel):
 class InternalSquadDto(BaseModel):
     uuid: UUID
     name: str
-    description: Optional[str] = None
 
     model_config = {"alias_generator": to_camel, "populate_by_name": True}
 
@@ -29,11 +28,10 @@ class BaseUserDto(BaseModel):
     short_uuid: str
     username: str
     status: TUsersStatus
+    used_traffic_bytes: int
+    lifetime_used_traffic_bytes: int
 
-    used_traffic_bytes: str
-    lifetime_used_traffic_bytes: str
-
-    traffic_limit_bytes: str
+    traffic_limit_bytes: int
     traffic_limit_strategy: TResetPeriods
     sub_last_user_agent: Optional[str] = None
     sub_last_opened_at: Optional[datetime] = None
@@ -48,7 +46,7 @@ class BaseUserDto(BaseModel):
 
     description: Optional[str] = None
     tag: Optional[str] = None
-    telegram_id: Optional[str] = None
+    telegram_id: Optional[int] = None
     email: Optional[str] = None
 
     hwid_device_limit: Optional[int] = None
@@ -57,7 +55,7 @@ class BaseUserDto(BaseModel):
     last_triggered_threshold: int
 
     online_at: Optional[datetime] = None
-    last_connected_node_uuid: Optional[str] = None
+    last_connected_node_uuid: Optional[UUID] = None
 
     created_at: datetime
     updated_at: datetime
@@ -73,9 +71,8 @@ class UserDto(BaseUserDto):
 
 
 class UserEventDto(BaseModel):
-    user: UserDto
     event_name: TUserEvents
-    skip_telegram_notification: bool = False
+    user: UserDto
 
     model_config = {"alias_generator": to_camel, "populate_by_name": True}
 
@@ -106,7 +103,6 @@ class UserHwidDeviceEventDto(BaseModel):
     def build(cls, user: UserDto, hwid_device: HwidUserDeviceDto, event: TUserHwidDevicesEvents):
         return cls(data={"user": user, "hwidUserDevice": hwid_device}, event_name=event)
 
-
 # ---------------- SERVICE EVENTS ---------------- #
 
 class LoginAttemptDto(BaseModel):
@@ -115,7 +111,7 @@ class LoginAttemptDto(BaseModel):
     user_agent: str
     description: Optional[str] = None
     password: Optional[str] = None
-
+    
     model_config = {"alias_generator": to_camel, "populate_by_name": True}
 
 
@@ -130,11 +126,30 @@ class ServiceEventDto(BaseModel):
 
 class ConfigProfileInboundDto(BaseModel):
     uuid: UUID
-    name: str
-    config: dict
+    profile_uuid: UUID
 
-    created_at: datetime
-    updated_at: datetime
+    tag: str
+    type: str
+    network: Optional[str]
+    security: Optional[str]
+    port: Optional[int]
+
+    raw_inbound: Optional[dict]
+
+    model_config = {"alias_generator": to_camel, "populate_by_name": True}
+
+
+class InfraBillingHistoryDto(BaseModel):
+    total_amount: int
+    total_bills: int
+
+    model_config = {"alias_generator": to_camel, "populate_by_name": True}
+
+
+class InfraBillingNodeDto(BaseModel):
+    node_uuid: UUID
+    name: str
+    country_code: str
 
     model_config = {"alias_generator": to_camel, "populate_by_name": True}
 
@@ -148,13 +163,13 @@ class InfraProviderDto(BaseModel):
     created_at: datetime
     updated_at: datetime
 
-    billing_history: Optional[dict] = None
-    billing_nodes: Optional[List[dict]] = None
+    billing_history: Optional[InfraBillingHistoryDto] = None
+    billing_nodes: Optional[List[InfraBillingNodeDto]] = None
 
     model_config = {"alias_generator": to_camel, "populate_by_name": True}
 
 
-class NodesDto(BaseModel):
+class NodeDto(BaseModel):
     uuid: UUID
     name: str
     address: str
@@ -164,7 +179,6 @@ class NodesDto(BaseModel):
     is_disabled: bool
     is_node_online: bool
     is_xray_running: bool
-
     last_status_change: Optional[datetime] = None
     last_status_message: Optional[str] = None
 
@@ -173,16 +187,16 @@ class NodesDto(BaseModel):
     xray_uptime: str
 
     users_online: Optional[int] = None
-
+    
     is_traffic_tracking_active: bool
     traffic_reset_day: Optional[int] = None
-    traffic_limit_bytes: Optional[str] = None
-    traffic_used_bytes: Optional[str] = None
+    traffic_limit_bytes: Optional[int] = None
+    traffic_used_bytes: Optional[int] = None
     notify_percent: Optional[int] = None
 
     view_position: int
     country_code: str
-    consumption_multiplier: str
+    consumption_multiplier: int
 
     cpu_count: Optional[int] = None
     cpu_model: Optional[str] = None
@@ -201,27 +215,43 @@ class NodesDto(BaseModel):
 
 
 class NodeEventDto(BaseModel):
-    node: NodesDto
     event_name: TNodeEvents
+    data: NodeDto
+
+    model_config = {"alias_generator": to_camel, "populate_by_name": True}
+
+# ---------------- ERROR EVENTS ---------------- #
+
+# https://github.com/remnawave/backend/blob/main/src/queue/user-jobs/user-jobs.processor.ts#L224
+# Not implemented yet!
+
+class ErrorDto(BaseModel):
+    description: str
 
     model_config = {"alias_generator": to_camel, "populate_by_name": True}
 
 
-# ---------------- ERROR EVENTS ---------------- #
-
 class CustomErrorEventDto(BaseModel):
     event_name: TErrorsEvents
-    data: dict
+    data: ErrorDto
 
     model_config = {"alias_generator": to_camel, "populate_by_name": True}
 
 
 # ---------------- CRM EVENTS ---------------- #
 
+class BillingNodeDto(BaseModel):
+    provider_name: str
+    node_name: str
+    next_billing_at: datetime
+    login_url: str
+
+    model_config = {"alias_generator": to_camel, "populate_by_name": True}
+
+
 class CrmEventDto(BaseModel):
     event_name: TCRMEvents
-    data: dict
-    skip_telegram_notification: bool = False
+    data: BillingNodeDto
 
     model_config = {"alias_generator": to_camel, "populate_by_name": True}
 
@@ -230,15 +260,16 @@ class CrmEventDto(BaseModel):
 
 class WebhookPayloadDto(BaseModel):
     event: str
+    timestamp: datetime
     data: Union[
         UserDto,
-        NodesDto,
+        NodeDto,
         HwidUserDeviceDto,
         LoginAttemptDto,
         UserHwidDeviceEventDto,
+        BillingNodeDto,
         dict
     ]
-    timestamp: datetime
 
     model_config = {"alias_generator": to_camel, "populate_by_name": True}
 
@@ -250,19 +281,24 @@ class WebhookPayloadDto(BaseModel):
         if event.startswith("user."):
             data = UserDto(**data_raw)
         elif event.startswith("user_hwid_devices."):
-            data = HwidUserDeviceDto(**data_raw)
+            user = UserDto(**data_raw["user"])
+            hwid_device = HwidUserDeviceDto(**data_raw["hwidUserDevice"])
+            data = UserHwidDeviceEventDto.build(
+                user=user,
+                hwid_device=hwid_device,
+                event=event,
+            )
         elif event.startswith("node."):
-            data = NodesDto(**data_raw)
+            data = NodeDto(**data_raw)
         elif event.startswith("service."):
-            # может быть loginAttempt или другое
-            if "username" in data_raw and "ip" in data_raw:
+            if event.startswith("service.login_attempt"):
                 data = LoginAttemptDto(**data_raw)
-            else:
+            else: # service.panel_started - содержит пустой json
                 data = data_raw
         elif event.startswith("errors."):
-            data = data_raw
+            data = ErrorDto(**data_raw)
         elif event.startswith("crm."):
-            data = data_raw
+            data = BillingNodeDto(**data_raw)
         else:
             data = data_raw
 

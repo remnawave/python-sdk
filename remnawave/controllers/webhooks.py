@@ -6,7 +6,7 @@ from typing import Union, Optional
 from remnawave.models.webhook import (
     WebhookPayloadDto,
     UserDto,
-    NodesDto,
+    NodeDto,
     HwidUserDeviceDto,
     LoginAttemptDto,
     UserHwidDeviceEventDto,
@@ -148,7 +148,7 @@ class WebhookUtility:
         return event.startswith("errors.")
 
     @staticmethod
-    def get_typed_data(payload: WebhookPayloadDto) -> Union[UserDto, NodesDto, HwidUserDeviceDto, LoginAttemptDto, UserHwidDeviceEventDto, dict]:
+    def get_typed_data(payload: WebhookPayloadDto) -> Union[UserDto, NodeDto, HwidUserDeviceDto, LoginAttemptDto, UserHwidDeviceEventDto, dict]:
         """
         Get typed data from webhook payload based on event type.
         

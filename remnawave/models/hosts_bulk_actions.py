@@ -8,8 +8,14 @@ from remnawave.models import HostResponseDto
 
 class SetInboundToManyHostsRequestDto(BaseModel):
     uuids: List[UUID]
-    inbound_uuid: UUID = Field(serialization_alias="inboundUuid")
+    config_profile_uuid: UUID = Field(serialization_alias="configProfileUuid")
+    config_profile_inbound_uuid: UUID = Field(
+        serialization_alias="configProfileInboundUuid"
+    )
 
+class SetPortToManyHostsRequestDto(BaseModel):
+    uuids: List[UUID]
+    port: int = Field(ge=1, le=65535)
 
 class BulkDeleteHostsResponseDto(List[HostResponseDto]):
     pass

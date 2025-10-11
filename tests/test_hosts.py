@@ -123,7 +123,7 @@ class TestHostsCRUD:
         # Создаем новый объект для обновления
         update_data = UpdateHostRequestDto(
             uuid=test_host.uuid,
-            serverDescription="Updated Host",
+            server_description="Updated Host",
             is_disabled=False  # явно устанавливаем значение
         )
         

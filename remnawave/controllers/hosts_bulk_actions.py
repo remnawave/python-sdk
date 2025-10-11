@@ -10,6 +10,7 @@ from remnawave.models import (
     SetInboundToManyHostsRequestDto,
     SetInboundToManyHostsResponseDto,
     SetPortToManyHostsResponseDto,
+    SetPortToManyHostsRequestDto
 )
 from remnawave.rapid import AttributeBody, BaseController, post
 
@@ -53,8 +54,7 @@ class HostsBulkActionsController(BaseController):
     @post("/hosts/bulk/set-port", response_class=SetPortToManyHostsResponseDto)
     async def set_port_to_hosts(
         self,
-        uuids: Annotated[List[UUID], AttributeBody()],
-        port: Annotated[float, AttributeBody()],
+        body: Annotated[SetPortToManyHostsRequestDto, PydanticBody()],
     ) -> SetPortToManyHostsResponseDto:
         """Set port to many hosts"""
         ...

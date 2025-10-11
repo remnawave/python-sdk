@@ -63,6 +63,7 @@ from .hosts_bulk_actions import (
     SetInboundToManyHostsRequestDto,
     SetInboundToManyHostsResponseDto,
     SetPortToManyHostsResponseDto,
+    SetPortToManyHostsRequestDto
 )
 from .hwid import (
     CreateHWIDUser,  # Legacy alias
@@ -252,7 +253,7 @@ from .webhook import (
     InternalSquadDto,
     BaseUserDto,
     UserDto,
-    NodesDto,
+    NodeDto,
     ConfigProfileInboundDto,
     InfraProviderDto,
     LoginAttemptDto,
@@ -404,6 +405,7 @@ __all__ = [
     "SetInboundToManyHostsRequestDto",
     "SetInboundToManyHostsResponseDto",
     "SetPortToManyHostsResponseDto",
+    "SetPortToManyHostsRequestDto",
     # Users models
     "ActiveInternalSquadDto",
     "CreateUserRequestDto",
@@ -524,7 +526,7 @@ __all__ = [
     # NODE ENTITIES
     "ConfigProfileInboundDto",
     "InfraProviderDto",
-    "NodesDto",
+    "NodeDto",
     "NodeEventDto",
 
     # ERROR EVENTS

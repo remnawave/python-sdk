@@ -292,7 +292,8 @@ class WebhookPayloadDto(BaseModel):
             data = NodeDto(**data_raw)
         elif event.startswith("service."):
             if event.startswith("service.login_attempt"):
-                data = LoginAttemptDto(**data_raw)
+                login_attempt_data = data_raw.get("loginAttempt", {})
+                data = LoginAttemptDto(**login_attempt_data)
             else: # service.panel_started - содержит пустой json
                 data = data_raw
         elif event.startswith("errors."):

@@ -98,15 +98,18 @@ from .inbounds_bulk_actions import (
     RemoveInboundFromUsersResponseDto,
 )
 from .infra_billing import (
+    CreateInfraBillingHistoryRecordRequestDto,
+    CreateInfraBillingHistoryRecordResponseDto, 
     CreateInfraBillingNodeRequestDto,
     CreateInfraBillingNodeResponseDto,
     CreateInfraProviderRequestDto,
     CreateInfraProviderResponseDto,
-    DeleteInfraBillingNodeResponseDto,
-    DeleteInfraProviderResponseDto,
-    GetAllInfraBillingHistoryResponseDto,
-    GetAllInfraBillingNodesResponseDto,
-    GetAllInfraProvidersResponseDto,
+    DeleteInfraBillingHistoryRecordByUuidResponseDto,  
+    DeleteInfraBillingNodeByUuidResponseDto,  # ПЕРЕИМЕНОВАНА (было DeleteInfraBillingNodeResponseDto)
+    DeleteInfraProviderByUuidResponseDto,  # ПЕРЕИМЕНОВАНА (было DeleteInfraProviderResponseDto)
+    GetInfraBillingHistoryRecordsResponseDto,  # ПЕРЕИМЕНОВАНА (было GetAllInfraBillingHistoryResponseDto)
+    GetInfraBillingNodesResponseDto,  # ПЕРЕИМЕНОВАНА (было GetAllInfraBillingNodesResponseDto)
+    GetInfraProvidersResponseDto,  # ПЕРЕИМЕНОВАНА (было GetAllInfraProvidersResponseDto)
     GetInfraBillingHistoryByUuidResponseDto,
     GetInfraBillingNodeByUuidResponseDto,
     GetInfraProviderByUuidResponseDto,
@@ -118,6 +121,11 @@ from .infra_billing import (
     UpdateInfraBillingNodeResponseDto,
     UpdateInfraProviderRequestDto,
     UpdateInfraProviderResponseDto,
+    DeleteInfraBillingNodeResponseDto,  # LEGACY
+    DeleteInfraProviderResponseDto,  # LEGACY
+    GetAllInfraBillingHistoryResponseDto,  # LEGACY
+    GetAllInfraBillingNodesResponseDto,  # LEGACY
+    GetAllInfraProvidersResponseDto,  # LEGACY
 )
 from .internal_squads import (
     AddUsersToInternalSquadRequestDto,
@@ -459,15 +467,18 @@ __all__ = [
     "UpdateConfigProfileResponseDto",
     "GetAllConfigProfilesResponsePaginated",
     # Infra billing models
+    "CreateInfraBillingHistoryRecordRequestDto",
+    "CreateInfraBillingHistoryRecordResponseDto", 
     "CreateInfraBillingNodeRequestDto",
     "CreateInfraBillingNodeResponseDto",
     "CreateInfraProviderRequestDto",
-    "CreateInfraProviderResponseDto",
-    "DeleteInfraBillingNodeResponseDto",
-    "DeleteInfraProviderResponseDto",
-    "GetAllInfraBillingHistoryResponseDto",
-    "GetAllInfraBillingNodesResponseDto",
-    "GetAllInfraProvidersResponseDto",
+    "CreateInfraProviderResponseDto",   
+    "DeleteInfraBillingHistoryRecordByUuidResponseDto",  
+    "DeleteInfraBillingNodeByUuidResponseDto",  # ПЕРЕИМЕНОВАНА (было DeleteInfraBillingNodeResponseDto)
+    "DeleteInfraProviderByUuidResponseDto",  # ПЕРЕИМЕНОВАНА (было DeleteInfraProviderResponseDto)
+    "GetInfraBillingHistoryRecordsResponseDto",  # ПЕРЕИМЕНОВАНА (было GetAllInfraBillingHistoryResponseDto)
+    "GetInfraBillingNodesResponseDto",  # ПЕРЕИМЕНОВАНА (было GetAllInfraBillingNodesResponseDto)
+    "GetInfraProvidersResponseDto",  # ПЕРЕИМЕНОВАНА (было GetAllInfraProvidersResponseDto)
     "GetInfraBillingHistoryByUuidResponseDto",
     "GetInfraBillingNodeByUuidResponseDto",
     "GetInfraProviderByUuidResponseDto",
@@ -479,6 +490,11 @@ __all__ = [
     "UpdateInfraBillingNodeResponseDto",
     "UpdateInfraProviderRequestDto",
     "UpdateInfraProviderResponseDto",
+    "DeleteInfraBillingNodeResponseDto",  # LEGACY
+    "DeleteInfraProviderResponseDto",  # LEGACY
+    "GetAllInfraBillingHistoryResponseDto",  # LEGACY
+    "GetAllInfraBillingNodesResponseDto",  # LEGACY
+    "GetAllInfraProvidersResponseDto",  # LEGACY
     # Internal squads models
     "AddUsersToInternalSquadRequestDto",
     "AddUsersToInternalSquadResponseDto",

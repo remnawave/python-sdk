@@ -102,6 +102,14 @@ class UserHwidDeviceEventDto(BaseModel):
     @classmethod
     def build(cls, user: UserDto, hwid_device: HwidUserDeviceDto, event: TUserHwidDevicesEvents):
         return cls(data={"user": user, "hwidUserDevice": hwid_device}, event_name=event)
+    
+    @property
+    def user(self) -> UserDto:
+        return self.data["user"]
+
+    @property
+    def hwid_user_device(self) -> HwidUserDeviceDto:
+        return self.data["hwidUserDevice"]
 
 # ---------------- SERVICE EVENTS ---------------- #
 

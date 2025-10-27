@@ -29,7 +29,11 @@ from remnawave.controllers import (
     UsersStatsController,
     WebhookUtility,
     XrayConfigController,
-    SubscriptionRequestHistoryController
+    SubscriptionRequestHistoryController,
+    PasskeysController,
+    ExternalSquadsController,
+    SnippetsController,
+    RemnawaveSettingsController,
     # WebhookUtility is not a controller, but it's included in the controllers module for convenience
 )
     
@@ -93,6 +97,10 @@ class RemnawaveSDK:
         self.users_stats = UsersStatsController(self._client)
         self.webhook_utility = WebhookUtility()
         self.xray_config = XrayConfigController(self._client)
+        self.passkeys = PasskeysController(self._client)
+        self.external_squads = ExternalSquadsController(self._client)
+        self.snippets = SnippetsController(self._client)
+        self.remnawave_settings = RemnawaveSettingsController(self._client)
 
     def _validate_params(self) -> None:
         if self._client is None:

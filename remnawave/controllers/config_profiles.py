@@ -67,3 +67,12 @@ class ConfigProfilesController(BaseController):
     ) -> DeleteConfigProfileResponseDto:
         """Delete config profile"""
         ...
+
+    # Get computed config profile by uuid​
+    @get("/config-profiles/{uuid}/computed-config", response_class=GetConfigProfileByUuidResponseDto)
+    async def get_computed_config_profile_by_uuid(
+        self,
+        uuid: Annotated[str, Path(description="UUID of the config profile")],
+    ) -> GetConfigProfileByUuidResponseDto:
+        """Get computed config profile by uuid"""
+        ...

@@ -15,7 +15,7 @@ class SubscriptionRequestHistoryRecord(BaseModel):
 
 class SubscriptionRequestHistoryData(BaseModel):
     records: List[SubscriptionRequestHistoryRecord]
-    total: float
+    total: int
 
 
 class GetAllSubscriptionRequestHistoryResponseDto(SubscriptionRequestHistoryData):

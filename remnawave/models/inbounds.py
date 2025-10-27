@@ -17,7 +17,7 @@ class InboundResponseDto(BaseModel):
 
 
 class AllInboundsData(BaseModel):
-    total: float
+    total: int
     inbounds: List[InboundResponseDto]
 
 
@@ -26,7 +26,7 @@ class GetAllInboundsResponseDto(AllInboundsData):
 
 
 class InboundsByProfileData(BaseModel):
-    total: float
+    total: int
     inbounds: List[InboundResponseDto]
 
 

@@ -15,13 +15,17 @@ class InboundDto(BaseModel):
     port: Optional[int] = None
     raw_inbound: Optional[Any] = Field(None, alias="rawInbound")
 
+class NodesProfileDto(BaseModel):
+    uuid: UUID
+    name: str
+    country_code: str = Field(alias="countryCode")
 
 class ConfigProfileDto(BaseModel):
     uuid: UUID
     name: str
     config: Dict[str, Any]
     inbounds: List[InboundDto]
-    nodes: List[Any] = []  # Can be empty list
+    nodes: List[NodesProfileDto] = []
     created_at: datetime = Field(alias="createdAt")
     updated_at: datetime = Field(alias="updatedAt")
 

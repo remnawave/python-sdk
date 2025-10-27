@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import List, Dict, Any
 from uuid import UUID
 
@@ -18,11 +19,13 @@ class GetUserAccessibleNodesResponseDto(GetUserAccessibleNodesResponse):
 
 
 class NodeUsageDto(BaseModel):
-    date: str
-    upload: int
-    download: int
+    """Individual node usage item"""
+    node_uuid: UUID = Field(alias="nodeUuid")
+    date: datetime
+    upload: int = Field(0, alias="totalBytes")  
+    download: int = Field(0, alias="totalBytes") 
 
-
+    
 class GetNodesUsageByRangeResponseDto(RootModel[List[NodeUsageDto]]):
     def __iter__(self):
         return iter(self.root)

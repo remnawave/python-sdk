@@ -6,6 +6,13 @@ from remnawave.models import (
     GetStatusResponseDto,
     LoginRequestDto,
     LoginResponseDto,
+    OAuth2AuthorizeRequestDto,
+    OAuth2AuthorizeResponseDto,
+    OAuth2CallbackRequestDto,
+    OAuth2CallbackResponseDto,
+    VerifyPasskeyAuthenticationRequestDto,
+    VerifyPasskeyAuthenticationResponseDto,
+    GetPasskeyAuthenticationOptionsResponseDto,
     RegisterRequestDto,
     RegisterResponseDto,
     TelegramCallbackRequestDto,
@@ -44,4 +51,35 @@ class AuthController(BaseController):
         body: Annotated[TelegramCallbackRequestDto, PydanticBody()],
     ) -> TelegramCallbackResponseDto:
         """OAuth2 Telegram callback"""
+        ...
+
+    @post("/auth/oauth2/authorize", response_class=OAuth2AuthorizeResponseDto)
+    async def oauth2_authorize(
+        self,
+        body: Annotated[OAuth2AuthorizeRequestDto, PydanticBody()],
+    ) -> OAuth2AuthorizeResponseDto:
+        """Initiate OAuth2 authorization"""
+        ...
+
+    @post("/auth/oauth2/callback", response_class=OAuth2CallbackResponseDto)
+    async def oauth2_callback(
+        self,
+        body: Annotated[OAuth2CallbackRequestDto, PydanticBody()],
+    ) -> OAuth2CallbackResponseDto:
+        """Callback from OAuth2"""
+        ...
+
+    @get("/auth/passkey/authentication/options", response_class=GetPasskeyAuthenticationOptionsResponseDto)
+    async def passkey_authentication_options(
+        self,
+    ) -> GetPasskeyAuthenticationOptionsResponseDto:
+        """Get the authentication options for passkey"""
+        ...
+
+    @post("/auth/passkey/authentication/verify", response_class=VerifyPasskeyAuthenticationResponseDto)
+    async def passkey_authentication_verify(
+        self,
+        body: Annotated[VerifyPasskeyAuthenticationRequestDto, PydanticBody()],
+    ) -> VerifyPasskeyAuthenticationResponseDto:
+        """Verify the authentication for passkey"""
         ...

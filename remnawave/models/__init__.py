@@ -14,6 +14,13 @@ from .auth import (
     TelegramCallbackRequestDto,
     TelegramCallbackResponseDto,
     LoginTelegramRequestDto,  # Legacy alias
+    OAuth2AuthorizeRequestDto,
+    OAuth2AuthorizeResponseDto,
+    OAuth2CallbackRequestDto,
+    OAuth2CallbackResponseDto,
+    VerifyPasskeyAuthenticationRequestDto,
+    VerifyPasskeyAuthenticationResponseDto,
+    GetPasskeyAuthenticationOptionsResponseDto,
 )
 from .bandwidthstats import (
     GetNodeUserUsageByRangeResponseDto,
@@ -36,6 +43,7 @@ from .config_profiles import (
     GetConfigProfileByUuidResponseDto,
     GetInboundsByProfileUuidResponseDto,
     InboundDto,
+    NodesProfileDto,
     UpdateConfigProfileRequestDto,
     UpdateConfigProfileResponseDto,
 )
@@ -162,7 +170,8 @@ from .nodes import (
     RestartNodeResponseDto,
     UpdateNodeRequestDto,
     UpdateNodeResponseDto,
-    RestartAllNodesRequestDto,
+    RestartAllNodesRequestDto, # Legacy alias,
+    RestartAllNodesRequestBodyDto,
 )
 from .nodes_usage_history import (
     GetNodeUserUsageByRangeResponseDto,
@@ -184,11 +193,21 @@ from .subscription import (
 )
 from .subscriptions_settings import (
     GetSubscriptionSettingsResponseDto,
+    ResponseModificationHeader,
+    ResponseModifications,
+    ResponseRule,
+    ResponseRuleCondition,
+    ResponseRules,
     SubscriptionSettingsResponseDto,
     UpdateSubscriptionSettingsRequestDto,
     UpdateSubscriptionSettingsResponseDto,
 )
 from .subscriptions_template import (
+    CreateSubscriptionTemplateRequestDto,
+    CreateSubscriptionTemplateResponseDto,
+    DeleteSubscriptionTemplateResponseDto,
+    GetTemplatesResponseDto,
+    TemplateInfoDto,
     GetTemplateResponseDto,
     TemplateResponseDto,
     UpdateTemplateRequestDto,
@@ -212,6 +231,10 @@ from .system import (
     GetNodesMetricsResponseDto,
     GetX25519KeyPairResponseDto, 
     X25519KeyPair,
+    DebugSrrMatcherRequestDto,
+    DebugSrrMatcherResponseDto,
+    EncryptHappCryptoLinkRequestDto,
+    EncryptHappCryptoLinkResponseDto,
 )
 from .users import (
     ActiveInternalSquadDto,
@@ -271,6 +294,56 @@ from .webhook import (
     CrmEventDto,
     WebhookPayloadDto,
 )
+from .passkeys import (
+    DeletePasskeyRequestDto,
+    DeletePasskeyResponseDto,
+    GetAllPasskeysResponseDto,
+    GetPasskeyRegistrationOptionsResponseDto,
+    PasskeyDto,
+    VerifyPasskeyRegistrationRequestDto,
+    VerifyPasskeyRegistrationResponseDto,
+)
+from .external_squads import (
+    AddUsersToExternalSquadResponseDto,
+    CreateExternalSquadRequestDto,
+    CreateExternalSquadResponseDto,
+    DeleteExternalSquadResponseDto,
+    ExternalSquadDto,
+    ExternalSquadInfoDto,
+    ExternalSquadSubscriptionSettingsDto,
+    ExternalSquadTemplateDto,
+    GetExternalSquadByUuidResponseDto,
+    GetExternalSquadsResponseDto,
+    RemoveUsersFromExternalSquadResponseDto,
+    TemplateType,
+    UpdateExternalSquadRequestDto,
+    UpdateExternalSquadResponseDto,
+)
+from .snippets import (
+    CreateSnippetRequestDto,
+    CreateSnippetResponseDto,
+    DeleteSnippetRequestDto,
+    DeleteSnippetResponseDto,
+    GetSnippetsResponseDto,
+    SnippetItem,
+    SnippetsData,
+    UpdateSnippetRequestDto,
+    UpdateSnippetResponseDto,
+)
+from .remnawave_settings import (
+    BrandingSettings,
+    GetRemnawaveSettingsResponseDto,
+    GitHubOAuth2Settings,
+    OAuth2Settings,
+    PasskeySettings,
+    PasswordSettings,
+    PocketIdOAuth2Settings,
+    RemnawaveSettingsData,
+    TelegramAuthSettings,
+    UpdateRemnawaveSettingsRequestDto,
+    UpdateRemnawaveSettingsResponseDto,
+    YandexOAuth2Settings,
+)
 
 __all__ = [
     # Auth models
@@ -283,6 +356,13 @@ __all__ = [
     "TelegramCallbackRequestDto",
     "TelegramCallbackResponseDto",
     "LoginTelegramRequestDto",  # Legacy alias
+    "OAuth2AuthorizeRequestDto",
+    "OAuth2AuthorizeResponseDto",
+    "OAuth2CallbackRequestDto",
+    "OAuth2CallbackResponseDto",
+    "VerifyPasskeyAuthenticationRequestDto",
+    "VerifyPasskeyAuthenticationResponseDto",
+    "GetPasskeyAuthenticationOptionsResponseDto",
     # Nodes models
     "CreateNodeRequestDto",
     "CreateNodeResponseDto",
@@ -302,7 +382,8 @@ __all__ = [
     "UpdateNodeResponseDto",
     "NodeConfigProfileDto",
     "NodeConfigProfileRequestDto",
-    "RestartAllNodesRequestDto",
+    "RestartAllNodesRequestDto",  # Legacy alias
+    "RestartAllNodesRequestBodyDto",
     # Hosts models
     "CreateHostRequestDto",
     "CreateHostResponseDto",
@@ -347,11 +428,21 @@ __all__ = [
     "SubscriptionSettingsResponseDto",
     "UpdateSubscriptionSettingsRequestDto",
     "UpdateSubscriptionSettingsResponseDto",
+    "ResponseModificationHeader",
+    "ResponseModifications",
+    "ResponseRule",
+    "ResponseRuleCondition",
+    "ResponseRules",
     # Subscription template models
     "GetTemplateResponseDto",
     "TemplateResponseDto",
     "UpdateTemplateRequestDto",
     "UpdateTemplateResponseDto",
+    "CreateSubscriptionTemplateRequestDto",
+    "CreateSubscriptionTemplateResponseDto",
+    "DeleteSubscriptionTemplateResponseDto",
+    "GetTemplatesResponseDto",
+    "TemplateInfoDto",
     # System models
     "BandwidthStatistic",
     "BandwidthStatisticResponseDto",
@@ -370,6 +461,10 @@ __all__ = [
     "GetNodesMetricsResponseDto",
     "GetX25519KeyPairResponseDto",
     "X25519KeyPair",
+    "DebugSrrMatcherRequestDto",
+    "DebugSrrMatcherResponseDto",
+    "EncryptHappCryptoLinkRequestDto",
+    "EncryptHappCryptoLinkResponseDto",
     # XRay config models
     "ConfigResponseDto",  # Legacy alias
     "GetConfigResponseDto",
@@ -463,6 +558,7 @@ __all__ = [
     "GetConfigProfileByUuidResponseDto",
     "GetInboundsByProfileUuidResponseDto",
     "InboundDto",
+    "NodesProfileDto",
     "UpdateConfigProfileRequestDto",
     "UpdateConfigProfileResponseDto",
     "GetAllConfigProfilesResponsePaginated",
@@ -553,4 +649,56 @@ __all__ = [
 
     # WEBHOOK PAYLOAD
     "WebhookPayloadDto",
+    
+    # Passkeys models
+    "DeletePasskeyRequestDto",
+    "DeletePasskeyResponseDto",
+    "GetAllPasskeysResponseDto",
+    "GetPasskeyRegistrationOptionsResponseDto",
+    "PasskeyDto",
+    "VerifyPasskeyRegistrationRequestDto",
+    "VerifyPasskeyRegistrationResponseDto",
+    
+    # External squads models
+    "AddUsersToExternalSquadResponseDto",
+    "CreateExternalSquadRequestDto",
+    "CreateExternalSquadResponseDto",
+    "DeleteExternalSquadResponseDto",
+    "ExternalSquadDto",
+    "ExternalSquadInfoDto",
+    "ExternalSquadSubscriptionSettingsDto",
+    "ExternalSquadTemplateDto",
+    "GetExternalSquadByUuidResponseDto",
+    "GetExternalSquadsResponseDto",
+    "RemoveUsersFromExternalSquadResponseDto",
+    "TemplateType",
+    "UpdateExternalSquadRequestDto",
+    "UpdateExternalSquadResponseDto",
+    
+    # Snippets models
+
+    "CreateSnippetRequestDto",
+    "CreateSnippetResponseDto",
+    "DeleteSnippetRequestDto",
+    "DeleteSnippetResponseDto",
+    "GetSnippetsResponseDto",
+    "SnippetItem",
+    "SnippetsData",
+    "UpdateSnippetRequestDto",
+    "UpdateSnippetResponseDto",
+    
+    # Remnawave settings models
+    
+    "BrandingSettings",
+    "GetRemnawaveSettingsResponseDto",
+    "GitHubOAuth2Settings",
+    "OAuth2Settings",
+    "PasskeySettings",
+    "PasswordSettings",
+    "PocketIdOAuth2Settings",
+    "RemnawaveSettingsData",
+    "TelegramAuthSettings",
+    "UpdateRemnawaveSettingsRequestDto",
+    "UpdateRemnawaveSettingsResponseDto",
+    "YandexOAuth2Settings",
 ]

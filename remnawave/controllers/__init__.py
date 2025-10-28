@@ -23,6 +23,11 @@ from .users_stats import UsersStatsController
 from .webhooks import WebhookUtility
 from .xray_config import XrayConfigController
 from .subscriptions_request import SubscriptionRequestHistoryController
+from .passkeys import PasskeysController
+from .external_squads import ExternalSquadsController
+from .snippets import SnippetsController
+from .remnawave_settings import RemnawaveSettingsController
+
 
 __all__ = [
     "APITokensManagementController",
@@ -51,4 +56,8 @@ __all__ = [
     "WebhookUtility",
     "XrayConfigController",
     "SubscriptionRequestHistoryController",
+    "PasskeysController",
+    "ExternalSquadsController",
+    "SnippetsController",
+    "RemnawaveSettingsController",
 ]

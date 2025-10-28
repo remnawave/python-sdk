@@ -87,3 +87,15 @@ class UsersBulkActionsController(BaseController):
     ) -> BulkAllResetTrafficUsersResponseDto:
         """Bulk Reset All Users Traffic"""
         ...
+
+    @post(
+        "/users/bulk/update-squads",
+        response_class=BulkResponseDto,
+    ) 
+    async def bulk_update_users_internal_squad(
+        self,
+        uuids: Annotated[List[UUID], AttributeBody()],
+        active_internal_squads: Annotated[List[UUID], AttributeBody(serialization_alias="activeInternalSquads")],
+    ) -> BulkResponseDto:
+        """Bulk Update Users External Squad"""
+        ...

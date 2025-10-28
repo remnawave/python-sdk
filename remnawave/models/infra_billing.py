@@ -102,7 +102,7 @@ class UpdateInfraProviderResponseDto(InfraProviderDto):
 
 
 class AllInfraProvidersData(BaseModel):
-    total: float = Field(alias="total")
+    total: int = Field(alias="total")
     providers: List[InfraProviderDto]
 
 

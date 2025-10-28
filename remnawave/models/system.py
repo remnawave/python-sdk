@@ -1,7 +1,10 @@
 import datetime
-from typing import List
+from typing import Dict, List, Optional
 
 from pydantic import BaseModel, Field
+
+from remnawave.enums import ResponseType
+from remnawave.models.subscriptions_settings import ResponseRule, ResponseRules
 
 
 class NodeStatistic(BaseModel):
@@ -105,26 +108,60 @@ class GetRemnawaveHealthResponseDto(BaseModel):
     pm2_stats: List[PM2Stat] = Field(alias="pm2Stats")
 
 
+
 class NodeMetric(BaseModel):
-    uuid: str
-    name: str
-    address: str
-    is_online: bool = Field(alias="isOnline")
-    cpu_usage: float = Field(alias="cpuUsage")
-    memory_usage: float = Field(alias="memoryUsage")
-    network_upload: int = Field(alias="networkUpload")
-    network_download: int = Field(alias="networkDownload")
-    uptime: int
-    last_seen: datetime.datetime = Field(alias="lastSeen")
-    connected_users: int = Field(alias="connectedUsers")
+    """Node metric data"""
+    uuid: str = Field(alias="nodeUuid")
+    name: Optional[str] = None
+    address: Optional[str] = None
+    is_online: Optional[bool] = Field(None, alias="isOnline")
+    cpu_usage: Optional[float] = Field(None, alias="cpuUsage")
+    memory_usage: Optional[float] = Field(None, alias="memoryUsage")
+    network_upload: Optional[int] = Field(None, alias="networkUpload")
+    network_download: Optional[int] = Field(None, alias="networkDownload")
+    uptime: Optional[int] = None
+    last_seen: Optional[datetime.datetime] = Field(None, alias="lastSeen")
+    connected_users: Optional[int] = Field(None, alias="connectedUsers")
+    upload: Optional[str] = None
+    download: Optional[str] = None
 
 
 class GetNodesMetricsResponseDto(BaseModel):
     nodes: List[NodeMetric]
 
+
 class X25519KeyPair(BaseModel):
     public_key: str = Field(alias="publicKey")
     private_key: str = Field(alias="privateKey")
 
+
 class GetX25519KeyPairResponseDto(BaseModel):
     key_pairs: List[X25519KeyPair] = Field(alias="keyPairs")
+
+
+class EncryptHappCryptoLinkRequestDto(BaseModel):
+    link_to_encrypt: str = Field(serialization_alias="linkToEncrypt")
+
+
+class EncryptHappCryptoLinkData(BaseModel):
+    encrypted_link: str = Field(alias="encryptedLink")
+
+
+class EncryptHappCryptoLinkResponseDto(BaseModel):
+    response: EncryptHappCryptoLinkData
+
+
+class DebugSrrMatcherRequestDto(BaseModel):
+    response_rules: ResponseRules = Field(serialization_alias="responseRules")
+
+
+class DebugSrrMatcherData(BaseModel):
+    matched: bool
+    response_type: ResponseType = Field(alias="responseType")
+    matched_rule: Optional[ResponseRule] = Field(alias="matchedRule")
+    input_headers: Dict[str, str] = Field(alias="inputHeaders")
+    output_headers: Dict[str, str] = Field(alias="outputHeaders")
+
+
+class DebugSrrMatcherResponseDto(BaseModel):
+    response: DebugSrrMatcherData

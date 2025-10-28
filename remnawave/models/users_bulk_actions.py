@@ -33,6 +33,13 @@ class UpdateUserFields(BaseModel):
     )
     telegram_id: Optional[int] = Field(None, serialization_alias="telegramId")
     email: Optional[str] = None
+    hwid_device_limit: Optional[int] = Field(
+        None, serialization_alias="hwidDeviceLimit", strict=True, ge=0
+    )
+    telegram_id: Optional[int] = Field(
+        None, serialization_alias="telegramId"
+    )
+    
 
 
 class BulkAllUpdateUsersRequestDto(BaseModel):
@@ -64,6 +71,10 @@ class BulkAllUpdateUsersRequestDto(BaseModel):
     telegram_id: Optional[int] = Field(
         None,
         serialization_alias="telegramId"
+    )
+
+    hwid_device_limit: Optional[int] = Field(
+        None, serialization_alias="hwidDeviceLimit", strict=True, ge=0
     )
 
     email: Optional[str] = None

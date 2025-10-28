@@ -8,7 +8,7 @@ from pydantic import BaseModel, Field, RootModel
 class NodeUsageResponseDto(BaseModel):
     node_uuid: UUID = Field(alias="nodeUuid")
     node_name: str = Field(alias="nodeName")
-    total: float
+    total: int
     total_download: float = Field(alias="totalDownload")
     total_upload: float = Field(alias="totalUpload")
     human_readable_total: str = Field(alias="humanReadableTotal")
@@ -65,7 +65,7 @@ class UserUsageByRangeItem(BaseModel):
     user_uuid: UUID = Field(alias="userUuid")
     node_uuid: UUID = Field(alias="nodeUuid")
     node_name: str = Field(alias="nodeName")
-    total: float
+    total: int
     date: str
 
 
@@ -81,7 +81,7 @@ class NodeUserUsageItem(BaseModel):
     user_uuid: UUID = Field(alias="userUuid")
     username: str
     node_uuid: UUID = Field(alias="nodeUuid")
-    total: float
+    total: int
     date: str
 
 

@@ -185,7 +185,7 @@ class SubscriptionWithoutHapp(BaseModel):
 
 class GetAllSubscriptionsResponseDto(BaseModel):
     subscriptions: List[SubscriptionWithoutHapp]
-    total: float
+    total: int
 
 
 class GetSubscriptionByUsernameResponseDto(BaseModel):

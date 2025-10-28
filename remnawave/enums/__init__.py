@@ -8,7 +8,16 @@ from .users import TrafficLimitStrategy, UserStatus
 from .webhook import (
     TCRMEvents, TErrorsEvents, TNodeEvents, TResetPeriods, TServiceEvents, TUserEvents, TUserHwidDevicesEvents, TUsersStatus
 )
+from .auth import OAuth2Provider
+from .subscriptions_settings import (
+    ResponseRuleConditionOperator,
+    ResponseRuleOperator,
+    ResponseRuleVersion,
+    ResponseType,
+)
+
 __all__ = [
+    "OAuth2Provider",
     "TrafficLimitStrategy",
     "UserStatus",
     "ErrorCode",
@@ -17,6 +26,10 @@ __all__ = [
     "Fingerprint",
     "SecurityLayer",
     "TemplateType",
+    "ResponseRuleConditionOperator",
+    "ResponseRuleOperator",
+    "ResponseRuleVersion",
+    "ResponseType",
     # Webhook enums
     "TNodeEvents",
     "TUserEvents",

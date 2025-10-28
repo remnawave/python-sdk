@@ -17,7 +17,7 @@ from remnawave.models import (
     RestartNodeResponseDto,
     UpdateNodeRequestDto,
     UpdateNodeResponseDto,
-    RestartAllNodesRequestDto,
+    RestartAllNodesRequestBodyDto, 
 )
 from remnawave.rapid import BaseController, delete, get, patch, post
 
@@ -89,7 +89,7 @@ class NodesController(BaseController):
     @post("/nodes/actions/restart-all", response_class=RestartAllNodesResponseDto)
     async def restart_all_nodes(
         self,
-        body: Annotated[RestartAllNodesRequestDto, PydanticBody()],
+        body: Annotated[RestartAllNodesRequestBodyDto, PydanticBody()],
     ) -> RestartAllNodesResponseDto:
         """Restart All Nodes"""
         ...

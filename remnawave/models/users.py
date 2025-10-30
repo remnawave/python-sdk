@@ -74,9 +74,6 @@ class CreateUserRequestDto(BaseModel):
 
 class UpdateUserRequestDto(BaseModel):
     uuid: UUID
-    active_internal_squads: list[str] | None = Field(
-        None, serialization_alias="activeInternalSquads"
-    )
     description: str | None = None
     email: str | None = None
     expire_at: datetime | None = Field(None, serialization_alias="expireAt")
@@ -92,6 +89,10 @@ class UpdateUserRequestDto(BaseModel):
     traffic_limit_strategy: TrafficLimitStrategy | None = Field(
         None, serialization_alias="trafficLimitStrategy"
     )
+    active_internal_squads: list[str] | None = Field(
+        None, serialization_alias="activeInternalSquads"
+    )
+    external_squad_uuid: UUID | None = Field(None, alias="externalSquadUuid")
 
 
 class UserResponseDto(BaseModel):

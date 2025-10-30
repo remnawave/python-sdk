@@ -65,7 +65,7 @@ class CreateUserRequestDto(BaseModel):
     hwidDeviceLimit: int | None = Field(
         None, serialization_alias="hwidDeviceLimit", strict=True, ge=0
     )
-    active_internal_squads: list[str] | None = Field(
+    active_internal_squads: list[UUID] | None = Field(
         None, serialization_alias="activeInternalSquads"
     )
     external_squad_uuid: UUID | None = Field(None, alias="externalSquadUuid")
@@ -89,7 +89,7 @@ class UpdateUserRequestDto(BaseModel):
     traffic_limit_strategy: TrafficLimitStrategy | None = Field(
         None, serialization_alias="trafficLimitStrategy"
     )
-    active_internal_squads: list[str] | None = Field(
+    active_internal_squads: list[UUID] | None = Field(
         None, serialization_alias="activeInternalSquads"
     )
     external_squad_uuid: UUID | None = Field(None, alias="externalSquadUuid")

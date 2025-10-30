@@ -62,7 +62,7 @@ class CreateUserRequestDto(BaseModel):
     tag: str | None = None
     telegram_id: int | None = Field(None, serialization_alias="telegramId")
     email: str | None = None
-    hwidDeviceLimit: int | None = Field(
+    hwid_device_limit: int | None = Field(
         None, serialization_alias="hwidDeviceLimit", strict=True, ge=0
     )
     active_internal_squads: list[UUID] | None = Field(
@@ -77,7 +77,7 @@ class UpdateUserRequestDto(BaseModel):
     description: str | None = None
     email: str | None = None
     expire_at: datetime | None = Field(None, serialization_alias="expireAt")
-    hwidDeviceLimit: int | None = Field(
+    hwid_device_limit: int | None = Field(
         None, serialization_alias="hwidDeviceLimit", strict=True, ge=0
     )
     status: UserStatus | None = None
@@ -116,7 +116,7 @@ class UserResponseDto(BaseModel):
     description: str | None = None
     telegram_id: int | None = Field(None, alias="telegramId")
     email: str | None = None
-    hwidDeviceLimit: int | None = Field(
+    hwid_device_limit: int | None = Field(
         None, serialization_alias="hwidDeviceLimit", strict=True, ge=0
     )
     active_internal_squads: list[ActiveInternalSquadDto] | None = Field(

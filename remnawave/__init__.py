@@ -137,6 +137,10 @@ class RemnawaveSDK:
         if self.custom_headers:
             headers.update(self.custom_headers)
 
+        if "http://" in self.base_url:
+            headers["x-forwarded-proto"] = "https"
+            headers["x-forwarded-for"] = "127.0.0.1"
+
         return headers
 
     def _prepare_url(self) -> str:

@@ -1,6 +1,6 @@
 from datetime import datetime
 from enum import StrEnum
-from typing import List, Optional
+from typing import Dict, List, Optional
 from uuid import UUID
 
 from pydantic import BaseModel, Field
@@ -41,22 +41,30 @@ class ExternalSquadSubscriptionSettingsDto(BaseModel):
     randomize_hosts: bool = Field(alias="randomizeHosts")
 
 
+# НОВЫЕ МОДЕЛИ
+class ExternalSquadHostOverridesDto(BaseModel):
+    """External squad host overrides"""
+    server_description: Optional[str] = Field(None, alias="serverDescription", max_length=30)
+    vless_route_id: Optional[int] = Field(None, alias="vlessRouteId", ge=0, le=65535)
+
+
 class ExternalSquadDto(BaseModel):
     """External squad data model"""
     uuid: UUID
     name: str
     info: ExternalSquadInfoDto
     templates: List[ExternalSquadTemplateDto]
-    subscription_settings: Optional[ExternalSquadSubscriptionSettingsDto] = Field(alias="subscriptionSettings")
+    subscription_settings: Optional[ExternalSquadSubscriptionSettingsDto] = Field(None, alias="subscriptionSettings")
+    host_overrides: Optional[ExternalSquadHostOverridesDto] = Field(None, alias="hostOverrides")
+    response_headers: Optional[Dict[str, str]] = Field(None, alias="responseHeaders")
     created_at: datetime = Field(alias="createdAt")
     updated_at: datetime = Field(alias="updatedAt")
 
 
 # Request/Response models
-class GetExternalSquadsResponseDto(BaseModel):
+class GetExternalSquadsResponseDto(ExternalSquadDto):
     """Response with all external squads"""
-    total: float
-    external_squads: List[ExternalSquadDto] = Field(alias="externalSquads")
+    pass
 
 
 class GetExternalSquadByUuidResponseDto(ExternalSquadDto):
@@ -80,6 +88,8 @@ class UpdateExternalSquadRequestDto(BaseModel):
     name: Optional[str] = Field(None, min_length=2, max_length=30, pattern=r"^[A-Za-z0-9_\s-]+$")
     templates: Optional[List[ExternalSquadTemplateDto]] = None
     subscription_settings: Optional[ExternalSquadSubscriptionSettingsDto] = Field(None, serialization_alias="subscriptionSettings")
+    host_overrides: Optional[ExternalSquadHostOverridesDto] = Field(None, serialization_alias="hostOverrides")
+    response_headers: Optional[Dict[str, str]] = Field(None, serialization_alias="responseHeaders")
 
 
 class UpdateExternalSquadResponseDto(ExternalSquadDto):

@@ -134,9 +134,6 @@ class UserResponseDto(BaseModel):
     external_squad_uuid: UUID | None = Field(None, alias="externalSquadUuid")
     created_at: datetime = Field(alias="createdAt")
     updated_at: datetime = Field(alias="updatedAt")
-    
-    model_config = {"alias_generator": to_camel, "populate_by_name": True}
-
 
 class EmailUserResponseDto(RootModel[list[UserResponseDto]]):
     def __iter__(self):

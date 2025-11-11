@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Annotated, List, Optional
+from typing import Annotated, List, Optional, Union
 from uuid import UUID
 
 from pydantic import BaseModel, Field, StringConstraints, RootModel
@@ -208,7 +208,12 @@ class DeleteNodeResponseDto(BaseModel):
 
 class RestartAllNodesRequestBodyDto(BaseModel):
     force_restart: bool = Field(default=False, alias="forceRestart")
+    
+class ResetNodeTrafficRequestDto(BaseModel):
+    uuid: Union[str, UUID] = Field(alias="uuid")
 
+class ResetNodeTrafficResponseDto(RestartEventResponse):
+    pass
 
 # Для обратной совместимости
 RestartAllNodesRequestDto = RestartAllNodesRequestBodyDto

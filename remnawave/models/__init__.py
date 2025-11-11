@@ -172,6 +172,8 @@ from .nodes import (
     UpdateNodeResponseDto,
     RestartAllNodesRequestDto, # Legacy alias,
     RestartAllNodesRequestBodyDto,
+    ResetNodeTrafficRequestDto,
+    ResetNodeTrafficResponseDto
 )
 from .nodes_usage_history import (
     GetNodeUserUsageByRangeResponseDto,
@@ -384,6 +386,8 @@ __all__ = [
     "NodeConfigProfileRequestDto",
     "RestartAllNodesRequestDto",  # Legacy alias
     "RestartAllNodesRequestBodyDto",
+    "ResetNodeTrafficRequestDto",
+    "ResetNodeTrafficResponseDto",
     # Hosts models
     "CreateHostRequestDto",
     "CreateHostResponseDto",

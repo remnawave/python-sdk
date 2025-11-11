@@ -18,6 +18,8 @@ from remnawave.models import (
     UpdateNodeRequestDto,
     UpdateNodeResponseDto,
     RestartAllNodesRequestBodyDto, 
+    ResetNodeTrafficRequestDto,
+    ResetNodeTrafficResponseDto
 )
 from remnawave.rapid import BaseController, delete, get, patch, post
 
@@ -100,4 +102,12 @@ class NodesController(BaseController):
         body: Annotated[ReorderNodeRequestDto, PydanticBody()],
     ) -> ReorderNodeResponseDto:
         """Reorder Nodes"""
+        ...
+        
+    @post("/nodes/actions/reset-traffic", response_class=ResetNodeTrafficResponseDto)
+    async def reset_traffic_all_nodes(
+        self,
+        body: Annotated[ResetNodeTrafficRequestDto, PydanticBody()],
+    ) -> ResetNodeTrafficResponseDto:
+        """Reset Traffic All Nodes"""
         ...

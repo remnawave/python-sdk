@@ -63,7 +63,8 @@ pip install git+https://github.com/remnawave/python-sdk.git@development
 
 | Contract Version | Remnawave Panel Version |
 | ---------------- | ----------------------- |
-| 2.2.13           | >=2.2.0                 |
+| 2.2.6            | >=2.2.6                 |
+| 2.2.3            | >=2.2.13                |
 | 2.1.19           | >=2.1.19, <2.2.0        |
 | 2.1.18           | >=2.1.18                |
 | 2.1.17           | >=2.1.16, <=2.1.17      |

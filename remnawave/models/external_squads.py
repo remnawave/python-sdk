@@ -64,7 +64,8 @@ class ExternalSquadDto(BaseModel):
 # Request/Response models
 class GetExternalSquadsResponseDto(ExternalSquadDto):
     """Response with all external squads"""
-    pass
+    total: int = Field(alias="total")
+    external_squads: List[ExternalSquadDto] = Field(alias="externalSquads")
 
 
 class GetExternalSquadByUuidResponseDto(ExternalSquadDto):

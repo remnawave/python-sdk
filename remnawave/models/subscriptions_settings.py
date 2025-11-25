@@ -55,29 +55,44 @@ class ResponseRules(BaseModel):
     rules: List[ResponseRule]
 
 
+class CustomRemarks(BaseModel):
+    """Custom remarks for different user states"""
+    expired_users: List[str] = Field(alias="expiredUsers", min_length=1)
+    limited_users: List[str] = Field(alias="limitedUsers", min_length=1)
+    disabled_users: List[str] = Field(alias="disabledUsers", min_length=1)
+    empty_hosts: List[str] = Field(alias="emptyHosts", min_length=1)
+    empty_internal_squads: List[str] = Field(alias="emptyInternalSquads", min_length=1)
+
+
+class HwidSettings(BaseModel):
+    """HWID (Hardware ID) settings"""
+    enabled: bool
+    fallback_device_limit: int = Field(alias="fallbackDeviceLimit")
+    max_devices_announce: Optional[Annotated[str, StringConstraints(max_length=200)]] = Field(
+        None, alias="maxDevicesAnnounce"
+    )
+
 class SubscriptionSettingsResponseDto(BaseModel):
+    """Subscription settings response data"""
     uuid: UUID
     profile_title: str = Field(alias="profileTitle")
     support_link: str = Field(alias="supportLink")
-    profile_update_interval: int = Field(
-        alias="profileUpdateInterval", strict=True, ge=1
-    )
+    profile_update_interval: int = Field(alias="profileUpdateInterval", ge=1)
     is_profile_webpage_url_enabled: bool = Field(alias="isProfileWebpageUrlEnabled")
     serve_json_at_base_subscription: bool = Field(alias="serveJsonAtBaseSubscription")
-    add_username_to_base_subscription: bool = Field(
-        alias="addUsernameToBaseSubscription"
-    )
+    add_username_to_base_subscription: bool = Field(alias="addUsernameToBaseSubscription")
     show_custom_remarks: bool = Field(alias="isShowCustomRemarks")
+    
+    custom_remarks: CustomRemarks = Field(alias="customRemarks")
+    
     happ_announce: Optional[str] = Field(None, alias="happAnnounce")
     happ_routing: Optional[str] = Field(None, alias="happRouting")
-    expired_users_remarks: List[str] = Field(alias="expiredUsersRemarks")
-    limited_users_remarks: List[str] = Field(alias="limitedUsersRemarks")
-    disabled_users_remarks: List[str] = Field(alias="disabledUsersRemarks")
-    custom_response_headers: Optional[Dict[str, str]] = Field(
-        None, alias="customResponseHeaders"
-    )
+    custom_response_headers: Optional[Dict[str, str]] = Field(None, alias="customResponseHeaders")
     randomize_hosts: bool = Field(alias="randomizeHosts")
     response_rules: Optional[ResponseRules] = Field(None, alias="responseRules")
+    
+    hwid_settings: Optional[HwidSettings] = Field(None, alias="hwidSettings")
+    
     created_at: datetime = Field(alias="createdAt")
     updated_at: datetime = Field(alias="updatedAt")
 
@@ -91,39 +106,32 @@ class UpdateSubscriptionSettingsResponseDto(SubscriptionSettingsResponseDto):
 
 
 class UpdateSubscriptionSettingsRequestDto(BaseModel):
+    """Update subscription settings request"""
     uuid: UUID
-    profile_title: Optional[str] = Field(None, alias="profileTitle")
-    support_link: Optional[str] = Field(None, alias="supportLink")
-    profile_update_interval: Optional[int] = Field(
-        None, alias="profileUpdateInterval"
-    )
+    profile_title: Optional[str] = Field(None, serialization_alias="profileTitle")
+    support_link: Optional[str] = Field(None, serialization_alias="supportLink")
+    profile_update_interval: Optional[int] = Field(None, serialization_alias="profileUpdateInterval")
     is_profile_webpage_url_enabled: Optional[bool] = Field(
-        None, alias="isProfileWebpageUrlEnabled"
+        None, serialization_alias="isProfileWebpageUrlEnabled"
     )
     serve_json_at_base_subscription: Optional[bool] = Field(
-        None, alias="serveJsonAtBaseSubscription"
+        None, serialization_alias="serveJsonAtBaseSubscription"
     )
     add_username_to_base_subscription: Optional[bool] = Field(
-        None, alias="addUsernameToBaseSubscription"
+        None, serialization_alias="addUsernameToBaseSubscription"
     )
-    is_show_custom_remarks: Optional[bool] = Field(
-        None, alias="isShowCustomRemarks"
+    is_show_custom_remarks: Optional[bool] = Field(None, serialization_alias="isShowCustomRemarks")
+    
+    custom_remarks: Optional[CustomRemarks] = Field(None, serialization_alias="customRemarks")
+    
+    happ_announce: Optional[Annotated[str, StringConstraints(max_length=200)]] = Field(
+        None, serialization_alias="happAnnounce"
     )
-    happ_announce: Annotated[Optional[str], StringConstraints(max_length=200)] = Field(
-        None, alias="happAnnounce"
-    )
-    happ_routing: Optional[str] = Field(None, alias="happRouting")
-    expired_users_remarks: Optional[List[str]] = Field(
-        None, alias="expiredUsersRemarks"
-    )
-    limited_users_remarks: Optional[List[str]] = Field(
-        None, alias="limitedUsersRemarks"
-    )
-    disabled_users_remarks: Optional[List[str]] = Field(
-        None, alias="disabledUsersRemarks"
-    )
+    happ_routing: Optional[str] = Field(None, serialization_alias="happRouting")
     custom_response_headers: Optional[Dict[str, str]] = Field(
-        None, alias="customResponseHeaders"
+        None, serialization_alias="customResponseHeaders"
     )
-    randomize_hosts: Optional[bool] = Field(None, alias="randomizeHosts")
-    response_rules: Optional[ResponseRules] = Field(None, alias="responseRules")
+    randomize_hosts: Optional[bool] = Field(None, serialization_alias="randomizeHosts")
+    response_rules: Optional[ResponseRules] = Field(None, serialization_alias="responseRules")
+    
+    hwid_settings: Optional[HwidSettings] = Field(None, serialization_alias="hwidSettings")

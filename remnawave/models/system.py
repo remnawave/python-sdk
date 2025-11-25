@@ -45,16 +45,21 @@ class MemoryStatistic(BaseModel):
 
 
 class StatusCounts(BaseModel):
-    active: int = Field(alias="ACTIVE")
-    disabled: int = Field(alias="DISABLED")
-    limited: int = Field(alias="LIMITED")
-    expired: int = Field(alias="EXPIRED")
+    """Dynamic status counts - использует additionalProperties"""
+    model_config = {"extra": "allow"}
+    
+    def __getitem__(self, key: str) -> int:
+        """Allow dict-like access"""
+        return getattr(self, key, 0)
+    
+    def get(self, key: str, default: int = 0) -> int:
+        """Dict-like get method"""
+        return getattr(self, key, default)
 
 
 class UsersStatistic(BaseModel):
     status_counts: StatusCounts = Field(alias="statusCounts")
     total_users: int = Field(alias="totalUsers")
-    total_traffic_bytes: int = Field(alias="totalTrafficBytes")
 
 
 class OnlineStatistic(BaseModel):
@@ -66,9 +71,11 @@ class OnlineStatistic(BaseModel):
 
 class NodesStatistic(BaseModel):
     total_online: int = Field(alias="totalOnline")
+    total_bytes_lifetime: str = Field(alias="totalBytesLifetime")
 
 
 class StatisticResponseDto(BaseModel):
+    """System statistics data"""
     cpu: CPUStatistic
     memory: MemoryStatistic
     uptime: float
@@ -89,6 +96,7 @@ class RemnawaveHealthData(BaseModel):
 
 
 class GetStatsResponseDto(StatisticResponseDto):
+    """Get system statistics response"""
     pass
 
 
@@ -106,7 +114,6 @@ class GetNodesStatisticsResponseDto(BaseModel):
 
 class GetRemnawaveHealthResponseDto(BaseModel):
     pm2_stats: List[PM2Stat] = Field(alias="pm2Stats")
-
 
 
 class NodeMetric(BaseModel):
@@ -147,8 +154,8 @@ class EncryptHappCryptoLinkData(BaseModel):
     encrypted_link: str = Field(alias="encryptedLink")
 
 
-class EncryptHappCryptoLinkResponseDto(BaseModel):
-    response: EncryptHappCryptoLinkData
+class EncryptHappCryptoLinkResponseDto(EncryptHappCryptoLinkData):
+    pass
 
 
 class DebugSrrMatcherRequestDto(BaseModel):
@@ -163,5 +170,5 @@ class DebugSrrMatcherData(BaseModel):
     output_headers: Dict[str, str] = Field(alias="outputHeaders")
 
 
-class DebugSrrMatcherResponseDto(BaseModel):
-    response: DebugSrrMatcherData
+class DebugSrrMatcherResponseDto(DebugSrrMatcherData):
+    pass

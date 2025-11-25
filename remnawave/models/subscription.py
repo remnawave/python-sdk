@@ -5,6 +5,7 @@ from uuid import UUID
 from pydantic import BaseModel, Field
 
 from remnawave.enums import TrafficLimitStrategy, UserStatus
+from remnawave.utils.happ_crypt import create_happ_crypto_link
 
 
 class HappCrypto(BaseModel):
@@ -22,22 +23,24 @@ class ActiveInternalSquadDto(BaseModel):
     name: str
 
 
+class UserTrafficDto(BaseModel):
+    """User traffic information"""
+    used_traffic_bytes: float = Field(alias="usedTrafficBytes")
+    lifetime_used_traffic_bytes: float = Field(alias="lifetimeUsedTrafficBytes")
+    online_at: Optional[datetime] = Field(None, alias="onlineAt")
+    first_connected_at: Optional[datetime] = Field(None, alias="firstConnectedAt")
+    last_connected_node_uuid: Optional[UUID] = Field(None, alias="lastConnectedNodeUuid")
+
+
 class UserResponseDto(BaseModel):
     uuid: UUID
     short_uuid: str = Field(alias="shortUuid")
     username: str
     status: UserStatus = Field(default=UserStatus.ACTIVE)
-    used_traffic_bytes: float = Field(alias="usedTrafficBytes")
-    lifetime_used_traffic_bytes: float = Field(alias="lifetimeUsedTrafficBytes")
-    traffic_limit_bytes: int = Field(default=0, alias="trafficLimitBytes")
-    traffic_limit_strategy: TrafficLimitStrategy = Field(
-        default=TrafficLimitStrategy.NO_RESET, 
-        alias="trafficLimitStrategy"
-    )
+    user_traffic: UserTrafficDto = Field(alias="userTraffic")
     sub_last_user_agent: Optional[str] = Field(None, alias="subLastUserAgent")
     sub_last_opened_at: Optional[datetime] = Field(None, alias="subLastOpenedAt")
     expire_at: datetime = Field(alias="expireAt")
-    online_at: Optional[datetime] = Field(None, alias="onlineAt")
     sub_revoked_at: Optional[datetime] = Field(None, alias="subRevokedAt")
     last_traffic_reset_at: Optional[datetime] = Field(None, alias="lastTrafficResetAt")
     trojan_password: str = Field(alias="trojanPassword")
@@ -48,14 +51,37 @@ class UserResponseDto(BaseModel):
     telegram_id: Optional[int] = Field(None, alias="telegramId")
     email: Optional[str] = None
     hwid_device_limit: Optional[int] = Field(None, alias="hwidDeviceLimit")
-    first_connected_at: Optional[datetime] = Field(None, alias="firstConnectedAt")
     last_triggered_threshold: int = Field(default=0, alias="lastTriggeredThreshold")
     created_at: datetime = Field(alias="createdAt")
     updated_at: datetime = Field(alias="updatedAt")
     active_internal_squads: List[ActiveInternalSquadDto] = Field(alias="activeInternalSquads")
     subscription_url: str = Field(alias="subscriptionUrl")
-    last_connected_node: Optional[UserLastConnectedNodeDto] = Field(None, alias="lastConnectedNode")
-    happ: HappCrypto = Field(alias="happ")
+    
+    # Legacy alias for backward compatibility
+    @property
+    def used_traffic_bytes(self) -> float:
+        """Backward compatibility property"""
+        return self.user_traffic.used_traffic_bytes
+    
+    @property
+    def lifetime_used_traffic_bytes(self) -> float:
+        """Backward compatibility property"""
+        return self.user_traffic.lifetime_used_traffic_bytes
+    
+    @property
+    def online_at(self) -> Optional[datetime]:
+        """Backward compatibility property"""
+        return self.user_traffic.online_at
+    
+    @property
+    def first_connected_at(self) -> Optional[datetime]:
+        """Backward compatibility property"""
+        return self.user_traffic.first_connected_at
+    
+    @property
+    def last_connected_node_uuid(self) -> Optional[UUID]:
+        """Backward compatibility property"""
+        return self.user_traffic.last_connected_node_uuid
 
 
 class ConvertedUserInfo(BaseModel):
@@ -85,11 +111,11 @@ class RawHostProtocolOptions(BaseModel):
 
 
 class RawHostDbData(BaseModel):
-    raw_inbound: Optional[Dict[str, Any]] = Field(alias="rawInbound")
+    raw_inbound: Optional[Dict[str, Any]] = Field(None, alias="rawInbound")
     inbound_tag: str = Field(alias="inboundTag")
     uuid: str
-    config_profile_uuid: Optional[str] = Field(alias="configProfileUuid")
-    config_profile_inbound_uuid: Optional[str] = Field(alias="configProfileInboundUuid")
+    config_profile_uuid: Optional[str] = Field(None, alias="configProfileUuid")
+    config_profile_inbound_uuid: Optional[str] = Field(None, alias="configProfileInboundUuid")
     is_disabled: bool = Field(alias="isDisabled")
     view_position: int = Field(alias="viewPosition") 
     remark: str
@@ -107,7 +133,7 @@ class RawHost(BaseModel):
     network: Optional[str] = None
     path: Optional[str] = None
     public_key: Optional[str] = Field(None, alias="publicKey")
-    port: Optional[float] = None  # изменен тип на float
+    port: Optional[float] = None
     protocol: Optional[str] = None
     remark: Optional[str] = None
     short_id: Optional[str] = Field(None, alias="shortId")
@@ -128,9 +154,11 @@ class RawHost(BaseModel):
     encryption: Optional[str] = None
     protocol_options: Optional[RawHostProtocolOptions] = Field(None, alias="protocolOptions")
     db_data: RawHostDbData = Field(alias="dbData")
+    xray_json_template: Optional[Dict[str, Any]] = Field(None, alias="xrayJsonTemplate")
 
 
 class RawSubscriptionResponse(BaseModel):
+    """Raw subscription response data"""
     user: UserResponseDto
     converted_user_info: ConvertedUserInfo = Field(alias="convertedUserInfo")
     headers: Dict[str, str]
@@ -172,7 +200,12 @@ class GetSubscriptionInfoResponseDto(BaseModel):
     links: List[str]
     ss_conf_links: Dict[str, str] = Field(alias="ssConfLinks")
     subscription_url: str = Field(alias="subscriptionUrl")
-    happ: HappCrypto
+    
+    @property
+    def happ(self) -> HappCrypto:
+        """Generate HAPP link on the fly"""
+        crypto_link = create_happ_crypto_link(self.subscription_url)
+        return HappCrypto(crypto_link=crypto_link)
 
 
 class SubscriptionWithoutHapp(BaseModel):

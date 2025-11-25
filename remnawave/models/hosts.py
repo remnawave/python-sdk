@@ -1,17 +1,9 @@
-from typing import Annotated, List, Optional
+from typing import Annotated, Any, Dict, List, Optional
 from uuid import UUID
 
 from pydantic import BaseModel, Field, StringConstraints, RootModel
 
 from remnawave.enums import ALPN, Fingerprint, SecurityLayer
-
-
-class ReorderResponse(BaseModel):
-    is_updated: bool = Field(alias="isUpdated")
-
-
-class DeleteResponse(BaseModel):
-    is_deleted: bool = Field(alias="isDeleted")
 
 
 class ReorderHostItem(BaseModel):
@@ -24,8 +16,8 @@ class ReorderHostRequestDto(BaseModel):
 
 
 class HostInboundData(BaseModel):
-    config_profile_uuid: Optional[UUID] = Field(alias="configProfileUuid")
-    config_profile_inbound_uuid: Optional[UUID] = Field(alias="configProfileInboundUuid")
+    config_profile_uuid: Optional[UUID] = Field(None, alias="configProfileUuid")
+    config_profile_inbound_uuid: Optional[UUID] = Field(None, alias="configProfileInboundUuid")
 
 
 class CreateHostInboundData(BaseModel):
@@ -46,50 +38,21 @@ class UpdateHostRequestDto(BaseModel):
     fingerprint: Optional[Fingerprint] = None
     allow_insecure: Optional[bool] = Field(None, serialization_alias="allowInsecure")
     is_disabled: Optional[bool] = Field(None, serialization_alias="isDisabled")
-    security_layer: Optional[SecurityLayer] = Field(
-        None, serialization_alias="securityLayer"
-    )
-    server_description: Optional[str] = Field(
-        None, serialization_alias="serverDescription", max_length=30
-    )
+    security_layer: Optional[SecurityLayer] = Field(None, serialization_alias="securityLayer")
+    server_description: Optional[str] = Field(None, serialization_alias="serverDescription", max_length=30)
     tag: Optional[Annotated[str, StringConstraints(max_length=32, pattern=r"^[A-Z0-9_:]+$")]] = None
-    is_hidden: Optional[bool] = Field(
-        None,
-        serialization_alias="isHidden",
-    )
-    override_sni_from_address: Optional[bool] = Field(
-        None,
-        serialization_alias="overrideSniFromAddress",
-    )
-    vless_route_id: Optional[int] = Field(
-        None,
-        serialization_alias="vlessRouteId",
-        ge=0,
-        le=65535
-    )
-    shuffle_host: Optional[bool] = Field(
-        None,
-        serialization_alias="shuffleHost",
-    )
-    mihomo_x25519: Optional[bool] = Field(
-        None,
-        serialization_alias="mihomoX25519",
-    )
-    x_http_extra_params: Optional[str] = Field(
-        None,
-        serialization_alias="xHttpExtraParams",
-    )
-    mux_params: Optional[str] = Field(
-        None,
-        serialization_alias="muxParams",
-    )
-    sockopt_params: Optional[str] = Field(
-        None,
-        serialization_alias="sockoptParams",
-    )
+    is_hidden: Optional[bool] = Field(None, serialization_alias="isHidden")
+    override_sni_from_address: Optional[bool] = Field(None, serialization_alias="overrideSniFromAddress")
+    vless_route_id: Optional[int] = Field(None, serialization_alias="vlessRouteId", ge=0, le=65535)
+    shuffle_host: Optional[bool] = Field(None, serialization_alias="shuffleHost")
+    mihomo_x25519: Optional[bool] = Field(None, serialization_alias="mihomoX25519")
+    x_http_extra_params: Optional[Dict[str, Any]] = Field(None, serialization_alias="xHttpExtraParams")
+    mux_params: Optional[Dict[str, Any]] = Field(None, serialization_alias="muxParams")
+    sockopt_params: Optional[Dict[str, Any]] = Field(None, serialization_alias="sockoptParams")
     nodes: Optional[List[UUID]] = None
+    xray_json_template_uuid: Optional[UUID] = Field(None, serialization_alias="xrayJsonTemplateUuid")
+    excluded_internal_squads: Optional[List[UUID]] = Field(None, serialization_alias="excludedInternalSquads")
 
-    # Legacy compatibility properties
     @property
     def inbound_uuid(self) -> Optional[UUID]:
         return self.inbound.config_profile_inbound_uuid if self.inbound else None
@@ -104,54 +67,26 @@ class HostResponseDto(BaseModel):
     path: Optional[str] = None
     sni: Optional[str] = None
     host: Optional[str] = None
-    alpn: Optional[ALPN] = None
-    fingerprint: Optional[Fingerprint] = None
-    x_http_extra_params: Optional[str] = Field(
-        None,
-        alias="xHttpExtraParams",
-    )
-    mux_params: Optional[str] = Field(
-        None,
-        alias="muxParams",
-    )
-    sockopt_params: Optional[str] = Field(
-        None,
-        alias="sockoptParams",
-    )
+    alpn: Optional[str] = None
+    fingerprint: Optional[str] = None
+    x_http_extra_params: Optional[Dict[str, Any]] = Field(None, alias="xHttpExtraParams")
+    mux_params: Optional[Dict[str, Any]] = Field(None, alias="muxParams")
+    sockopt_params: Optional[Dict[str, Any]] = Field(None, alias="sockoptParams")
     inbound: HostInboundData
-    server_description: Optional[str] = Field(
-        None, alias="serverDescription"
-    )
+    server_description: Optional[str] = Field(None, alias="serverDescription")
     tag: Optional[str] = None
-    vless_route_id: Optional[int] = Field(
-        None,
-        alias="vlessRouteId",
-    )
+    vless_route_id: Optional[int] = Field(None, alias="vlessRouteId")
     shuffle_host: bool = Field(alias="shuffleHost")
     mihomo_x25519: bool = Field(alias="mihomoX25519")
     nodes: List[UUID]
-    is_disabled: bool = Field(
-        default=False,
-        alias="isDisabled",
-    )
-    security_layer: SecurityLayer = Field(
-        default=SecurityLayer.DEFAULT,
-        alias="securityLayer",
-    )
-    is_hidden: bool = Field(
-        default=False,
-        alias="isHidden",
-    )
-    override_sni_from_address: bool = Field(
-        default=False,
-        alias="overrideSniFromAddress",
-    )
-    allow_insecure: bool = Field(
-        default=False,
-        alias="allowInsecure",
-    )
+    is_disabled: bool = Field(False, alias="isDisabled")
+    security_layer: SecurityLayer = Field(SecurityLayer.DEFAULT, alias="securityLayer")
+    is_hidden: bool = Field(False, alias="isHidden")
+    override_sni_from_address: bool = Field(False, alias="overrideSniFromAddress")
+    allow_insecure: bool = Field(False, alias="allowInsecure")
+    xray_json_template_uuid: Optional[UUID] = Field(None, alias="xrayJsonTemplateUuid")
+    excluded_internal_squads: List[UUID] = Field(default_factory=list, alias="excludedInternalSquads")
 
-    # Legacy compatibility property
     @property
     def inbound_uuid(self) -> Optional[UUID]:
         return self.inbound.config_profile_inbound_uuid
@@ -167,64 +102,27 @@ class CreateHostRequestDto(BaseModel):
     host: Optional[str] = None
     alpn: Optional[ALPN] = None
     fingerprint: Optional[Fingerprint] = None
-    x_http_extra_params: Optional[str] = Field(
-        None,
-        serialization_alias="xHttpExtraParams",
-    )
-    mux_params: Optional[str] = Field(
-        None,
-        serialization_alias="muxParams",
-    )
-    sockopt_params: Optional[str] = Field(
-        None,
-        serialization_alias="sockoptParams",
-    )
-    server_description: Optional[str] = Field(
-        None, serialization_alias="serverDescription", max_length=30
-    )
+    x_http_extra_params: Optional[Dict[str, Any]] = Field(None, serialization_alias="xHttpExtraParams")
+    mux_params: Optional[Dict[str, Any]] = Field(None, serialization_alias="muxParams")
+    sockopt_params: Optional[Dict[str, Any]] = Field(None, serialization_alias="sockoptParams")
+    server_description: Optional[str] = Field(None, serialization_alias="serverDescription", max_length=30)
     tag: Optional[Annotated[str, StringConstraints(max_length=32, pattern=r"^[A-Z0-9_:]+$")]] = None
-    vless_route_id: Optional[int] = Field(
-        None,
-        serialization_alias="vlessRouteId",
-        ge=0,
-        le=65535
-    )
-    shuffle_host: bool = Field(
-        False,
-        serialization_alias="shuffleHost",
-    )
-    mihomo_x25519: bool = Field(
-        False,
-        serialization_alias="mihomoX25519",
-    )
+    vless_route_id: Optional[int] = Field(None, serialization_alias="vlessRouteId", ge=0, le=65535)
+    shuffle_host: bool = Field(False, serialization_alias="shuffleHost")
+    mihomo_x25519: bool = Field(False, serialization_alias="mihomoX25519")
     nodes: List[UUID] = Field(default_factory=list)
-    allow_insecure: bool = Field(
-        False,
-        serialization_alias="allowInsecure",
-    )
-    is_disabled: bool = Field(
-        False, 
-        serialization_alias="isDisabled",
-    )
-    security_layer: SecurityLayer = Field(
-        SecurityLayer.DEFAULT, 
-        serialization_alias="securityLayer",
-    )
-    is_hidden: bool = Field(
-        False,
-        serialization_alias="isHidden",
-    )
-    override_sni_from_address: bool = Field(
-        False, 
-        serialization_alias="overrideSniFromAddress",
-    )
+    allow_insecure: bool = Field(False, serialization_alias="allowInsecure")
+    is_disabled: bool = Field(False, serialization_alias="isDisabled")
+    security_layer: SecurityLayer = Field(SecurityLayer.DEFAULT, serialization_alias="securityLayer")
+    is_hidden: bool = Field(False, serialization_alias="isHidden")
+    override_sni_from_address: bool = Field(False, serialization_alias="overrideSniFromAddress")
+    xray_json_template_uuid: Optional[UUID] = Field(None, serialization_alias="xrayJsonTemplateUuid")
+    excluded_internal_squads: List[UUID] = Field(default_factory=list, serialization_alias="excludedInternalSquads")
 
-    # Legacy compatibility property
     @property
     def inbound_uuid(self) -> Optional[UUID]:
         return self.inbound.config_profile_inbound_uuid
 
-    # Constructor compatibility - support old-style inbound_uuid
     def __init__(
         self,
         inbound_uuid: Optional[UUID] = None,
@@ -232,8 +130,6 @@ class CreateHostRequestDto(BaseModel):
         **data,
     ):
         if inbound_uuid is not None and "inbound" not in data:
-            # Legacy mode: create inbound object from UUID
-            # Use hardcoded config_profile_uuid from API response for compatibility
             data["inbound"] = CreateHostInboundData(
                 config_profile_uuid=config_profile_uuid
                 or UUID("107541f1-ae1a-4e2d-9dec-7297557b5125"),
@@ -246,35 +142,46 @@ class GetAllHostTagsResponseDto(BaseModel):
     tags: List[str]
 
 
+# Response wrappers - обернуты в response
 class CreateHostResponseDto(HostResponseDto):
+    """Create host response"""
     pass
 
 
-class UpdateHostResponseDto(HostResponseDto):
+class UpdateHostResponseDto(CreateHostResponseDto):
+    """Update host response"""
     pass
 
 
-class GetAllHostsResponseDto(RootModel[List[HostResponseDto]]):
-    root: List[HostResponseDto]
-
+class GetAllHostsResponseDto(BaseModel):
+    """Get all hosts response"""
+    response: List[HostResponseDto]
+    
     def __iter__(self):
-        return iter(self.root)
-
+        return iter(self.response)
+    
     def __getitem__(self, item):
-        return self.root[item]
+        return self.response[item]
 
 
 class GetOneHostResponseDto(HostResponseDto):
+    """Get one host response"""
     pass
 
 
 class ReorderHostResponseDto(BaseModel):
+    """Reorder hosts response"""
     is_updated: bool = Field(alias="isUpdated", default=True)
 
 
 class DeleteHostResponseDto(BaseModel):
+    """Delete host response"""
     is_deleted: bool = Field(alias="isDeleted")
-
-
-# Legacy compatibility
-HostsResponseDto = List[HostResponseDto]
+    
+class HostsResponseDto(HostResponseDto):
+    """Host response data with backward compatibility properties"""
+    
+    @property
+    def allow_insecure(self) -> bool:
+        """Backward compatibility property"""
+        return self.security_layer == SecurityLayer.NONE

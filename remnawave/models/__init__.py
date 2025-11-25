@@ -203,6 +203,8 @@ from .subscriptions_settings import (
     SubscriptionSettingsResponseDto,
     UpdateSubscriptionSettingsRequestDto,
     UpdateSubscriptionSettingsResponseDto,
+    CustomRemarks,
+    HwidSettings,
 )
 from .subscriptions_template import (
     CreateSubscriptionTemplateRequestDto,
@@ -431,6 +433,8 @@ __all__ = [
     "GetSubscriptionSettingsResponseDto",
     "SubscriptionSettingsResponseDto",
     "UpdateSubscriptionSettingsRequestDto",
+    "CustomRemarks",
+    "HwidSettings",
     "UpdateSubscriptionSettingsResponseDto",
     "ResponseModificationHeader",
     "ResponseModifications",

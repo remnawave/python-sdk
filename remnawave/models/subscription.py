@@ -123,6 +123,10 @@ class RawHostDbData(BaseModel):
     tag: Optional[str] = None
     vless_route_id: Optional[int] = Field(None, alias="vlessRouteId")
 
+class RawSettings(BaseModel):
+    """Raw settings for network configuration"""
+    header_type: Optional[str] = Field(None, alias="headerType")
+    request: Optional[Dict[str, Any]] = None
 
 class RawHost(BaseModel):
     password: Passwords 
@@ -140,7 +144,7 @@ class RawHost(BaseModel):
     sni: Optional[str] = None
     spider_x: Optional[str] = Field(None, alias="spiderX")
     tls: Optional[str] = None
-    header_type: Optional[str] = Field(None, alias="headerType")
+    raw_settings: Optional[RawSettings] = Field(None, alias="rawSettings")
     additional_params: Optional[RawHostAdditionalParams] = Field(None, alias="additionalParams")
     x_http_extra_params: Optional[Dict[str, Any]] = Field(None, alias="xHttpExtraParams")
     mux_params: Optional[Dict[str, Any]] = Field(None, alias="muxParams")

@@ -34,7 +34,6 @@ class ExternalSquadSubscriptionSettingsDto(BaseModel):
     profile_update_interval: int = Field(alias="profileUpdateInterval", ge=1)
     is_profile_webpage_url_enabled: bool = Field(alias="isProfileWebpageUrlEnabled")
     serve_json_at_base_subscription: bool = Field(alias="serveJsonAtBaseSubscription")
-    add_username_to_base_subscription: bool = Field(alias="addUsernameToBaseSubscription")
     is_show_custom_remarks: bool = Field(alias="isShowCustomRemarks")
     happ_announce: Optional[str] = Field(None, alias="happAnnounce")
     happ_routing: Optional[str] = Field(None, alias="happRouting")

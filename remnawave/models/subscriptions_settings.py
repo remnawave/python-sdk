@@ -80,7 +80,6 @@ class SubscriptionSettingsResponseDto(BaseModel):
     profile_update_interval: int = Field(alias="profileUpdateInterval", ge=1)
     is_profile_webpage_url_enabled: bool = Field(alias="isProfileWebpageUrlEnabled")
     serve_json_at_base_subscription: bool = Field(alias="serveJsonAtBaseSubscription")
-    add_username_to_base_subscription: bool = Field(alias="addUsernameToBaseSubscription")
     show_custom_remarks: bool = Field(alias="isShowCustomRemarks")
     
     custom_remarks: CustomRemarks = Field(alias="customRemarks")
@@ -116,9 +115,6 @@ class UpdateSubscriptionSettingsRequestDto(BaseModel):
     )
     serve_json_at_base_subscription: Optional[bool] = Field(
         None, serialization_alias="serveJsonAtBaseSubscription"
-    )
-    add_username_to_base_subscription: Optional[bool] = Field(
-        None, serialization_alias="addUsernameToBaseSubscription"
     )
     is_show_custom_remarks: Optional[bool] = Field(None, serialization_alias="isShowCustomRemarks")
     

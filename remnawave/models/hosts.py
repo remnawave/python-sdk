@@ -75,15 +75,15 @@ class UpdateHostRequestDto(BaseModel):
         None,
         serialization_alias="mihomoX25519",
     )
-    x_http_extra_params: Optional[str] = Field(
+    x_http_extra_params: Optional[dict] = Field(
         None,
         serialization_alias="xHttpExtraParams",
     )
-    mux_params: Optional[str] = Field(
+    mux_params: Optional[dict] = Field(
         None,
         serialization_alias="muxParams",
     )
-    sockopt_params: Optional[str] = Field(
+    sockopt_params: Optional[dict] = Field(
         None,
         serialization_alias="sockoptParams",
     )
@@ -106,15 +106,15 @@ class HostResponseDto(BaseModel):
     host: Optional[str] = None
     alpn: Optional[ALPN] = None
     fingerprint: Optional[Fingerprint] = None
-    x_http_extra_params: Optional[str] = Field(
+    x_http_extra_params: Optional[dict] = Field(
         None,
         alias="xHttpExtraParams",
     )
-    mux_params: Optional[str] = Field(
+    mux_params: Optional[dict] = Field(
         None,
         alias="muxParams",
     )
-    sockopt_params: Optional[str] = Field(
+    sockopt_params: Optional[dict] = Field(
         None,
         alias="sockoptParams",
     )
@@ -167,15 +167,15 @@ class CreateHostRequestDto(BaseModel):
     host: Optional[str] = None
     alpn: Optional[ALPN] = None
     fingerprint: Optional[Fingerprint] = None
-    x_http_extra_params: Optional[str] = Field(
+    x_http_extra_params: Optional[dict] = Field(
         None,
         serialization_alias="xHttpExtraParams",
     )
-    mux_params: Optional[str] = Field(
+    mux_params: Optional[dict] = Field(
         None,
         serialization_alias="muxParams",
     )
-    sockopt_params: Optional[str] = Field(
+    sockopt_params: Optional[dict] = Field(
         None,
         serialization_alias="sockoptParams",
     )

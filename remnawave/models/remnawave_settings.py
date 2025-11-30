@@ -69,9 +69,9 @@ class RemnawaveSettingsData(BaseModel):
     branding_settings: Optional[BrandingSettings] = Field(None, alias="brandingSettings")
 
 
-class GetRemnawaveSettingsResponseDto(BaseModel):
+class GetRemnawaveSettingsResponseDto(RemnawaveSettingsData):
     """Get Remnawave settings response"""
-    response: RemnawaveSettingsData
+    pass
 
 
 class UpdateRemnawaveSettingsRequestDto(BaseModel):
@@ -83,6 +83,6 @@ class UpdateRemnawaveSettingsRequestDto(BaseModel):
     branding_settings: Optional[BrandingSettings] = Field(None, serialization_alias="brandingSettings")
 
 
-class UpdateRemnawaveSettingsResponseDto(BaseModel):
+class UpdateRemnawaveSettingsResponseDto(RemnawaveSettingsData):
     """Update Remnawave settings response"""
-    response: RemnawaveSettingsData
+    pass

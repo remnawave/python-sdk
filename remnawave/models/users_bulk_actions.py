@@ -1,97 +1,203 @@
 from datetime import datetime
-from typing import Annotated, List, Literal, Optional
+from typing import Annotated, List, Optional
 from uuid import UUID
 
-from pydantic import BaseModel, EmailStr, Field, constr
+from pydantic import BaseModel, Field
 
-from remnawave.enums import UserStatus
-from remnawave.enums.users import TrafficLimitStrategy
+from remnawave.enums import UserStatus, TrafficLimitStrategy
 
 
-class BulkUpdateUsersInternalSquadsRequestDto(BaseModel):
-    uuids: List[UUID]
-    active_internal_squads: List[UUID] = Field(serialization_alias="activeInternalSquads")
-
+# Type alias for tag validation
 TagStr = Annotated[
     str,
     Field(min_length=1, max_length=16, pattern=r"^[A-Z0-9_]+$")
 ]
 
+
+# Request DTOs
+class BulkDeleteUsersByStatusRequestDto(BaseModel):
+    """Request to delete users by status"""
+    status: UserStatus = Field(default=UserStatus.ACTIVE)
+
+
+class BulkDeleteUsersRequestDto(BaseModel):
+    """Request to delete users by UUIDs"""
+    uuids: List[UUID] = Field(min_length=1, max_length=500)
+
+
+class BulkRevokeUsersSubscriptionRequestDto(BaseModel):
+    """Request to revoke users subscription"""
+    uuids: List[UUID] = Field(min_length=1, max_length=500)
+
+
+class BulkResetTrafficUsersRequestDto(BaseModel):
+    """Request to reset traffic for users"""
+    uuids: List[UUID] = Field(min_length=1, max_length=500)
+
+
 class UpdateUserFields(BaseModel):
+    """Fields to update for users"""
     status: Optional[UserStatus] = None
     traffic_limit_bytes: Optional[int] = Field(
-        None, serialization_alias="trafficLimitBytes", strict=True, ge=0
+        None, 
+        serialization_alias="trafficLimitBytes", 
+        ge=0,
+        description="Traffic limit in bytes. 0 - unlimited"
     )
     traffic_limit_strategy: Optional[TrafficLimitStrategy] = Field(
-        None, serialization_alias="trafficLimitStrategy"
+        None, 
+        serialization_alias="trafficLimitStrategy",
+        description="Traffic limit reset strategy"
     )
-    expire_at: Optional[datetime] = Field(None, serialization_alias="expireAt")
+    expire_at: Optional[datetime] = Field(
+        None, 
+        serialization_alias="expireAt",
+        description="Expiration date: 2025-01-17T15:38:45.065Z"
+    )
     description: Optional[str] = None
+    telegram_id: Optional[int] = Field(None, serialization_alias="telegramId")
+    email: Optional[str] = None
     tag: Optional[TagStr] = Field(
         None,
         description="Tag for user. Must be uppercase, alphanumeric, and can include underscores. Max length 16 characters."
     )
-    telegram_id: Optional[int] = Field(None, serialization_alias="telegramId")
-    email: Optional[str] = None
     hwid_device_limit: Optional[int] = Field(
-        None, serialization_alias="hwidDeviceLimit", strict=True, ge=0
+        None, 
+        serialization_alias="hwidDeviceLimit", 
+        ge=0
     )
-    telegram_id: Optional[int] = Field(
-        None, serialization_alias="telegramId"
+    external_squad_uuid: Optional[UUID] = Field(
+        None,
+        serialization_alias="externalSquadUuid",
+        description="Optional. External squad UUID."
     )
-    
+
+
+class BulkUpdateUsersRequestDto(BaseModel):
+    """Request to bulk update users"""
+    uuids: List[UUID] = Field(min_length=1, max_length=500)
+    fields: UpdateUserFields
+
+
+class BulkUpdateUsersSquadsRequestDto(BaseModel):
+    """Request to update users internal squads"""
+    uuids: List[UUID] = Field(min_length=1, max_length=500)
+    active_internal_squads: List[UUID] = Field(serialization_alias="activeInternalSquads")
+
+
+class BulkExtendExpirationDateRequestDto(BaseModel):
+    """Request to extend expiration date for selected users"""
+    uuids: List[UUID] = Field(min_length=1, max_length=500)
+    extend_days: int = Field(
+        serialization_alias="extendDays",
+        ge=1,
+        le=9999
+    )
 
 
 class BulkAllUpdateUsersRequestDto(BaseModel):
-    status: Optional[Literal["ACTIVE", "DISABLED", "LIMITED", "EXPIRED"]] = Field(
-        "ACTIVE"
-    )
-
+    """Request to update all users"""
+    status: Optional[UserStatus] = Field(default=UserStatus.ACTIVE)
     traffic_limit_bytes: Optional[int] = Field(
         None,
         serialization_alias="trafficLimitBytes",
         ge=0,
         description="Traffic limit in bytes. 0 - unlimited"
     )
-
-    traffic_limit_strategy: Optional[Literal["NO_RESET", "DAY", "WEEK", "MONTH"]] = Field(
+    traffic_limit_strategy: Optional[TrafficLimitStrategy] = Field(
         None,
         serialization_alias="trafficLimitStrategy",
         description="Traffic limit reset strategy"
     )
-
     expire_at: Optional[datetime] = Field(
         None,
         serialization_alias="expireAt",
-        description="Expiration date"
+        description="Expiration date: 2025-01-17T15:38:45.065Z"
     )
-
     description: Optional[str] = None
-
-    telegram_id: Optional[int] = Field(
-        None,
-        serialization_alias="telegramId"
-    )
-
-    hwid_device_limit: Optional[int] = Field(
-        None, serialization_alias="hwidDeviceLimit", strict=True, ge=0
-    )
-
+    telegram_id: Optional[int] = Field(None, serialization_alias="telegramId")
     email: Optional[str] = None
-
     tag: Optional[TagStr] = Field(
         None,
         description="Tag for user. Must be uppercase, alphanumeric, and can include underscores. Max length 16 characters."
     )
+    hwid_device_limit: Optional[int] = Field(
+        None, 
+        serialization_alias="hwidDeviceLimit", 
+        ge=0
+    )
 
 
-class BulkResponseDto(BaseModel):
+class BulkAllExtendExpirationDateRequestDto(BaseModel):
+    """Request to extend expiration date for all users"""
+    extend_days: int = Field(
+        serialization_alias="extendDays",
+        ge=1
+    )
+
+
+# Base Response DTOs (без обертки response)
+class BulkResponseData(BaseModel):
+    """Common bulk response with affected rows"""
     affected_rows: int = Field(alias="affectedRows")
 
 
-class BulkAllResetTrafficUsersResponseDto(BaseModel):
+class BulkEventResponseData(BaseModel):
+    """Common bulk response with event sent flag"""
     event_sent: bool = Field(alias="eventSent")
 
 
-class BulkAllUpdateUsersResponseDto(BaseModel):
-    event_sent: bool = Field(alias="eventSent")
+# Response DTOs - наследуются от базовых
+class BulkDeleteUsersByStatusResponseDto(BulkResponseData):
+    """Response for bulk delete by status"""
+    pass
+
+
+class BulkDeleteUsersResponseDto(BulkResponseData):
+    """Response for bulk delete users"""
+    pass
+
+
+class BulkRevokeUsersSubscriptionResponseDto(BulkResponseData):
+    """Response for bulk revoke subscription"""
+    pass
+
+
+class BulkResetTrafficUsersResponseDto(BulkResponseData):
+    """Response for bulk reset traffic"""
+    pass
+
+
+class BulkUpdateUsersResponseDto(BulkResponseData):
+    """Response for bulk update users"""
+    pass
+
+
+class BulkUpdateUsersSquadsResponseDto(BulkResponseData):
+    """Response for bulk update squads"""
+    pass
+
+
+class BulkExtendExpirationDateResponseDto(BulkResponseData):
+    """Response for bulk extend expiration date"""
+    pass
+
+
+class BulkAllUpdateUsersResponseDto(BulkEventResponseData):
+    """Response for bulk update all users"""
+    pass
+
+
+class BulkAllResetTrafficUsersResponseDto(BulkEventResponseData):
+    """Response for bulk reset all users traffic"""
+    pass
+
+
+class BulkAllExtendExpirationDateResponseDto(BulkEventResponseData):
+    """Response for bulk extend all users expiration date"""
+    pass
+
+
+# Legacy compatibility
+BulkResponseDto = BulkResponseData
+BulkUpdateUsersInternalSquadsRequestDto = BulkUpdateUsersSquadsRequestDto

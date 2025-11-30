@@ -153,15 +153,14 @@ class UpdateHostResponseDto(CreateHostResponseDto):
     pass
 
 
-class GetAllHostsResponseDto(BaseModel):
-    """Get all hosts response"""
-    response: List[HostResponseDto]
-    
+class GetAllHostsResponseDto(RootModel[List[HostResponseDto]]):
+    root: List[HostResponseDto]
+
     def __iter__(self):
-        return iter(self.response)
-    
+        return iter(self.root)
+
     def __getitem__(self, item):
-        return self.response[item]
+        return self.root[item]
 
 
 class GetOneHostResponseDto(HostResponseDto):

@@ -263,7 +263,6 @@ from .users import (
     # Response DTOs - Collections
     GetAllUsersResponseDto,
     GetAllTagsResponseDto,
-    GetUserAccessibleNodesResponseDto,
     GetUserSubscriptionRequestHistoryResponseDto,
     
     # Response DTOs - Arrays (RootModel)
@@ -590,7 +589,6 @@ __all__ = [
     "ActivateAllInboundsResponseDto",
     "GetAllUsersResponseDto",
     "GetAllTagsResponseDto",
-    "GetUserAccessibleNodesResponseDto",
     "GetUserSubscriptionRequestHistoryResponseDto",
     "TelegramUserResponseDto",
     "EmailUserResponseDto",

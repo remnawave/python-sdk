@@ -125,8 +125,6 @@ class NodeResponseDto(BaseModel):
     is_connected: bool = Field(alias="isConnected")
     is_disabled: bool = Field(alias="isDisabled")
     is_connecting: bool = Field(alias="isConnecting")
-    is_node_online: bool = Field(alias="isNodeOnline")
-    is_xray_running: bool = Field(alias="isXrayRunning")
     last_status_change: Optional[datetime] = Field(None, alias="lastStatusChange")
     last_status_message: Optional[str] = Field(None, alias="lastStatusMessage")
     xray_version: Optional[str] = Field(None, alias="xrayVersion")

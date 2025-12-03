@@ -322,12 +322,3 @@ class TelegramUserResponseDto(RootModel[list[UserResponseDto]]):
 
     def __getitem__(self, item):
         return self.root[item]
-
-
-class GetUserAccessibleNodesResponseDto(RootModel[list[UUID]]):
-    """Response for get user accessible nodes"""
-    def __iter__(self):
-        return iter(self.root)
-
-    def __getitem__(self, item):
-        return self.root[item]

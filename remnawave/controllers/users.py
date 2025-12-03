@@ -135,7 +135,8 @@ class UsersController(BaseController):
         """Get user subscription request history, recent 24 records"""
         ...
 
-    @get("/users/by-short-uuid/{short_uuid}", response_class=GetUserByShortUuidResponseDto)
+    # ИСПРАВЛЕНО: убран alias, используется short_uuid
+    @get("/users/by-short-uuid/{shortUuid}", response_class=GetUserByShortUuidResponseDto)
     async def get_user_by_short_uuid(
         self,
         short_uuid: Annotated[str, Path(description="Short UUID of the user", alias="shortUuid")],
@@ -151,7 +152,6 @@ class UsersController(BaseController):
         """Get user by username"""
         ...
 
-    # НОВЫЙ ЭНДПОИНТ
     @get("/users/by-id/{id}", response_class=GetUserByIdResponseDto)
     async def get_user_by_id(
         self,
@@ -160,8 +160,9 @@ class UsersController(BaseController):
         """Get user by ID"""
         ...
 
+    # ИСПРАВЛЕНО: убран alias, используется telegram_id
     @get(
-        "/users/by-telegram-id/{telegram_id}",
+        "/users/by-telegram-id/{telegramId}",
         response_class=TelegramUserResponseDto,
     )
     async def get_users_by_telegram_id(

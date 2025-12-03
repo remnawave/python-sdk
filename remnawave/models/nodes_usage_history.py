@@ -4,11 +4,17 @@ from uuid import UUID
 
 from pydantic import BaseModel, Field, RootModel
 
+class NodeActiveSquadDto(BaseModel):
+    squad_name: str = Field(alias="squadName")
+    active_inbounds: list[str] = Field(alias="activeInbounds")
 
 class NodeInfoDto(BaseModel):
     uuid: UUID
     name: str
     country_code: str = Field(alias="countryCode")
+    config_profile_name: str = Field(alias="configProfileName")
+    config_profile_uuid: UUID = Field(alias="configProfileUuid")
+    active_squads: List[NodeActiveSquadDto] = Field(alias="activeSquads")
 
 class GetUserAccessibleNodesResponse(BaseModel):
     user_uuid: UUID = Field(alias="userUuid")

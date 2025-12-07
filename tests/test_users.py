@@ -19,6 +19,7 @@ from remnawave.models import (
     RevokeUserRequestDto,
     GetSubscriptionRequestsResponseDto
 )
+from remnawave.models.users import GetUserSubscriptionRequestHistoryResponseDto
 from tests.utils import generate_email, generate_random_string
 
 
@@ -110,7 +111,7 @@ class TestUsersFetch:
     
     @pytest.mark.asyncio
     async def test_get_all_users(self, remnawave):
-        all_users = await remnawave.users.get_all_users_v2()
+        all_users = await remnawave.users.get_all_users()
         assert isinstance(all_users, UsersResponseDto)
     
     @pytest.mark.asyncio
@@ -173,12 +174,10 @@ class TestUsersFetch:
         """Test fetching user subscription request history"""
         string_uuid = str(test_user.uuid)
         try:
-            subscription_requests = await remnawave.users.get_subscription_requests(uuid=string_uuid)
-            assert isinstance(subscription_requests, GetSubscriptionRequestsResponseDto)
+            subscription_requests = await remnawave.users.get_user_subscription_request_history(uuid=string_uuid)
+            assert isinstance(subscription_requests, GetUserSubscriptionRequestHistoryResponseDto)
             assert hasattr(subscription_requests, 'total')
             assert hasattr(subscription_requests, 'records')
-            # Даже если записей нет, модель должна быть правильно сформирована
-            # с пустым списком records и total=0
         except ApiError as e:
             # Этот блок должен срабатывать только если API вернуло ошибку
             # (404, 403 и т.д.), но не когда просто нет записей

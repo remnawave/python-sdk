@@ -5,69 +5,93 @@ from rapid_api_client.annotations import PydanticBody
 
 from remnawave.enums import UserStatus
 from remnawave.models import (
+    BulkAllExtendExpirationDateRequestDto,
+    BulkAllExtendExpirationDateResponseDto,
     BulkAllResetTrafficUsersResponseDto,
     BulkAllUpdateUsersRequestDto,
     BulkAllUpdateUsersResponseDto,
-    BulkResponseDto,
-    BulkUpdateUsersInternalSquadsRequestDto,
-    UpdateUserFields,
+    BulkDeleteUsersByStatusRequestDto,
+    BulkDeleteUsersByStatusResponseDto,
+    BulkDeleteUsersRequestDto,
+    BulkDeleteUsersResponseDto,
+    BulkExtendExpirationDateRequestDto,
+    BulkExtendExpirationDateResponseDto,
+    BulkResetTrafficUsersRequestDto,
+    BulkResetTrafficUsersResponseDto,
+    BulkRevokeUsersSubscriptionRequestDto,
+    BulkRevokeUsersSubscriptionResponseDto,
+    BulkUpdateUsersRequestDto,
+    BulkUpdateUsersResponseDto,
+    BulkUpdateUsersSquadsRequestDto,
+    BulkUpdateUsersSquadsResponseDto,
 )
-from remnawave.rapid import AttributeBody, BaseController, patch, post
+from remnawave.rapid import BaseController, post
 
 
 class UsersBulkActionsController(BaseController):
     @post(
         "/users/bulk/delete-by-status",
-        response_class=BulkResponseDto,
+        response_class=BulkDeleteUsersByStatusResponseDto,
     )
     async def bulk_delete_users_by_status(
-        self, status: Annotated[UserStatus, AttributeBody()]
-    ) -> BulkResponseDto:
+        self, 
+        body: Annotated[BulkDeleteUsersByStatusRequestDto, PydanticBody()]
+    ) -> BulkDeleteUsersByStatusResponseDto:
         """Bulk Delete Users By Status"""
         ...
 
-    @post("/users/bulk/delete", response_class=BulkResponseDto)
+    @post("/users/bulk/delete", response_class=BulkDeleteUsersResponseDto)
     async def bulk_delete_users(
         self,
-        uuids: Annotated[List[UUID], AttributeBody()],
-    ) -> BulkResponseDto:
+        body: Annotated[BulkDeleteUsersRequestDto, PydanticBody()],
+    ) -> BulkDeleteUsersResponseDto:
         """Bulk Delete Users By UUIDs"""
         ...
 
     @post(
         "/users/bulk/revoke-subscription",
-        response_class=BulkResponseDto,
+        response_class=BulkRevokeUsersSubscriptionResponseDto,
     )
     async def bulk_revoke_users_subscription(
         self,
-        uuids: Annotated[List[UUID], AttributeBody()],
-    ) -> BulkResponseDto:
+        body: Annotated[BulkRevokeUsersSubscriptionRequestDto, PydanticBody()],
+    ) -> BulkRevokeUsersSubscriptionResponseDto:
         """Bulk Revoke Users Subscription"""
         ...
 
-    @post("/users/bulk/reset-traffic", response_class=BulkResponseDto)
+    @post("/users/bulk/reset-traffic", response_class=BulkResetTrafficUsersResponseDto)
     async def bulk_reset_user_traffic(
         self,
-        uuids: Annotated[List[UUID], AttributeBody()],
-    ) -> BulkResponseDto:
+        body: Annotated[BulkResetTrafficUsersRequestDto, PydanticBody()],
+    ) -> BulkResetTrafficUsersResponseDto:
         """Bulk Reset User Traffic"""
         ...
 
-    @post("/users/bulk/update", response_class=BulkResponseDto)
+    @post("/users/bulk/update", response_class=BulkUpdateUsersResponseDto)
     async def bulk_update_users(
         self,
-        uuids: Annotated[List[UUID], AttributeBody()],
-        fields: Annotated[UpdateUserFields, AttributeBody()],
-    ) -> BulkResponseDto:
+        body: Annotated[BulkUpdateUsersRequestDto, PydanticBody()],
+    ) -> BulkUpdateUsersResponseDto:
         """Bulk Update Users"""
         ...
 
-    @post("/users/bulk/update-squads", response_class=BulkResponseDto)
+    @post("/users/bulk/update-squads", response_class=BulkUpdateUsersSquadsResponseDto)
     async def bulk_update_users_internal_squads(
         self,
-        body: Annotated[BulkUpdateUsersInternalSquadsRequestDto, PydanticBody()],
-    ) -> BulkResponseDto:
+        body: Annotated[BulkUpdateUsersSquadsRequestDto, PydanticBody()],
+    ) -> BulkUpdateUsersSquadsResponseDto:
         """Bulk Update Users Internal Squads"""
+        ...
+
+    @post(
+        "/users/bulk/extend-expiration-date",
+        response_class=BulkExtendExpirationDateResponseDto,
+    )
+    async def bulk_extend_expiration_date(
+        self,
+        body: Annotated[BulkExtendExpirationDateRequestDto, PydanticBody()],
+    ) -> BulkExtendExpirationDateResponseDto:
+        """Bulk Extend Users Expiration Date"""
         ...
 
     @post("/users/bulk/all/update", response_class=BulkAllUpdateUsersResponseDto)
@@ -89,13 +113,12 @@ class UsersBulkActionsController(BaseController):
         ...
 
     @post(
-        "/users/bulk/update-squads",
-        response_class=BulkResponseDto,
-    ) 
-    async def bulk_update_users_internal_squad(
+        "/users/bulk/all/extend-expiration-date",
+        response_class=BulkAllExtendExpirationDateResponseDto,
+    )
+    async def bulk_all_extend_expiration_date(
         self,
-        uuids: Annotated[List[UUID], AttributeBody()],
-        active_internal_squads: Annotated[List[UUID], AttributeBody(serialization_alias="activeInternalSquads")],
-    ) -> BulkResponseDto:
-        """Bulk Update Users External Squad"""
+        body: Annotated[BulkAllExtendExpirationDateRequestDto, PydanticBody()],
+    ) -> BulkAllExtendExpirationDateResponseDto:
+        """Bulk Extend All Users Expiration Date"""
         ...

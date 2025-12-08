@@ -111,8 +111,8 @@ class UserResponseDto(BaseModel):
     short_uuid: str = Field(alias="shortUuid")
     username: str
     status: UserStatus | None = None
-    traffic_limit_bytes: int | None = Field(None, alias="trafficLimitBytes", default=0)
-    traffic_limit_strategy: str | None = Field(None, alias="trafficLimitStrategy", default="NO_RESET")
+    traffic_limit_bytes: int | None = Field(default=0, alias="trafficLimitBytes")
+    traffic_limit_strategy: str | None = Field(default="NO_RESET", alias="trafficLimitStrategy")
     sub_last_user_agent: str | None = Field(None, alias="subLastUserAgent")
     sub_last_opened_at: datetime | None = Field(None, alias="subLastOpenedAt")
     expire_at: datetime = Field(alias="expireAt")
@@ -129,7 +129,7 @@ class UserResponseDto(BaseModel):
     )
     active_internal_squads: list[ActiveInternalSquadDto] = Field(alias="activeInternalSquads", default_factory=list)
     subscription_url: str = Field(alias="subscriptionUrl")
-    last_trigger_threshold: int | None = Field(None, alias="lastTriggeredThreshold", default=0)
+    last_trigger_threshold: int | None = Field(default=0, alias="lastTriggeredThreshold")
     tag: str | None = Field(None, alias="tag")
     external_squad_uuid: UUID | None = Field(None, alias="externalSquadUuid")
     created_at: datetime = Field(alias="createdAt")

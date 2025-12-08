@@ -32,6 +32,10 @@ class ActiveInternalSquadDto(BaseModel):
     name: str
 
 
+class HappCrypto(BaseModel):
+    cryptoLink: str
+
+
 class UserTrafficDto(BaseModel):
     """Traffic statistics nested in userTraffic object (API v2.3.0+)"""
     used_traffic_bytes: float = Field(alias="usedTrafficBytes")
@@ -175,12 +179,20 @@ class UsersResponseDto(BaseModel):
     total: int
 
 
+# Aliases for compatibility
+GetAllUsersResponseDto = UsersResponseDto
+
+
 class DeleteUserResponseDto(BaseModel):
     is_deleted: bool = Field(alias="isDeleted")
 
 
 class TagsResponseDto(BaseModel):
     tags: list[str]
+
+
+# Aliases for compatibility
+GetAllTagsResponseDto = TagsResponseDto
 
 
 class CreateUserResponseDto(UserResponseDto):
@@ -223,6 +235,10 @@ class GetUserByUsernameResponseDto(UserResponseDto):
     pass
 
 
+class GetUserByIdResponseDto(UserResponseDto):
+    pass
+
+
 class RevokeUserRequestDto(BaseModel):
     short_uuid: str | None = Field(
         None,
@@ -249,3 +265,7 @@ class SubscriptionRequestsResponseData(BaseModel):
 
 class GetSubscriptionRequestsResponseDto(SubscriptionRequestsResponseData):
     pass
+
+
+# Alias for compatibility
+GetUserSubscriptionRequestHistoryResponseDto = GetSubscriptionRequestsResponseDto

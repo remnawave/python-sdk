@@ -4,6 +4,7 @@ from typing import Dict, List, Optional
 from uuid import UUID
 
 from pydantic import BaseModel, Field
+from remnawave.models import CustomRemarksDto, HwidSettingsDto
 
 
 class TemplateType(StrEnum):
@@ -54,6 +55,8 @@ class ExternalSquadDto(BaseModel):
     subscription_settings: Optional[ExternalSquadSubscriptionSettingsDto] = Field(None, alias="subscriptionSettings")
     host_overrides: Optional[ExternalSquadHostOverridesDto] = Field(None, alias="hostOverrides")
     response_headers: Optional[Dict[str, str]] = Field(None, alias="responseHeaders")
+    hwid_settings: Optional[HwidSettingsDto] = Field(None, alias="hwidSettings")
+    custom_remarks: Optional[CustomRemarksDto] = Field(None, alias="customRemarks")
     created_at: datetime = Field(alias="createdAt")
     updated_at: datetime = Field(alias="updatedAt")
 
@@ -87,6 +90,8 @@ class UpdateExternalSquadRequestDto(BaseModel):
     templates: Optional[List[ExternalSquadTemplateDto]] = None
     subscription_settings: Optional[ExternalSquadSubscriptionSettingsDto] = Field(None, serialization_alias="subscriptionSettings")
     host_overrides: Optional[ExternalSquadHostOverridesDto] = Field(None, serialization_alias="hostOverrides")
+    hwid_settings: Optional[HwidSettingsDto] = Field(None, alias="hwidSettings")
+    custom_remarks: Optional[CustomRemarksDto] = Field(None, alias="customRemarks")
     response_headers: Optional[Dict[str, str]] = Field(None, serialization_alias="responseHeaders")
 
 

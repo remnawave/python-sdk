@@ -1,4 +1,4 @@
-from typing import Annotated
+from typing import Annotated, Optional
 from uuid import UUID
 
 from remnawave.models import (
@@ -8,9 +8,10 @@ from remnawave.models import (
     GetHwidStatisticsResponseDto,
     CreateHWIDUser,
     HWIDDeleteRequest,
-    DeleteUserAllHwidDeviceRequestDto
+    DeleteUserAllHwidDeviceRequestDto,
+    GetTopUsersByHwidDevicesResponseDto
 )
-from rapid_api_client import Path, PydanticBody
+from rapid_api_client import Path, PydanticBody, Query
 from remnawave.rapid import AttributeBody, BaseController, post, get
 
 
@@ -61,4 +62,13 @@ class HWIDUserController(BaseController):
         uuid: Annotated[str, Path(description="UUID of the User")],
     ) -> GetUserHwidDevicesResponseDto:
         """Get a user HWID device"""
+        ...
+
+    @get("/hwid/devices/top-users", response_class=GetTopUsersByHwidDevicesResponseDto)
+    async def get_top_users_by_hwid_devices(
+        self,
+        size: Annotated[Optional[int], Query(default=None, description="Page size for pagination")] = None,
+        start: Annotated[Optional[int], Query(default=None, description="Offset for pagination")] = None,
+    ) -> GetTopUsersByHwidDevicesResponseDto:
+        """Get top users by HWID devices"""
         ...

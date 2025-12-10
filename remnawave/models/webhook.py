@@ -23,13 +23,24 @@ class InternalSquadDto(BaseModel):
     model_config = {"alias_generator": to_camel, "populate_by_name": True}
 
 
+
+class UserTrafficDto(BaseModel):
+    """User traffic information for webhooks"""
+    used_traffic_bytes: int
+    lifetime_used_traffic_bytes: int
+    online_at: Optional[datetime] = None
+    first_connected_at: Optional[datetime] = None
+    last_connected_node_uuid: Optional[UUID] = None
+
+    model_config = {"alias_generator": to_camel, "populate_by_name": True}
+
+
 class BaseUserDto(BaseModel):
     uuid: UUID
     short_uuid: str
     username: str
     status: TUsersStatus
-    used_traffic_bytes: int
-    lifetime_used_traffic_bytes: int
+    user_traffic: UserTrafficDto
 
     traffic_limit_bytes: int
     traffic_limit_strategy: TResetPeriods
@@ -50,17 +61,40 @@ class BaseUserDto(BaseModel):
     email: Optional[str] = None
 
     hwid_device_limit: Optional[int] = None
-
-    first_connected_at: Optional[datetime] = None
     last_triggered_threshold: int
-
-    online_at: Optional[datetime] = None
-    last_connected_node_uuid: Optional[UUID] = None
 
     created_at: datetime
     updated_at: datetime
 
+
     model_config = {"alias_generator": to_camel, "populate_by_name": True}
+
+    # Backward compatibility properties
+    @property
+    def used_traffic_bytes(self) -> int:
+        """Backward compatibility property"""
+        return self.user_traffic.used_traffic_bytes
+    
+    @property
+    def lifetime_used_traffic_bytes(self) -> int:
+        """Backward compatibility property"""
+        return self.user_traffic.lifetime_used_traffic_bytes
+    
+    @property
+    def online_at(self) -> Optional[datetime]:
+        """Backward compatibility property"""
+        return self.user_traffic.online_at
+    
+    @property
+    def first_connected_at(self) -> Optional[datetime]:
+        """Backward compatibility property"""
+        return self.user_traffic.first_connected_at
+    
+    @property
+    def last_connected_node_uuid(self) -> Optional[UUID]:
+        """Backward compatibility property"""
+        return self.user_traffic.last_connected_node_uuid
+
 
 
 class UserDto(BaseUserDto):

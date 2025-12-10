@@ -84,7 +84,10 @@ from .hwid import (
     HWIDUserResponseDto,  # Legacy alias
     HWIDUserResponseDtoList,  # Legacy alias
     GetHwidStatisticsResponseDto,
-    DeleteUserAllHwidDeviceRequestDto
+    DeleteUserAllHwidDeviceRequestDto,
+    GetTopUsersByHwidDevicesResponseDto,
+    TopUserByHwidDevicesDto,
+    TopUsersByHwidDevicesData,
 )
 from .inbounds import (
     AllInboundsData,
@@ -351,6 +354,7 @@ from .webhook import (
     CustomErrorEventDto,
     CrmEventDto,
     WebhookPayloadDto,
+    UserTrafficDto
 )
 from .passkeys import (
     DeletePasskeyRequestDto,
@@ -545,6 +549,9 @@ __all__ = [
     "HWIDUserResponseDtoList",  # Legacy alias
     "GetHwidStatisticsResponseDto",
     "DeleteUserAllHwidDeviceRequestDto",
+    "GetTopUsersByHwidDevicesResponseDto",
+    "TopUserByHwidDevicesDto",
+    "TopUsersByHwidDevicesData",
     # Bandwidth stats models
     "GetNodeUserUsageByRangeResponseDto",
     "GetNodesRealtimeUsageResponseDto",
@@ -712,6 +719,7 @@ __all__ = [
     "BaseUserDto",
     "UserDto",
     "UserEventDto",
+    "UserTrafficDto",
 
     # HWID DEVICES
     "HwidUserDeviceDto",

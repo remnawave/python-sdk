@@ -39,8 +39,6 @@ class ExternalSquadSubscriptionSettingsDto(BaseModel):
     happ_routing: Optional[str] = Field(None, alias="happRouting")
     randomize_hosts: bool = Field(alias="randomizeHosts")
 
-
-# НОВЫЕ МОДЕЛИ
 class ExternalSquadHostOverridesDto(BaseModel):
     """External squad host overrides"""
     server_description: Optional[str] = Field(None, alias="serverDescription", max_length=30)
@@ -61,7 +59,7 @@ class ExternalSquadDto(BaseModel):
 
 
 # Request/Response models
-class GetExternalSquadsResponseDto(ExternalSquadDto):
+class GetExternalSquadsResponseDto(BaseModel):
     """Response with all external squads"""
     total: int = Field(alias="total")
     external_squads: List[ExternalSquadDto] = Field(alias="externalSquads")

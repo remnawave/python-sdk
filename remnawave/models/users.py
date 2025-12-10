@@ -304,6 +304,14 @@ class EmailUserResponseDto(RootModel[list[UserResponseDto]]):
 
     def __getitem__(self, item):
         return self.root[item]
+    
+    def __bool__(self):
+        """Return True if list is not empty"""
+        return bool(self.root)
+    
+    def __len__(self):
+        """Return length of list"""
+        return len(self.root)
 
 
 class TagUserResponseDto(RootModel[list[UserResponseDto]]):
@@ -313,6 +321,14 @@ class TagUserResponseDto(RootModel[list[UserResponseDto]]):
 
     def __getitem__(self, item):
         return self.root[item]
+    
+    def __bool__(self):
+        """Return True if list is not empty"""
+        return bool(self.root)
+    
+    def __len__(self):
+        """Return length of list"""
+        return len(self.root)
 
 
 class TelegramUserResponseDto(RootModel[list[UserResponseDto]]):
@@ -322,3 +338,11 @@ class TelegramUserResponseDto(RootModel[list[UserResponseDto]]):
 
     def __getitem__(self, item):
         return self.root[item]
+    
+    def __bool__(self):
+        """Return True if list is not empty"""
+        return bool(self.root)
+    
+    def __len__(self):
+        """Return length of list"""
+        return len(self.root)

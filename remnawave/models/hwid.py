@@ -76,6 +76,24 @@ class GetHwidStatisticsResponseDto(HwidStatisticsData):
 
 class DeleteUserAllHwidDeviceRequestDto(BaseModel):
     user_uuid: UUID = Field(serialization_alias="userUuid")
+    
+class TopUserByHwidDevicesDto(BaseModel):
+    """Top user by HWID devices"""
+    user_uuid: UUID = Field(alias="userUuid")
+    id: int
+    username: str
+    devices_count: int = Field(alias="devicesCount")
+
+
+class TopUsersByHwidDevicesData(BaseModel):
+    """Top users by HWID devices data"""
+    users: list[TopUserByHwidDevicesDto]
+    total: int
+
+
+class GetTopUsersByHwidDevicesResponseDto(TopUsersByHwidDevicesData):
+    """Response for get top users by HWID devices"""
+    pass
 
 # Legacy aliases for backward compatibility
 CreateHWIDUser = CreateUserHwidDeviceRequestDto

@@ -52,6 +52,6 @@ def create_happ_crypto_link(content: str, method: Literal["v3", "v4"] = "v4") ->
             content.encode("utf-8"), padding.PKCS1v15()  # RSA_PKCS1_PADDING
         )
 
-        return "happ://crypt{" + method.lower().replace("v", "") + "/" + base64.b64encode(encrypted).decode()
+        return "happ://crypt" + method.lower().replace("v", "") + "/" + base64.b64encode(encrypted).decode()
     except Exception:
         return ""

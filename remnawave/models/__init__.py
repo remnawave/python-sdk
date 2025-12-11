@@ -207,6 +207,9 @@ from .subscriptions_settings import (
     SubscriptionSettingsResponseDto,
     UpdateSubscriptionSettingsRequestDto,
     UpdateSubscriptionSettingsResponseDto,
+    CustomRemarksDto,
+    HwidSettingsDto,
+    # Backward compatibility aliases
     CustomRemarks,
     HwidSettings,
 )
@@ -492,6 +495,9 @@ __all__ = [
     "GetSubscriptionSettingsResponseDto",
     "SubscriptionSettingsResponseDto",
     "UpdateSubscriptionSettingsRequestDto",
+    "CustomRemarksDto",
+    "HwidSettingsDto",
+    # Backward compatibility aliases
     "CustomRemarks",
     "HwidSettings",
     "UpdateSubscriptionSettingsResponseDto",

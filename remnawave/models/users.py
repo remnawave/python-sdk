@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Annotated, List, Optional
+from typing import Annotated, List, Literal, Optional
 from uuid import UUID
 
 from pydantic import (
@@ -176,6 +176,13 @@ class UserResponseDto(BaseModel):
     def happ(self) -> HappCrypto:
         """Generate Happ Crypto Link"""
         crypto_link = create_happ_crypto_link(self.subscription_url)
+        return HappCrypto(cryptoLink=crypto_link)
+    
+    def happ_with_version(self, version: Literal["v3", "v4"] = "v4") -> HappCrypto:
+        return self._generate_happ(version=version)
+
+    def _generate_happ(self, version):
+        crypto_link = create_happ_crypto_link(content=self.subscription_url, method=version)
         return HappCrypto(cryptoLink=crypto_link)
 
 

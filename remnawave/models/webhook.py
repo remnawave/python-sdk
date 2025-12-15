@@ -219,8 +219,6 @@ class NodeDto(BaseModel):
     is_connected: bool
     is_connecting: bool
     is_disabled: bool
-    is_node_online: bool
-    is_xray_running: bool
     last_status_change: Optional[datetime] = None
     last_status_message: Optional[str] = None
 

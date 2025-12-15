@@ -1,0 +1,32 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="Eslint" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="false" level="WARNING" enabled_by_default="false">
+      <option name="ignoredPackages">
+        <list>
+          <option value="aiogram" />
+          <option value="aioredis" />
+          <option value="redis" />
+          <option value="environs" />
+          <option value="loguru" />
+          <option value="SQLAlchemy" />
+          <option value="asyncpg" />
+          <option value="apscheduler" />
+          <option value="aiopayok" />
+          <option value="aioyookassa" />
+          <option value="pandas" />
+          <option value="xlsxwriter" />
+          <option value="aiohttp" />
+          <option value="aiofiles" />
+          <option value="ujson" />
+          <option value="PyYAML" />
+          <option value="phonenumbers" />
+          <option value="pydantic" />
+          <option value="cachetools" />
+          <option value="orjson" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>

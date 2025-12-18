@@ -49,10 +49,12 @@ class GetNodesUsageByRangeResponseDto(RootModel[List[NodeUsageDto]]):
 
 
 class UserUsageDto(BaseModel):
+    """User usage data with node information"""
     user_uuid: UUID = Field(alias="userUuid")
+    node_uuid: UUID = Field(alias="nodeUuid")
     username: str
-    upload: int
-    download: int
+    total: int
+    date: datetime
 
 
 class GetNodeUserUsageByRangeResponseDto(RootModel[List[UserUsageDto]]):

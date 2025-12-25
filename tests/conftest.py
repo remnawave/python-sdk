@@ -41,7 +41,7 @@ async def remnawave() -> RemnawaveSDK:
     assert sdk.system is not None
     assert sdk.users is not None
     assert sdk.users_bulk_actions is not None
-    assert sdk.users_stats is not None
+    assert sdk.subscription_page_config is not None
     assert sdk.xray_config is not None
     assert sdk.hwid is not None
     return sdk

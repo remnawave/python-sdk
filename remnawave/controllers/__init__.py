@@ -11,7 +11,6 @@ from .infra_billing import InfraBillingController
 from .internal_squads import InternalSquadsController
 from .keygen import KeygenController
 from .nodes import NodesController
-from .nodes_usage_history import NodesUsageHistoryController, NodesUserUsageHistoryController
 from .subscription import SubscriptionController
 from .subscriptions_controller import SubscriptionsController
 from .subscriptions_settings import SubscriptionsSettingsController
@@ -19,7 +18,6 @@ from .subscriptions_template import SubscriptionsTemplateController
 from .system import SystemController
 from .users import UsersController
 from .users_bulk_actions import UsersBulkActionsController
-from .users_stats import UsersStatsController
 from .webhooks import WebhookUtility
 from .xray_config import XrayConfigController
 from .subscriptions_request import SubscriptionRequestHistoryController
@@ -27,7 +25,7 @@ from .passkeys import PasskeysController
 from .external_squads import ExternalSquadsController
 from .snippets import SnippetsController
 from .remnawave_settings import RemnawaveSettingsController
-
+from .subscription_page import SubscriptionPageConfigController
 
 __all__ = [
     "APITokensManagementController",
@@ -43,8 +41,6 @@ __all__ = [
     "InternalSquadsController",
     "KeygenController",
     "NodesController",
-    "NodesUsageHistoryController",
-    "NodesUserUsageHistoryController",
     "SubscriptionController",
     "SubscriptionsController",
     "SubscriptionsSettingsController",
@@ -52,7 +48,6 @@ __all__ = [
     "SystemController",
     "UsersController",
     "UsersBulkActionsController",
-    "UsersStatsController",
     "WebhookUtility",
     "XrayConfigController",
     "SubscriptionRequestHistoryController",
@@ -60,4 +55,5 @@ __all__ = [
     "ExternalSquadsController",
     "SnippetsController",
     "RemnawaveSettingsController",
+    "SubscriptionPageConfigController"
 ]

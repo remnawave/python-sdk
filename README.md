@@ -21,19 +21,6 @@
 A Python SDK client for interacting with the **[Remnawave API](https://remna.st)**.
 This library simplifies working with the API by providing convenient controllers, Pydantic models for requests and responses, and fast serialization with `orjson`. 
 
-**🎉 Version 2.0.0** brings full compatibility with the latest Remnawave backend API, including new endpoints, improved response wrappers, and enhanced type safety.
-
-## ✨ Key Features
-
-- **Full v2.0.0 API compatibility**: Updated for latest Remnawave backend features
-- **New controllers**: ConfigProfiles, InternalSquads, InfraBilling, NodesUsageHistory
-- **Enhanced models**: OpenAPI-compliant response wrappers with improved field mappings
-- **Controller-based design**: Split functionality into separate controllers for flexibility. Use only what you need!
-- **Pydantic models**: Strongly-typed requests and responses for better reliability.
-- **Fast serialization**: Powered by `orjson` for efficient JSON handling.
-- **Modular usage**: Import individual controllers or the full SDK as needed.
-- **Backward compatibility**: Legacy aliases maintained for smooth migration.
-
 ## 📦 Installation
 
 ### New Package (Recommended)
@@ -63,7 +50,8 @@ pip install git+https://github.com/remnawave/python-sdk.git@development
 
 | Contract Version | Remnawave Panel Version |
 | ---------------- | ----------------------- |
-| 2.3.2            | >=2.3.0                 |
+| 2.4.4            | >=2.4.0                 |
+| 2.3.2            | >=2.3.0, <2.4.0         |
 | 2.3.0            | >=2.3.0, <2.3.2         |
 | 2.2.6            | ==2.2.6                 |
 | 2.2.3            | >=2.2.13                |
@@ -126,14 +114,6 @@ if __name__ == "__main__":
 ```
 
 ---
-
-## 🧪 Running Tests
-
-To run the test suite, use Poetry:
-
-```bash
-poetry run pytest
-```
 
 ## ❤️ About
 

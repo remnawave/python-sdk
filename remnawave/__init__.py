@@ -17,8 +17,6 @@ from remnawave.controllers import (
     InternalSquadsController,
     KeygenController,
     NodesController,
-    NodesUsageHistoryController,
-    NodesUserUsageHistoryController,
     SubscriptionController,
     SubscriptionsController,
     SubscriptionsSettingsController,
@@ -26,7 +24,6 @@ from remnawave.controllers import (
     SystemController,
     UsersBulkActionsController,
     UsersController,
-    UsersStatsController,
     WebhookUtility,
     XrayConfigController,
     SubscriptionRequestHistoryController,
@@ -34,7 +31,7 @@ from remnawave.controllers import (
     ExternalSquadsController,
     SnippetsController,
     RemnawaveSettingsController,
-    # WebhookUtility is not a controller, but it's included in the controllers module for convenience
+    SubscriptionPageConfigController,
 )
     
 
@@ -84,8 +81,6 @@ class RemnawaveSDK:
         self.internal_squads = InternalSquadsController(self._client)
         self.keygen = KeygenController(self._client)
         self.nodes = NodesController(self._client)
-        self.nodes_usage_history = NodesUsageHistoryController(self._client)
-        self.nodes_user_usage_history = NodesUserUsageHistoryController(self._client)
         self.subscription = SubscriptionController(self._client)
         self.subscriptions = SubscriptionsController(self._client)
         self.subscriptions_settings = SubscriptionsSettingsController(self._client)
@@ -94,13 +89,13 @@ class RemnawaveSDK:
         self.system = SystemController(self._client)
         self.users = UsersController(self._client)
         self.users_bulk_actions = UsersBulkActionsController(self._client)
-        self.users_stats = UsersStatsController(self._client)
         self.webhook_utility = WebhookUtility()
         self.xray_config = XrayConfigController(self._client)
         self.passkeys = PasskeysController(self._client)
         self.external_squads = ExternalSquadsController(self._client)
         self.snippets = SnippetsController(self._client)
         self.remnawave_settings = RemnawaveSettingsController(self._client)
+        self.subscription_page_config = SubscriptionPageConfigController(self._client)
 
     def _validate_params(self) -> None:
         if self._client is None:

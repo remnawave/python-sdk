@@ -7,7 +7,7 @@ authors = [
 ]
 license = { text = "MIT" }
 readme = "README.md"
-requires-python = ">=3.11,<4.0"
+requires-python = ">=3.11,<3.13"
 dependencies = [
     "rapid-api-client (==0.6.0)",
     "orjson (>=3.10.15,<4.0.0)",

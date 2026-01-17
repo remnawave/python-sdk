@@ -20,7 +20,7 @@ from remnawave.rapid import BaseController, get
 class BandWidthStatsController(BaseController):
     # ============ Legacy Endpoints (Deprecated) ============
 
-    @get("/bandwidth-stats/users/{user_uuid}/legacy-old", response_class=GetUserUsageByRangeResponseDto)
+    @get("/bandwidth-stats/users/{userUuid}/legacy", response_class=GetUserUsageByRangeResponseDto)
     async def get_user_usage_legacy_old(
         self,
         user_uuid: Annotated[str, Path(description="UUID of the user", alias="userUuid")],
@@ -30,7 +30,7 @@ class BandWidthStatsController(BaseController):
         """Get User Usage by Range (Legacy - Deprecated)"""
         ...
 
-    @get("/bandwidth-stats/nodes/{node_uuid}/users/legacy-old", response_class=GetNodeUserUsageByRangeResponseDto)
+    @get("/bandwidth-stats/nodes/{nodeUuid}/users/legacy", response_class=GetNodeUserUsageByRangeResponseDto)
     async def get_node_user_usage_legacy_old(
         self,
         node_uuid: Annotated[str, Path(description="UUID of the node", alias="nodeUuid")],

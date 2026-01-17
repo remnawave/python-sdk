@@ -172,3 +172,39 @@ class DebugSrrMatcherData(BaseModel):
 
 class DebugSrrMatcherResponseDto(DebugSrrMatcherData):
     pass
+
+class BuildInfo(BaseModel):
+    """Build information"""
+    time: str
+    number: str
+
+
+class GitBackendInfo(BaseModel):
+    """Git backend information"""
+    commit_sha: str = Field(alias="commitSha")
+    branch: str
+    commit_url: str = Field(alias="commitUrl")
+
+
+class GitFrontendInfo(BaseModel):
+    """Git frontend information"""
+    commit_sha: str = Field(alias="commitSha")
+    commit_url: str = Field(alias="commitUrl")
+
+
+class GitInfo(BaseModel):
+    """Git information"""
+    backend: GitBackendInfo
+    frontend: GitFrontendInfo
+
+
+class MetadataResponse(BaseModel):
+    """Metadata response data"""
+    version: str
+    build: BuildInfo
+    git: GitInfo
+
+
+class GetMetadataResponseDto(MetadataResponse):
+    """Get metadata response"""
+    pass

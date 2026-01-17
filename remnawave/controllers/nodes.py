@@ -19,7 +19,9 @@ from remnawave.models import (
     UpdateNodeResponseDto,
     RestartAllNodesRequestBodyDto, 
     ResetNodeTrafficRequestDto,
-    ResetNodeTrafficResponseDto
+    ResetNodeTrafficResponseDto,
+    ProfileModificationRequestDto,
+    ProfileModificationResponseDto,
 )
 from remnawave.rapid import BaseController, delete, get, patch, post
 
@@ -110,4 +112,12 @@ class NodesController(BaseController):
         body: Annotated[ResetNodeTrafficRequestDto, PydanticBody()],
     ) -> ResetNodeTrafficResponseDto:
         """Reset Traffic All Nodes"""
+        ...
+        
+    @post("/nodes/bulk-actions/profile-modification", response_class=ProfileModificationResponseDto)
+    async def profile_modification(
+        self,
+        body: Annotated[ProfileModificationRequestDto, PydanticBody()],
+    ) -> ProfileModificationResponseDto:
+        """Modify Inbounds & Profile for many nodes"""
         ...

@@ -11,11 +11,19 @@ from remnawave.models import (
     EncryptHappCryptoLinkResponseDto,
     DebugSrrMatcherRequestDto,
     DebugSrrMatcherResponseDto,
+    GetMetadataResponseDto
 )
 from remnawave.rapid import BaseController, get, post
 
 
 class SystemController(BaseController):
+    @get("/system/metadata", response_class=GetMetadataResponseDto)
+    async def get_metadata(
+        self,
+    ) -> GetMetadataResponseDto:
+        """Get Remnawave Information"""
+        ...
+        
     @get("/system/stats", response_class=GetStatsResponseDto)
     async def get_stats(
         self,

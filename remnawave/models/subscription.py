@@ -157,7 +157,7 @@ class RawHost(BaseModel):
     mldsa65_verify: Optional[str] = Field(None, alias="mldsa65Verify")
     encryption: Optional[str] = None
     protocol_options: Optional[RawHostProtocolOptions] = Field(None, alias="protocolOptions")
-    db_data: RawHostDbData = Field(alias="dbData")
+    db_data: Optional[RawHostDbData] = Field(None, alias="dbData")
     xray_json_template: Optional[Dict[str, Any]] = Field(None, alias="xrayJsonTemplate")
 
 

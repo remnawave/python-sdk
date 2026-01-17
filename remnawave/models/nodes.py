@@ -230,6 +230,27 @@ class ResetNodeTrafficRequestDto(BaseModel):
 class ResetNodeTrafficResponseDto(RestartEventResponse):
     pass
 
+class ConfigProfileData(BaseModel):
+    """Config profile data for modification"""
+    active_config_profile_uuid: str = Field(alias="activeConfigProfileUuid")
+    active_inbounds: List[str] = Field(alias="activeInbounds", min_length=1)
+
+
+class ProfileModificationRequestDto(BaseModel):
+    """Request to modify profiles for multiple nodes"""
+    uuids: List[str] = Field(min_length=1)
+    config_profile: ConfigProfileData = Field(alias="configProfile")
+
+
+class ProfileModificationResponseData(BaseModel):
+    """Profile modification response data"""
+    event_sent: bool = Field(alias="eventSent")
+
+
+class ProfileModificationResponseDto(ProfileModificationResponseData):
+    """Profile modification response"""
+    pass
+
 # Для обратной совместимости
 RestartAllNodesRequestDto = RestartAllNodesRequestBodyDto
 NodesResponseDto = NodeResponseDto

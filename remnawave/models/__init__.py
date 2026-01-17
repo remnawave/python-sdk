@@ -193,7 +193,9 @@ from .nodes import (
     RestartAllNodesRequestDto, # Legacy alias,
     RestartAllNodesRequestBodyDto,
     ResetNodeTrafficRequestDto,
-    ResetNodeTrafficResponseDto
+    ResetNodeTrafficResponseDto,
+    ProfileModificationRequestDto,
+    ProfileModificationResponseDto,
 )
 from .nodes_usage_history import (
     GetNodeUserUsageByRangeResponseDto,
@@ -263,6 +265,7 @@ from .system import (
     DebugSrrMatcherResponseDto,
     EncryptHappCryptoLinkRequestDto,
     EncryptHappCryptoLinkResponseDto,
+    GetMetadataResponseDto
 )
 from .users import (
     # Request DTOs
@@ -483,6 +486,8 @@ __all__ = [
     "RestartAllNodesRequestBodyDto",
     "ResetNodeTrafficRequestDto",
     "ResetNodeTrafficResponseDto",
+    "ProfileModificationRequestDto",
+    "ProfileModificationResponseDto",
     # Hosts models
     "CreateHostRequestDto",
     "CreateHostResponseDto",
@@ -570,6 +575,7 @@ __all__ = [
     "DebugSrrMatcherResponseDto",
     "EncryptHappCryptoLinkRequestDto",
     "EncryptHappCryptoLinkResponseDto",
+    "GetMetadataResponseDto"
     # XRay config models
     "ConfigResponseDto",  # Legacy alias
     "GetConfigResponseDto",

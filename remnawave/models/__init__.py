@@ -196,6 +196,9 @@ from .nodes import (
     ResetNodeTrafficResponseDto,
     ProfileModificationRequestDto,
     ProfileModificationResponseDto,
+    NodeBulkActionType,
+    NodesBulkActionsRequestDto,
+    NodesBulkActionsResponseDto,
 )
 from .nodes_usage_history import (
     GetNodeUserUsageByRangeResponseDto,
@@ -488,6 +491,9 @@ __all__ = [
     "ResetNodeTrafficResponseDto",
     "ProfileModificationRequestDto",
     "ProfileModificationResponseDto",
+    "NodeBulkActionType",
+    "NodesBulkActionsRequestDto",
+    "NodesBulkActionsResponseDto",
     # Hosts models
     "CreateHostRequestDto",
     "CreateHostResponseDto",

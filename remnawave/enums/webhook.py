@@ -35,6 +35,7 @@ TServiceEvents = Literal[
     "service.panel_started",
     "service.login_attempt_failed",
     "service.login_attempt_success",
+    "service.subpage_config_changed",
 ]
 
 TErrorsEvents = Literal[

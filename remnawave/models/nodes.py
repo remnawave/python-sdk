@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Annotated, List, Optional, Union
+from typing import Annotated, List, Optional, Union, Literal
 from uuid import UUID
 
 from pydantic import BaseModel, Field, StringConstraints, RootModel
@@ -254,3 +254,17 @@ class ProfileModificationResponseDto(ProfileModificationResponseData):
 # Для обратной совместимости
 RestartAllNodesRequestDto = RestartAllNodesRequestBodyDto
 NodesResponseDto = NodeResponseDto
+
+
+NodeBulkActionType = Literal["ENABLE", "DISABLE", "RESTART", "RESET_TRAFFIC"]
+
+
+class NodesBulkActionsRequestDto(BaseModel):
+    """Request for performing bulk actions on nodes"""
+    uuids: List[UUID] = Field(min_length=1)
+    action: NodeBulkActionType = Field(description="Action to perform on nodes")
+
+
+class NodesBulkActionsResponseDto(BaseModel):
+    """Response after performing bulk actions on nodes"""
+    event_sent: bool = Field(alias="eventSent")

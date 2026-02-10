@@ -196,7 +196,11 @@ class RevokeUserRequestDto(BaseModel):
         max_length=48,
         pattern=r"^[a-zA-Z0-9_-]+$",
     )
-
+    revoke_only_passwords: Optional[bool] = Field(
+        None,
+        serialization_alias="revokeOnlyPasswords",
+        description="Optional. If true, only passwords will be revoked without changing the short UUID.",
+    )
 
 class SubscriptionRequestRecord(BaseModel):
     """Subscription request history record"""

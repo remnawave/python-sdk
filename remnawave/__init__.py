@@ -44,6 +44,7 @@ class RemnawaveSDK:
         caddy_token: Optional[str] = None,
         ssl_ignore: Optional[bool] = False,
         custom_headers: Optional[dict] = None,
+        cookies: Optional[dict] = None,
     ):
         """
         Remnawave SDK init
@@ -55,6 +56,7 @@ class RemnawaveSDK:
             caddy_token (Optional[str]): - Token for Caddy Auth (Headers). Defaults to None.
             ssl_ignore (Optional[bool]): - Whether to ignore SSL certificate errors. Defaults to False.
             custom_headers (Optional[dict]): - Custom headers to include in the requests. Defaults to None.
+            cookies (Optional[dict]): - Cookies for Reverse Proxy authorization. Defaults to None.
         """
         self._client = client
         self._token = token
@@ -62,6 +64,7 @@ class RemnawaveSDK:
         self.caddy_token = caddy_token
         self.ssl_ignore = ssl_ignore
         self.custom_headers = custom_headers
+        self.cookies = cookies
 
         self._validate_params()
 
@@ -108,13 +111,21 @@ class RemnawaveSDK:
                 logging.warning(
                     "base_url and token will be ignored if client is provided"
                 )
+            if self.cookies is not None:
+                logging.warning(
+                    "cookies will be ignored if client is provided"
+                )
 
     def _prepare_client(self) -> httpx.AsyncClient:
-        return httpx.AsyncClient(
-            base_url=self._prepare_url(),
-            headers=self._prepare_headers(),
-            verify=not self.ssl_ignore,
-        )
+        client_kwargs = {
+            "base_url": self._prepare_url(),
+            "headers": self._prepare_headers(),
+            "verify": not self.ssl_ignore,
+        }
+        if self.cookies is not None:
+            client_kwargs["cookies"] = self.cookies
+        
+        return httpx.AsyncClient(**client_kwargs)
 
     def _prepare_headers(self) -> dict:
         headers = {}

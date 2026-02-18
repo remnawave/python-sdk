@@ -6,7 +6,10 @@ from remnawave.models import (
     GetSubscriptionInfoResponseDto,
     GetRawSubscriptionByShortUuidResponseDto,
     GetAllSubscriptionsResponseDto,
-    GetSubscriptionByUsernameResponseDto
+    GetSubscriptionByUsernameResponseDto,
+    GetSubpageConfigByShortUuidRequestBodyDto,
+    GetSubpageConfigByShortUuidResponseDto,
+    SubpageConfigData,
 )
 from tests.conftest import REMNAWAVE_SHORT_UUID, REMNAWAVE_USER_USERNAME
 
@@ -72,3 +75,15 @@ class TestSubscriptionsManagement:
             username=REMNAWAVE_USER_USERNAME
         )
         assert isinstance(subscription_by_username, GetSubscriptionByUsernameResponseDto)
+
+    @pytest.mark.asyncio
+    async def test_get_subpage_config(self, remnawave):
+        """Тест получения конфига страницы подписки по short UUID"""
+        body = GetSubpageConfigByShortUuidRequestBodyDto(request_headers={})
+        subpage_config = await remnawave.subscriptions.get_subpage_config(
+            short_uuid=REMNAWAVE_SHORT_UUID,
+            body=body,
+        )
+        # Client auto-unwraps single "response" field → returns SubpageConfigData
+        assert isinstance(subpage_config, (GetSubpageConfigByShortUuidResponseDto, SubpageConfigData))
+        assert hasattr(subpage_config, 'webpage_allowed')

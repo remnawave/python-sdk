@@ -11,6 +11,9 @@ from remnawave.models import (
     DeleteUsersFromInternalSquadResponseDto,
     GetAllInternalSquadsResponseDto,
     GetInternalSquadByUuidResponseDto,
+    ReorderInternalSquadItem,
+    ReorderInternalSquadsRequestDto,
+    ReorderInternalSquadsResponseDto,
     UpdateInternalSquadRequestDto,
     UpdateInternalSquadResponseDto,
 )
@@ -69,6 +72,21 @@ async def test_internal_squads(remnawave) -> None:
     )
     
     assert isinstance(remove_users, DeleteUsersFromInternalSquadResponseDto)
+
+    # Test reorder internal squads
+    all_squads = await remnawave.internal_squads.get_internal_squads()
+    if len(all_squads.internal_squads) >= 2:
+        items = [
+            ReorderInternalSquadItem(
+                uuid=squad.uuid,
+                view_position=idx
+            )
+            for idx, squad in enumerate(all_squads.internal_squads)
+        ]
+        reorder_result = await remnawave.internal_squads.reorder_internal_squads(
+            ReorderInternalSquadsRequestDto(items=items)
+        )
+        assert isinstance(reorder_result, ReorderInternalSquadsResponseDto)
     
     # Test delete internal squad
     delete_squad = await remnawave.internal_squads.delete_internal_squad(squad_uuid)

@@ -101,3 +101,16 @@ class AccessibleNodeDto(BaseModel):
 class GetInternalSquadAccessibleNodesResponseDto(BaseModel):
     squad_uuid: UUID = Field(alias="squadUuid")
     accessible_nodes: List[AccessibleNodeDto] = Field(alias="accessibleNodes")
+
+
+class ReorderInternalSquadItem(BaseModel):
+    view_position: int = Field(serialization_alias="viewPosition")
+    uuid: UUID
+
+
+class ReorderInternalSquadsRequestDto(BaseModel):
+    items: List[ReorderInternalSquadItem]
+
+
+class ReorderInternalSquadsResponseDto(GetAllInternalSquadsResponse):
+    pass

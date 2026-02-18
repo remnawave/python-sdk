@@ -73,3 +73,16 @@ class GetAllInboundsResponseDto(List[InboundDto]):
 
 class GetInboundsByProfileUuidResponseDto(List[InboundDto]):
     pass
+
+
+class ReorderConfigProfileItem(BaseModel):
+    view_position: int = Field(serialization_alias="viewPosition")
+    uuid: UUID
+
+
+class ReorderConfigProfilesRequestDto(BaseModel):
+    items: List[ReorderConfigProfileItem]
+
+
+class ReorderConfigProfilesResponseDto(GetAllConfigProfilesResponsePaginated):
+    pass

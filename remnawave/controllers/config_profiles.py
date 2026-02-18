@@ -11,6 +11,8 @@ from remnawave.models import (
     GetAllInboundsResponseDto,
     GetConfigProfileByUuidResponseDto,
     GetInboundsByProfileUuidResponseDto,
+    ReorderConfigProfilesRequestDto,
+    ReorderConfigProfilesResponseDto,
     UpdateConfigProfileRequestDto,
     UpdateConfigProfileResponseDto,
 )
@@ -66,6 +68,14 @@ class ConfigProfilesController(BaseController):
         uuid: Annotated[str, Path(description="UUID of the config profile")],
     ) -> DeleteConfigProfileResponseDto:
         """Delete config profile"""
+        ...
+
+    @post("/config-profiles/actions/reorder", response_class=ReorderConfigProfilesResponseDto)
+    async def reorder_config_profiles(
+        self,
+        body: Annotated[ReorderConfigProfilesRequestDto, PydanticBody()],
+    ) -> ReorderConfigProfilesResponseDto:
+        """Reorder config profiles"""
         ...
 
     # Get computed config profile by uuid​

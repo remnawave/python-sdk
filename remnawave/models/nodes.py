@@ -212,6 +212,10 @@ class RestartAllNodesResponseDto(BaseModel):
     event_sent: bool = Field(alias="eventSent")
 
 
+class ResetNodeTrafficResponseDto(BaseModel):
+    event_sent: bool = Field(alias="eventSent")
+
+
 class ReorderNodeResponseDto(RootModel[List[NodeResponseDto]]):
     root: List[NodeResponseDto]
 

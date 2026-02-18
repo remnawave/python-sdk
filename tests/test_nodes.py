@@ -11,6 +11,7 @@ from remnawave.models import (
     NodesResponseDto,
     ReorderNodeRequestDto,
     ReorderNodeResponseDto,
+    ResetNodeTrafficResponseDto,
     UpdateNodeRequestDto,
 )
 from remnawave.models.nodes import ReorderNodeItem
@@ -63,6 +64,10 @@ async def test_nodes(remnawave):
     assert isinstance(update_node, NodeResponseDto)
     assert update_node.uuid == create_node.uuid
     assert update_node.name == update_name
+
+    reset_traffic = await remnawave.nodes.reset_node_traffic(uuid=string_uuid)
+    assert isinstance(reset_traffic, ResetNodeTrafficResponseDto)
+    assert reset_traffic.event_sent is True
 
     delete_node = await remnawave.nodes.delete_node(uuid=string_uuid)
     assert isinstance(delete_node, DeleteNodeResponseDto)

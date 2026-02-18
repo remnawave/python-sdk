@@ -106,6 +106,26 @@ class DeleteExternalSquadResponseDto(BaseModel):
     is_deleted: bool = Field(alias="isDeleted")
 
 
+class ReorderExternalSquadItem(BaseModel):
+    view_position: int = Field(serialization_alias="viewPosition")
+    uuid: UUID
+
+
+class ReorderExternalSquadsRequestDto(BaseModel):
+    items: List[ReorderExternalSquadItem]
+
+
+class ReorderExternalSquadsResponseDto(BaseModel):
+    """Response after reordering external squads"""
+    total: int = Field(alias="total")
+    external_squads: List[ExternalSquadDto] = Field(alias="externalSquads")
+
+
+class DeleteExternalSquadResponseDto(BaseModel):
+    """Response after deleting external squad"""
+    is_deleted: bool = Field(alias="isDeleted")
+
+
 class AddUsersToExternalSquadResponseDto(BaseModel):
     """Response after adding users to external squad"""
     event_sent: bool = Field(alias="eventSent")

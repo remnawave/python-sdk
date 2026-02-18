@@ -105,3 +105,25 @@ class CloneSubscriptionPageConfigRequestDto(BaseModel):
 class CloneSubscriptionPageConfigResponseDto(SubscriptionPageConfigDto):
     """Response after cloning subscription page config"""
     pass
+
+
+class GetSubpageConfigByShortUuidRequestBodyDto(BaseModel):
+    """Request body for getting subpage config by short UUID"""
+    model_config = ConfigDict(populate_by_name=True)
+    
+    request_headers: dict[str, str] = Field(default_factory=dict, serialization_alias="requestHeaders")
+
+
+class SubpageConfigData(BaseModel):
+    """Data inside GetSubpageConfigByShortUuidResponseDto"""
+    model_config = ConfigDict(populate_by_name=True)
+    
+    subpage_config_uuid: UUID | None = Field(alias="subpageConfigUuid")
+    webpage_allowed: bool = Field(alias="webpageAllowed")
+
+
+class GetSubpageConfigByShortUuidResponseDto(BaseModel):
+    """Response for getting subpage config by short UUID"""
+    model_config = ConfigDict(populate_by_name=True)
+    
+    response: SubpageConfigData

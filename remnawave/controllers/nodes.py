@@ -115,6 +115,14 @@ class NodesController(BaseController):
     ) -> ReorderNodeResponseDto:
         """Reorder Nodes"""
         ...
+    
+    @post("/nodes/{uuid}/actions/reset-traffic", response_class=ResetNodeTrafficResponseDto)
+    async def reset_node_traffic(
+        self,
+        uuid: Annotated[str, Path(description="UUID of the node")],
+    ) -> ResetNodeTrafficResponseDto:
+        """Reset traffic for individual node"""
+        ...
         
     @post("/nodes/actions/reset-traffic", response_class=ResetNodeTrafficResponseDto)
     async def reset_traffic_all_nodes(

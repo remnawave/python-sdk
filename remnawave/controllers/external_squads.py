@@ -10,6 +10,8 @@ from remnawave.models import (
     GetExternalSquadByUuidResponseDto,
     GetExternalSquadsResponseDto,
     RemoveUsersFromExternalSquadResponseDto,
+    ReorderExternalSquadsRequestDto,
+    ReorderExternalSquadsResponseDto,
     UpdateExternalSquadRequestDto,
     UpdateExternalSquadResponseDto,
 )
@@ -70,4 +72,11 @@ class ExternalSquadsController(BaseController):
         uuid: str,
     ) -> RemoveUsersFromExternalSquadResponseDto:
         """Delete users from external squad"""
+        ...
+    @post("/external-squads/actions/reorder", response_class=ReorderExternalSquadsResponseDto)
+    async def reorder_external_squads(
+        self,
+        body: Annotated[ReorderExternalSquadsRequestDto, PydanticBody()],
+    ) -> ReorderExternalSquadsResponseDto:
+        """Reorder external squads"""
         ...

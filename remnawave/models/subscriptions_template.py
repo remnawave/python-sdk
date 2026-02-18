@@ -65,6 +65,19 @@ class DeleteSubscriptionTemplateResponseDto(DeleteTemplateData):
     pass
 
 
+class ReorderTemplateItem(BaseModel):
+    view_position: int = Field(serialization_alias="viewPosition")
+    uuid: UUID
+
+
+class ReorderSubscriptionTemplatesRequestDto(BaseModel):
+    items: List[ReorderTemplateItem]
+
+
+class ReorderSubscriptionTemplatesResponseDto(GetTemplatesData):
+    pass
+
+
 # Legacy aliases for backward compatibility
 class UpdateTemplateRequestDtoLegacy(BaseModel):
     template_type: TemplateType = Field(serialization_alias="templateType")

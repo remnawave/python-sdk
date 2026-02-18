@@ -9,6 +9,8 @@ from remnawave.models import (
     DeleteSubscriptionTemplateResponseDto,
     GetTemplateResponseDto,
     GetTemplatesResponseDto,
+    ReorderSubscriptionTemplatesRequestDto,
+    ReorderSubscriptionTemplatesResponseDto,
     UpdateTemplateRequestDto,
     UpdateTemplateResponseDto,
 )
@@ -51,4 +53,11 @@ class SubscriptionsTemplateController(BaseController):
         uuid: Annotated[str, Path(description="Template UUID")],
     ) -> DeleteSubscriptionTemplateResponseDto:
         """Delete subscription template"""
+        ...
+    @post("/subscription-templates/actions/reorder", response_class=ReorderSubscriptionTemplatesResponseDto)
+    async def reorder_templates(
+        self,
+        body: Annotated[ReorderSubscriptionTemplatesRequestDto, PydanticBody()],
+    ) -> ReorderSubscriptionTemplatesResponseDto:
+        """Reorder subscription templates"""
         ...

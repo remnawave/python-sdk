@@ -28,6 +28,11 @@ class ReorderNodeItem(BaseModel):
     uuid: UUID
 
 
+class GetAllNodesTagsResponseDto(BaseModel):
+    """Response with all nodes tags"""
+    tags: List[str]
+
+
 class NodeProviderDto(BaseModel):
     """Node provider information"""
     uuid: UUID
@@ -79,6 +84,11 @@ class CreateNodeRequestDto(BaseModel):
         serialization_alias="configProfile"
     )
     provider_uuid: Optional[UUID] = Field(None, serialization_alias="providerUuid")
+    tags: Optional[List[Annotated[str, StringConstraints(max_length=36, pattern=r'^[A-Z0-9_:]+$')]]] = Field(
+        None, 
+        serialization_alias="tags",
+        max_length=10
+    )
 
 
 class UpdateNodeRequestDto(BaseModel):
@@ -111,6 +121,11 @@ class UpdateNodeRequestDto(BaseModel):
         None, serialization_alias="configProfile"
     )
     provider_uuid: Optional[UUID] = Field(None, serialization_alias="providerUuid")
+    tags: Optional[List[Annotated[str, StringConstraints(max_length=36, pattern=r'^[A-Z0-9_:]+$')]]] = Field(
+        None,
+        serialization_alias="tags",
+        max_length=10
+    )
 
 
 class ReorderNodeRequestDto(BaseModel):
@@ -147,6 +162,7 @@ class NodeResponseDto(BaseModel):
     config_profile: NodeConfigProfileDto = Field(alias="configProfile")
     provider_uuid: Optional[UUID] = Field(None, alias="providerUuid")
     provider: Optional[NodeProviderDto] = None
+    tags: List[str] = Field(default_factory=list, alias="tags")
 
 
 class CreateNodeResponseDto(NodeResponseDto):

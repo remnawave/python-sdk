@@ -179,6 +179,7 @@ from .nodes import (
     EnableNodeResponseDto,
     ExcludedInbounds,
     GetAllNodesResponseDto,
+    GetAllNodesTagsResponseDto,
     GetOneNodeResponseDto,
     NodeConfigProfileDto,
     NodeConfigProfileRequestDto,
@@ -388,6 +389,8 @@ from .passkeys import (
     GetAllPasskeysResponseDto,
     GetPasskeyRegistrationOptionsResponseDto,
     PasskeyDto,
+    UpdatePasskeyRequestDto,
+    UpdatePasskeyResponseDto,
     VerifyPasskeyRegistrationRequestDto,
     VerifyPasskeyRegistrationResponseDto,
 )
@@ -422,6 +425,8 @@ from .remnawave_settings import (
     BrandingSettings,
     GetRemnawaveSettingsResponseDto,
     GitHubOAuth2Settings,
+    GenericOAuth2Settings,
+    KeycloakOAuth2Settings,
     OAuth2Settings,
     PasskeySettings,
     PasswordSettings,
@@ -474,6 +479,7 @@ __all__ = [
     "EnableNodeResponseDto",
     "ExcludedInbounds",
     "GetAllNodesResponseDto",
+    "GetAllNodesTagsResponseDto",
     "GetOneNodeResponseDto",
     "NodeResponseDto",
     "NodesResponseDto",  # Legacy alias
@@ -815,6 +821,8 @@ __all__ = [
     "GetAllPasskeysResponseDto",
     "GetPasskeyRegistrationOptionsResponseDto",
     "PasskeyDto",
+    "UpdatePasskeyRequestDto",
+    "UpdatePasskeyResponseDto",
     "VerifyPasskeyRegistrationRequestDto",
     "VerifyPasskeyRegistrationResponseDto",
     
@@ -850,7 +858,9 @@ __all__ = [
     
     "BrandingSettings",
     "GetRemnawaveSettingsResponseDto",
+    "GenericOAuth2Settings",
     "GitHubOAuth2Settings",
+    "KeycloakOAuth2Settings",
     "OAuth2Settings",
     "PasskeySettings",
     "PasswordSettings",

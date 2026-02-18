@@ -49,6 +49,7 @@ class ExternalSquadHostOverridesDto(BaseModel):
 class ExternalSquadDto(BaseModel):
     """External squad data model"""
     uuid: UUID
+    view_position: int = Field(alias="viewPosition")
     name: str
     info: ExternalSquadInfoDto
     templates: List[ExternalSquadTemplateDto]

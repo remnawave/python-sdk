@@ -10,6 +10,7 @@ from remnawave.models import (
     DisableNodeResponseDto,
     EnableNodeResponseDto,
     GetAllNodesResponseDto,
+    GetAllNodesTagsResponseDto,
     GetOneNodeResponseDto,
     ReorderNodeRequestDto,
     ReorderNodeResponseDto,
@@ -29,6 +30,13 @@ from remnawave.rapid import BaseController, delete, get, patch, post
 
 
 class NodesController(BaseController):
+    @get("/nodes/tags", response_class=GetAllNodesTagsResponseDto)
+    async def get_all_nodes_tags(
+        self,
+    ) -> GetAllNodesTagsResponseDto:
+        """Get all nodes tags"""
+        ...
+
     @post("/nodes", response_class=CreateNodeResponseDto)
     async def create_node(
         self,

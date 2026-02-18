@@ -9,15 +9,17 @@ from remnawave.enums import TemplateType
 class TemplateResponseDto(BaseModel):
     uuid: UUID
     name: str
+    view_position: int = Field(alias="viewPosition")
     template_type: TemplateType = Field(alias="templateType")
-    template_json: Optional[Any] = Field(None, alias="templateJson")
-    encoded_template_yaml: Optional[str] = Field(None, alias="encodedTemplateYaml")
+    template_json: Any | None = Field(alias="templateJson")
+    encoded_template_yaml: str | None = Field(alias="encodedTemplateYaml")
 
 
 class TemplateInfoDto(BaseModel):
     """Template info without content - used in list responses"""
     uuid: UUID
     name: str
+    view_position: int = Field(alias="viewPosition")
     template_type: TemplateType = Field(alias="templateType")
     template_json: Optional[Any] = Field(None, alias="templateJson")
     encoded_template_yaml: Optional[str] = Field(None, alias="encodedTemplateYaml")

@@ -11,7 +11,7 @@ class SubscriptionPageConfigDto(BaseModel):
     uuid: UUID
     view_position: int = Field(alias="viewPosition")
     name: str
-    config: Optional[Any] = None
+    config: Any | None
 
 
 class GetSubscriptionPageConfigsData(BaseModel):
@@ -25,9 +25,14 @@ class GetSubscriptionPageConfigsResponseDto(GetSubscriptionPageConfigsData):
     pass
 
 
-class GetSubscriptionPageConfigResponseDto(SubscriptionPageConfigDto):
+class GetSubscriptionPageConfigResponseDto(BaseModel):
     """Response with single subscription page config"""
-    pass
+    model_config = ConfigDict(populate_by_name=True)
+    
+    uuid: UUID
+    view_position: int = Field(alias="viewPosition")
+    name: str
+    config: Any
 
 
 class CreateSubscriptionPageConfigRequestDto(BaseModel):

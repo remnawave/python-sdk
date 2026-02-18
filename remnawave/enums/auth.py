@@ -5,3 +5,4 @@ class OAuth2Provider(StrEnum):
     GITHUB = "github"
     POCKETID = "pocketid"
     YANDEX = "yandex"
+    KEYCLOAK = "keycloak"

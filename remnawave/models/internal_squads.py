@@ -10,10 +10,10 @@ class InboundsDto(BaseModel):
     profile_uuid: UUID = Field(alias="profileUuid")
     tag: str
     type: str
-    network: Optional[str] = Field(default=None)
-    security: Optional[str] = Field(default=None)
-    port: Optional[float] = Field(default=None)
-    raw_inbound: Optional[dict] = Field(default=None, alias="rawInbound")
+    network: Optional[str] = None
+    security: Optional[str] = None
+    port: Optional[float] = None
+    raw_inbound: Optional[dict] = Field(None, alias="rawInbound")
 
 
 class InfoDto(BaseModel):
@@ -23,6 +23,7 @@ class InfoDto(BaseModel):
 
 class InternalSquadDto(BaseModel):
     uuid: UUID
+    view_position: int = Field(alias="viewPosition")
     name: str
     info: Optional[InfoDto] = Field(default=None)
     inbounds: List[InboundsDto] = Field(default_factory=list)

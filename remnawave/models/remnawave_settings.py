@@ -6,32 +6,55 @@ from pydantic import BaseModel, Field, HttpUrl
 class PasskeySettings(BaseModel):
     """Passkey authentication settings"""
     enabled: bool
-    rp_id: Optional[str] = Field(None, alias="rpId")
-    origin: Optional[str] = None
+    rp_id: str | None = Field(alias="rpId")
+    origin: str | None
 
 
 class GitHubOAuth2Settings(BaseModel):
     """GitHub OAuth2 settings"""
     enabled: bool
-    client_id: Optional[str] = Field(None, alias="clientId")
-    client_secret: Optional[str] = Field(None, alias="clientSecret")
+    client_id: str | None = Field(alias="clientId")
+    client_secret: str | None = Field(alias="clientSecret")
     allowed_emails: List[str] = Field(alias="allowedEmails")
 
 
 class PocketIdOAuth2Settings(BaseModel):
     """PocketID OAuth2 settings"""
     enabled: bool
-    client_id: Optional[str] = Field(None, alias="clientId")
-    client_secret: Optional[str] = Field(None, alias="clientSecret")
-    plain_domain: Optional[str] = Field(None, alias="plainDomain")
+    client_id: str | None = Field(alias="clientId")
+    client_secret: str | None = Field(alias="clientSecret")
+    plain_domain: str | None = Field(alias="plainDomain")
     allowed_emails: List[str] = Field(alias="allowedEmails")
 
 
 class YandexOAuth2Settings(BaseModel):
     """Yandex OAuth2 settings"""
     enabled: bool
-    client_id: Optional[str] = Field(None, alias="clientId")
-    client_secret: Optional[str] = Field(None, alias="clientSecret")
+    client_id: str | None = Field(alias="clientId")
+    client_secret: str | None = Field(alias="clientSecret")
+    allowed_emails: List[str] = Field(alias="allowedEmails")
+
+
+class KeycloakOAuth2Settings(BaseModel):
+    """Keycloak OAuth2 settings"""
+    enabled: bool
+    realm: str | None
+    client_id: str | None = Field(alias="clientId")
+    client_secret: str | None = Field(alias="clientSecret")
+    frontend_domain: str | None = Field(alias="frontendDomain")
+    keycloak_domain: str | None = Field(alias="keycloakDomain")
+    allowed_emails: List[str] = Field(alias="allowedEmails")
+
+
+class GenericOAuth2Settings(BaseModel):
+    """Generic OAuth2 settings"""
+    enabled: bool
+    client_id: str | None = Field(alias="clientId")
+    client_secret: str | None = Field(alias="clientSecret")
+    with_pkce: bool = Field(alias="withPkce")
+    authorization_url: str | None = Field(alias="authorizationUrl")
+    token_url: str | None = Field(alias="tokenUrl")
+    frontend_domain: str | None = Field(alias="frontendDomain")
     allowed_emails: List[str] = Field(alias="allowedEmails")
 
 
@@ -40,12 +63,14 @@ class OAuth2Settings(BaseModel):
     github: GitHubOAuth2Settings
     pocketid: PocketIdOAuth2Settings
     yandex: YandexOAuth2Settings
+    keycloak: KeycloakOAuth2Settings
+    generic: GenericOAuth2Settings
 
 
 class TelegramAuthSettings(BaseModel):
     """Telegram authentication settings"""
     enabled: bool
-    bot_token: Optional[str] = Field(None, alias="botToken")
+    bot_token: str | None = Field(alias="botToken")
     admin_ids: List[str] = Field(alias="adminIds")
 
 
@@ -62,9 +87,9 @@ class BrandingSettings(BaseModel):
 
 class RemnawaveSettingsData(BaseModel):
     """Remnawave settings data"""
-    passkey_settings: Optional[PasskeySettings] = Field(None, alias="passkeySettings")
-    oauth2_settings: Optional[OAuth2Settings] = Field(None, alias="oauth2Settings")
-    tg_auth_settings: Optional[TelegramAuthSettings] = Field(None, alias="tgAuthSettings")
+    passkey_settings: PasskeySettings | None = Field(alias="passkeySettings")
+    oauth2_settings: OAuth2Settings | None = Field(alias="oauth2Settings")
+    tg_auth_settings: TelegramAuthSettings | None = Field(alias="tgAuthSettings")
     password_settings: Optional[PasswordSettings] = Field(None, alias="passwordSettings")
     branding_settings: Optional[BrandingSettings] = Field(None, alias="brandingSettings")
 

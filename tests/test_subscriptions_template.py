@@ -6,6 +6,9 @@ from remnawave.models import (
     DeleteSubscriptionTemplateResponseDto,
     GetTemplateResponseDto,
     GetTemplatesResponseDto,
+    ReorderTemplateItem,
+    ReorderSubscriptionTemplatesRequestDto,
+    ReorderSubscriptionTemplatesResponseDto,
     UpdateTemplateRequestDto,
     UpdateTemplateResponseDto,
 )
@@ -89,3 +92,23 @@ async def test_delete_template(remnawave):
     )
     assert isinstance(delete_response, DeleteSubscriptionTemplateResponseDto)
     assert delete_response.is_deleted is True
+
+
+@pytest.mark.asyncio
+async def test_reorder_templates(remnawave):
+    """Проверка изменения порядка шаблонов"""
+    templates = await remnawave.subscriptions_template.get_all_templates()
+    assert isinstance(templates, GetTemplatesResponseDto)
+
+    if len(templates.templates) >= 2:
+        items = [
+            ReorderTemplateItem(
+                uuid=tmpl.uuid,
+                view_position=idx
+            )
+            for idx, tmpl in enumerate(templates.templates)
+        ]
+        reorder_result = await remnawave.subscriptions_template.reorder_templates(
+            ReorderSubscriptionTemplatesRequestDto(items=items)
+        )
+        assert isinstance(reorder_result, ReorderSubscriptionTemplatesResponseDto)

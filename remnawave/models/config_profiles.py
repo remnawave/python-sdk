@@ -12,7 +12,7 @@ class InboundDto(BaseModel):
     type: str
     network: Optional[str] = None
     security: Optional[str] = None
-    port: Optional[int] = None
+    port: Optional[float] = None
     raw_inbound: Optional[Any] = Field(None, alias="rawInbound")
 
 class NodesProfileDto(BaseModel):
@@ -23,6 +23,7 @@ class NodesProfileDto(BaseModel):
 class ConfigProfileDto(BaseModel):
     uuid: UUID
     name: str
+    view_position: int = Field(alias="viewPosition")
     config: Dict[str, Any]
     inbounds: List[InboundDto]
     nodes: List[NodesProfileDto] = []
@@ -71,4 +72,17 @@ class GetAllInboundsResponseDto(List[InboundDto]):
 
 
 class GetInboundsByProfileUuidResponseDto(List[InboundDto]):
+    pass
+
+
+class ReorderConfigProfileItem(BaseModel):
+    view_position: int = Field(serialization_alias="viewPosition")
+    uuid: UUID
+
+
+class ReorderConfigProfilesRequestDto(BaseModel):
+    items: List[ReorderConfigProfileItem]
+
+
+class ReorderConfigProfilesResponseDto(GetAllConfigProfilesResponsePaginated):
     pass

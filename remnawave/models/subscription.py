@@ -157,7 +157,7 @@ class RawHost(BaseModel):
     mldsa65_verify: Optional[str] = Field(None, alias="mldsa65Verify")
     encryption: Optional[str] = None
     protocol_options: Optional[RawHostProtocolOptions] = Field(None, alias="protocolOptions")
-    db_data: RawHostDbData = Field(alias="dbData")
+    db_data: Optional[RawHostDbData] = Field(None, alias="dbData")
     xray_json_template: Optional[Dict[str, Any]] = Field(None, alias="xrayJsonTemplate")
 
 
@@ -182,7 +182,7 @@ class UserSubscription(BaseModel):
     lifetime_traffic_used: str = Field(alias="lifetimeTrafficUsed")
     traffic_used_bytes: str = Field(alias="trafficUsedBytes")
     traffic_limit_bytes: str = Field(alias="trafficLimitBytes")
-    lifetime_traffic_used_bytes: int = Field(alias="lifetimeTrafficUsedBytes")
+    lifetime_traffic_used_bytes: str = Field(alias="lifetimeTrafficUsedBytes")
     traffic_limit_strategy: TrafficLimitStrategy = Field(alias="trafficLimitStrategy")
     expires_at: datetime = Field(alias="expiresAt")
     user_status: UserStatus = Field(alias="userStatus")

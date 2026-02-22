@@ -8,6 +8,9 @@ from remnawave.models import (
     GetAllInboundsResponseDto,
     GetConfigProfileByUuidResponseDto,
     GetInboundsByProfileUuidResponseDto,
+    ReorderConfigProfileItem,
+    ReorderConfigProfilesRequestDto,
+    ReorderConfigProfilesResponseDto,
     UpdateConfigProfileRequestDto,
     UpdateConfigProfileResponseDto,
 )
@@ -127,6 +130,21 @@ async def test_config_profiles(remnawave) -> None:
     # Test get inbounds by profile uuid
     inbounds_by_profile = await remnawave.config_profiles.get_inbounds_by_profile_uuid(profile_uuid)
     assert isinstance(inbounds_by_profile, GetInboundsByProfileUuidResponseDto)
+    
+    # Test reorder config profiles
+    all_profiles_before_reorder = await remnawave.config_profiles.get_config_profiles()
+    if len(all_profiles_before_reorder.config_profiles) >= 2:
+        items = [
+            ReorderConfigProfileItem(
+                uuid=profile.uuid,
+                view_position=idx
+            )
+            for idx, profile in enumerate(all_profiles_before_reorder.config_profiles)
+        ]
+        reorder_result = await remnawave.config_profiles.reorder_config_profiles(
+            ReorderConfigProfilesRequestDto(items=items)
+        )
+        assert isinstance(reorder_result, ReorderConfigProfilesResponseDto)
     
     # Test delete config profile
     delete_profile = await remnawave.config_profiles.delete_config_profile_by_uuid(profile_uuid)

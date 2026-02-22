@@ -1,11 +1,19 @@
 from typing import Annotated
 
 from rapid_api_client import Path, Query
+from rapid_api_client.annotations import PydanticBody
 
 from remnawave.enums import ClientType
 from remnawave.models.subscription import GetRawSubscriptionByShortUuidResponseDto
 from remnawave.rapid import BaseController, get
-from remnawave.models import GetAllSubscriptionsResponseDto, GetSubscriptionByUsernameResponseDto, GetSubscriptionByShortUUIDResponseDto, GetSubscriptionByUUIDResponseDto
+from remnawave.models import (
+    GetAllSubscriptionsResponseDto,
+    GetSubscriptionByUsernameResponseDto,
+    GetSubscriptionByShortUUIDResponseDto,
+    GetSubscriptionByUUIDResponseDto,
+    GetSubpageConfigByShortUuidRequestBodyDto,
+    GetSubpageConfigByShortUuidResponseDto,
+)
 
 
 class SubscriptionsController(BaseController):
@@ -45,6 +53,15 @@ class SubscriptionsController(BaseController):
         uuid: Annotated[str, Path(description="UUID of the user")],
     ) -> GetSubscriptionByUUIDResponseDto:
         """None"""
+        ...
+
+    @get("/subscriptions/subpage-config/{short_uuid}", response_class=GetSubpageConfigByShortUuidResponseDto)
+    async def get_subpage_config(
+        self,
+        short_uuid: Annotated[str, Path(description="Short UUID of the subscription")],
+        body: Annotated[GetSubpageConfigByShortUuidRequestBodyDto, PydanticBody()],
+    ) -> GetSubpageConfigByShortUuidResponseDto:
+        """Get subscription page config by short UUID"""
         ...
 
     @get("/subscriptions/by-short-uuid/{short_uuid}/raw", response_class=GetRawSubscriptionByShortUuidResponseDto)

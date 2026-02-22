@@ -7,10 +7,12 @@ from remnawave.models import (
     DeletePasskeyResponseDto,
     GetAllPasskeysResponseDto,
     GetPasskeyRegistrationOptionsResponseDto,
+    UpdatePasskeyRequestDto,
+    UpdatePasskeyResponseDto,
     VerifyPasskeyRegistrationRequestDto,
     VerifyPasskeyRegistrationResponseDto,
 )
-from remnawave.rapid import BaseController, delete, get, post
+from remnawave.rapid import BaseController, delete, get, patch, post
 
 
 class PasskeysController(BaseController):
@@ -42,4 +44,12 @@ class PasskeysController(BaseController):
         body: Annotated[DeletePasskeyRequestDto, PydanticBody()],
     ) -> DeletePasskeyResponseDto:
         """Delete a passkey by ID"""
+        ...
+
+    @patch("/passkeys", response_class=UpdatePasskeyResponseDto)
+    async def update_passkey(
+        self,
+        body: Annotated[UpdatePasskeyRequestDto, PydanticBody()],
+    ) -> UpdatePasskeyResponseDto:
+        """Update a passkey name"""
         ...

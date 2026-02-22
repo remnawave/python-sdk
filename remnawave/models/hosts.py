@@ -65,18 +65,18 @@ class HostResponseDto(BaseModel):
     remark: str
     address: str
     port: int
-    path: Optional[str] = None
-    sni: Optional[str] = None
-    host: Optional[str] = None
-    alpn: Optional[str] = None
-    fingerprint: Optional[str] = None
-    x_http_extra_params: Optional[Dict[str, Any]] = Field(None, alias="xHttpExtraParams")
-    mux_params: Optional[Dict[str, Any]] = Field(None, alias="muxParams")
-    sockopt_params: Optional[Dict[str, Any]] = Field(None, alias="sockoptParams")
+    path: str | None = Field(alias="path")
+    sni: str | None = Field(alias="sni")
+    host: str | None = Field(alias="host")
+    alpn: str | None = Field(alias="alpn")
+    fingerprint: str | None = Field(alias="fingerprint")
+    x_http_extra_params: Dict[str, Any] | None = Field(alias="xHttpExtraParams")
+    mux_params: Dict[str, Any] | None = Field(alias="muxParams")
+    sockopt_params: Dict[str, Any] | None = Field(alias="sockoptParams")
     inbound: HostInboundData
-    server_description: Optional[str] = Field(None, alias="serverDescription")
-    tag: Optional[str] = None
-    vless_route_id: Optional[int] = Field(None, alias="vlessRouteId")
+    server_description: str | None = Field(alias="serverDescription")
+    tag: str | None = Field(alias="tag")
+    vless_route_id: int | None = Field(alias="vlessRouteId")
     shuffle_host: bool = Field(alias="shuffleHost")
     mihomo_x25519: bool = Field(alias="mihomoX25519")
     nodes: List[UUID]
@@ -86,7 +86,7 @@ class HostResponseDto(BaseModel):
     override_sni_from_address: bool = Field(False, alias="overrideSniFromAddress")
     keep_blank_sni: bool = Field(False, alias="keepBlankSni")
     allow_insecure: bool = Field(False, alias="allowInsecure")
-    xray_json_template_uuid: Optional[UUID] = Field(None, alias="xrayJsonTemplateUuid")
+    xray_json_template_uuid: UUID | None = Field(alias="xrayJsonTemplateUuid")
     excluded_internal_squads: List[UUID] = Field(default_factory=list, alias="excludedInternalSquads")
 
     @property

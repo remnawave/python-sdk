@@ -13,6 +13,8 @@ from remnawave.models import (
     DeleteUsersFromInternalSquadResponseDto,
     GetAllInternalSquadsResponseDto,
     GetInternalSquadByUuidResponseDto,
+    ReorderInternalSquadsRequestDto,
+    ReorderInternalSquadsResponseDto,
     UpdateInternalSquadRequestDto,
     UpdateInternalSquadResponseDto,
     GetInternalSquadAccessibleNodesResponseDto,
@@ -89,4 +91,12 @@ class InternalSquadsController(BaseController):
         uuid: Annotated[str, Path(description="UUID of the internal squad")],
     ) -> GetInternalSquadAccessibleNodesResponseDto:
         """Get accessible nodes for internal squad"""
+        ...
+
+    @post("/internal-squads/actions/reorder", response_class=ReorderInternalSquadsResponseDto)
+    async def reorder_internal_squads(
+        self,
+        body: Annotated[ReorderInternalSquadsRequestDto, PydanticBody()],
+    ) -> ReorderInternalSquadsResponseDto:
+        """Reorder internal squads"""
         ...

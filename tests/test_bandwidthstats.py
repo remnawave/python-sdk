@@ -16,7 +16,7 @@ from remnawave.models import (
     GetStatsNodeUsersUsageResponseDto,
     GetStatsUserUsageResponseDto,
 )
-from tests.utils import generate_isoformat_range
+from tests.utils import generate_date_range, generate_isoformat_range
 
 @pytest.mark.asyncio
 async def test_legacy_user_usage(remnawave):
@@ -27,15 +27,19 @@ async def test_legacy_user_usage(remnawave):
         pytest.skip("No users available for testing")
     
     user_uuid = str(users.users[0].uuid)
-    start, end = generate_isoformat_range()
+    start, end = generate_date_range()
     
     user_usage = await remnawave.bandwidthstats.get_user_usage_legacy_old(
         user_uuid=user_uuid,
         start=start,
         end=end
     )
-    assert isinstance(user_usage, GetUserUsageByRangeResponseDto)
-    assert len(user_usage) >= 0
+    assert hasattr(user_usage, 'root')
+    assert isinstance(user_usage.root, list)
+    if user_usage.root:
+        first_item = user_usage.root[0]
+        assert hasattr(first_item, 'user_uuid')
+        assert hasattr(first_item, 'node_uuid')
 
 
 @pytest.mark.asyncio
@@ -47,14 +51,21 @@ async def test_legacy_node_user_usage(remnawave):
         pytest.skip("No nodes available for testing")
     
     node_uuid = str(nodes[0].uuid)
-    start, end = generate_isoformat_range()
+    start, end = generate_date_range()
     
     node_user_usage = await remnawave.bandwidthstats.get_node_user_usage_legacy_old(
         node_uuid=node_uuid,
         start=start,
         end=end
     )
-    assert isinstance(node_user_usage, GetNodeUserUsageByRangeResponseDto)
+    assert hasattr(node_user_usage, 'root')
+    assert isinstance(node_user_usage.root, list)
+    if node_user_usage.root:
+        first_item = node_user_usage.root[0]
+        assert hasattr(first_item, 'user_uuid')
+        assert hasattr(first_item, 'username')
+        assert hasattr(first_item, 'node_uuid')
+        assert hasattr(first_item, 'total')
     assert len(node_user_usage) >= 0
 
 
@@ -79,7 +90,7 @@ async def test_stats_nodes_realtime_usage(remnawave):
 @pytest.mark.asyncio
 async def test_stats_nodes_usage(remnawave):
     """Test new stats nodes usage endpoint with charts"""
-    start, end = generate_isoformat_range()
+    start, end = generate_date_range()
     
     nodes_usage = await remnawave.bandwidthstats.get_stats_nodes_usage(
         start=start,
@@ -109,7 +120,7 @@ async def test_stats_node_users_usage(remnawave):
         pytest.skip("No nodes available for testing")
     
     node_uuid = str(nodes[0].uuid)
-    start, end = generate_isoformat_range()
+    start, end = generate_date_range()
     
     node_users_usage = await remnawave.bandwidthstats.get_stats_node_users_usage(
         uuid=node_uuid,
@@ -138,7 +149,7 @@ async def test_stats_user_usage(remnawave):
         pytest.skip("No users available for testing")
     
     user_uuid = str(users.users[0].uuid)
-    start, end = generate_isoformat_range()
+    start, end = generate_date_range()
     
     user_usage = await remnawave.bandwidthstats.get_stats_user_usage(
         uuid=user_uuid,
@@ -169,7 +180,7 @@ async def test_legacy_stats_user_usage(remnawave):
         pytest.skip("No users available for testing")
     
     user_uuid = str(users.users[0].uuid)
-    start, end = generate_isoformat_range()
+    start, end = generate_date_range()
     
     legacy_user_usage = await remnawave.bandwidthstats.get_user_usage_legacy_stats(
         uuid=user_uuid,
@@ -198,7 +209,7 @@ async def test_legacy_stats_nodes_users_usage(remnawave):
         pytest.skip("No nodes available for testing")
     
     node_uuid = str(nodes[0].uuid)
-    start, end = generate_isoformat_range()
+    start, end = generate_date_range()
     
     legacy_node_users = await remnawave.bandwidthstats.get_node_users_usage_legacy_stats(
         uuid=node_uuid,
@@ -220,7 +231,7 @@ async def test_legacy_stats_nodes_users_usage(remnawave):
 @pytest.mark.asyncio
 async def test_bandwidth_data_structure(remnawave):
     """Test bandwidth stats data structure validity"""
-    start, end = generate_isoformat_range()
+    start, end = generate_date_range()
     
     # Get realtime data
     realtime = await remnawave.bandwidthstats.get_nodes_realtime_usage()

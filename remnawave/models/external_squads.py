@@ -49,6 +49,7 @@ class ExternalSquadHostOverridesDto(BaseModel):
 class ExternalSquadDto(BaseModel):
     """External squad data model"""
     uuid: UUID
+    view_position: int = Field(alias="viewPosition")
     name: str
     info: ExternalSquadInfoDto
     templates: List[ExternalSquadTemplateDto]
@@ -98,6 +99,26 @@ class UpdateExternalSquadRequestDto(BaseModel):
 class UpdateExternalSquadResponseDto(ExternalSquadDto):
     """Response after updating external squad"""
     pass
+
+
+class DeleteExternalSquadResponseDto(BaseModel):
+    """Response after deleting external squad"""
+    is_deleted: bool = Field(alias="isDeleted")
+
+
+class ReorderExternalSquadItem(BaseModel):
+    view_position: int = Field(serialization_alias="viewPosition")
+    uuid: UUID
+
+
+class ReorderExternalSquadsRequestDto(BaseModel):
+    items: List[ReorderExternalSquadItem]
+
+
+class ReorderExternalSquadsResponseDto(BaseModel):
+    """Response after reordering external squads"""
+    total: int = Field(alias="total")
+    external_squads: List[ExternalSquadDto] = Field(alias="externalSquads")
 
 
 class DeleteExternalSquadResponseDto(BaseModel):

@@ -10,6 +10,7 @@ from remnawave.models import (
     DisableNodeResponseDto,
     EnableNodeResponseDto,
     GetAllNodesResponseDto,
+    GetAllNodesTagsResponseDto,
     GetOneNodeResponseDto,
     ReorderNodeRequestDto,
     ReorderNodeResponseDto,
@@ -17,14 +18,25 @@ from remnawave.models import (
     RestartNodeResponseDto,
     UpdateNodeRequestDto,
     UpdateNodeResponseDto,
-    RestartAllNodesRequestBodyDto, 
+    RestartAllNodesRequestBodyDto,
     ResetNodeTrafficRequestDto,
-    ResetNodeTrafficResponseDto
+    ResetNodeTrafficResponseDto,
+    ProfileModificationRequestDto,
+    ProfileModificationResponseDto,
+    NodesBulkActionsRequestDto,
+    NodesBulkActionsResponseDto,
 )
 from remnawave.rapid import BaseController, delete, get, patch, post
 
 
 class NodesController(BaseController):
+    @get("/nodes/tags", response_class=GetAllNodesTagsResponseDto)
+    async def get_all_nodes_tags(
+        self,
+    ) -> GetAllNodesTagsResponseDto:
+        """Get all nodes tags"""
+        ...
+
     @post("/nodes", response_class=CreateNodeResponseDto)
     async def create_node(
         self,
@@ -103,6 +115,14 @@ class NodesController(BaseController):
     ) -> ReorderNodeResponseDto:
         """Reorder Nodes"""
         ...
+    
+    @post("/nodes/{uuid}/actions/reset-traffic", response_class=ResetNodeTrafficResponseDto)
+    async def reset_node_traffic(
+        self,
+        uuid: Annotated[str, Path(description="UUID of the node")],
+    ) -> ResetNodeTrafficResponseDto:
+        """Reset traffic for individual node"""
+        ...
         
     @post("/nodes/actions/reset-traffic", response_class=ResetNodeTrafficResponseDto)
     async def reset_traffic_all_nodes(
@@ -110,4 +130,20 @@ class NodesController(BaseController):
         body: Annotated[ResetNodeTrafficRequestDto, PydanticBody()],
     ) -> ResetNodeTrafficResponseDto:
         """Reset Traffic All Nodes"""
+        ...
+        
+    @post("/nodes/bulk-actions/profile-modification", response_class=ProfileModificationResponseDto)
+    async def profile_modification(
+        self,
+        body: Annotated[ProfileModificationRequestDto, PydanticBody()],
+    ) -> ProfileModificationResponseDto:
+        """Modify Inbounds & Profile for many nodes"""
+        ...
+
+    @post("/nodes/bulk-actions", response_class=NodesBulkActionsResponseDto)
+    async def nodes_bulk_actions(
+        self,
+        body: Annotated[NodesBulkActionsRequestDto, PydanticBody()],
+    ) -> NodesBulkActionsResponseDto:
+        """Perform actions for many nodes (ENABLE, DISABLE, RESTART, RESET_TRAFFIC)"""
         ...

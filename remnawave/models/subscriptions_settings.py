@@ -61,7 +61,8 @@ class CustomRemarksDto(BaseModel):
     limited_users: List[str] = Field(alias="limitedUsers", min_length=1)
     disabled_users: List[str] = Field(alias="disabledUsers", min_length=1)
     empty_hosts: List[str] = Field(alias="emptyHosts", min_length=1)
-    empty_internal_squads: List[str] = Field(alias="emptyInternalSquads", min_length=1)
+    hwid_max_devices_exceeded: List[str] = Field(alias="HWIDMaxDevicesExceeded", min_length=1)
+    hwid_not_supported: List[str] = Field(alias="HWIDNotSupported", min_length=1)
 
 
 class HwidSettingsDto(BaseModel):

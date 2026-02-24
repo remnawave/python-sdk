@@ -1,13 +1,13 @@
 [project]
 name = "remnawave"
-version = "2.6.1"
-description = "A Python SDK for interacting with the Remnawave API v2.6.1."
+version = "2.6.2"
+description = "A Python SDK for interacting with the Remnawave API v2.6.2."
 authors = [
     {name = "Artem",email = "dev@forestsnet.com"}
 ]
 license = { text = "MIT" }
 readme = "README.md"
-requires-python = ">=3.11,<4.0"
+requires-python = ">=3.11,<3.14"
 dependencies = [
     "rapid-api-client (==0.6.0)",
     "orjson (>=3.10.15,<4.0.0)",

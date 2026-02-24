@@ -26,6 +26,7 @@ from .external_squads import ExternalSquadsController
 from .snippets import SnippetsController
 from .remnawave_settings import RemnawaveSettingsController
 from .subscription_page import SubscriptionPageConfigController
+from .ip_control import IpControlController
 
 __all__ = [
     "APITokensManagementController",
@@ -55,5 +56,6 @@ __all__ = [
     "ExternalSquadsController",
     "SnippetsController",
     "RemnawaveSettingsController",
-    "SubscriptionPageConfigController"
+    "SubscriptionPageConfigController",
+    "IpControlController",
 ]

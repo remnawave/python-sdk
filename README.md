@@ -50,6 +50,7 @@ pip install git+https://github.com/remnawave/python-sdk.git@development
 
 | Contract Version | Remnawave Panel Version |
 | ---------------- | ----------------------- |
+| 2.6.2            | >=2.6.2                 |
 | 2.6.1            | >=2.6.0                 |
 | 2.4.4            | >=2.4.0                 |
 | 2.3.2            | >=2.3.0, <2.4.0         |
@@ -104,7 +105,7 @@ async def main():
     remnawave = RemnawaveSDK(base_url=base_url, token=token)
 
     # Fetch all users
-    response: UsersResponseDto = await remnawave.users.get_all_users_v2()
+    response: UsersResponseDto = await remnawave.users.get_all_users()
     total_users: int = response.total
     users: list[UserResponseDto] = response.users
     print("Total users: ", total_users)

@@ -382,6 +382,7 @@ from .webhook import (
     BaseUserDto,
     UserDto,
     NodeDto,
+    WebhookNodeConfigProfileDto,
     ConfigProfileInboundDto,
     InfraProviderDto,
     LoginAttemptDto,
@@ -466,6 +467,25 @@ from .subscription_page import (
     SubscriptionPageConfigDto,
     UpdateSubscriptionPageConfigRequestDto,
     UpdateSubscriptionPageConfigResponseDto,
+)
+from .ip_control import (
+    # Request DTOs
+    DropConnectionsRequestDto,
+    DropByUserUuids,
+    DropByIpAddresses,
+    TargetAllNodes,
+    TargetSpecificNodes,
+    # Response DTOs
+    FetchIpsResponseDto,
+    FetchIpsResultResponseDto,
+    DropConnectionsResponseDto,
+    # Data models
+    FetchIpsJobData,
+    FetchIpsProgressData,
+    FetchIpsNodeResult,
+    FetchIpsResult,
+    FetchIpsResultData,
+    DropConnectionsResponseData,
 )
 
 __all__ = [
@@ -829,6 +849,7 @@ __all__ = [
     "ConfigProfileInboundDto",
     "InfraProviderDto",
     "NodeDto",
+    "WebhookNodeConfigProfileDto",
     "NodeEventDto",
 
     # ERROR EVENTS
@@ -916,4 +937,20 @@ __all__ = [
     "SubscriptionPageConfigDto",
     "UpdateSubscriptionPageConfigRequestDto",
     "UpdateSubscriptionPageConfigResponseDto",
+
+    # IP Control models
+    "DropConnectionsRequestDto",
+    "DropByUserUuids",
+    "DropByIpAddresses",
+    "TargetAllNodes",
+    "TargetSpecificNodes",
+    "FetchIpsResponseDto",
+    "FetchIpsResultResponseDto",
+    "DropConnectionsResponseDto",
+    "FetchIpsJobData",
+    "FetchIpsProgressData",
+    "FetchIpsNodeResult",
+    "FetchIpsResult",
+    "FetchIpsResultData",
+    "DropConnectionsResponseData",
 ]

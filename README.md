@@ -105,7 +105,7 @@ async def main():
     remnawave = RemnawaveSDK(base_url=base_url, token=token)
 
     # Fetch all users
-    response: UsersResponseDto = await remnawave.users.get_all_users_v2()
+    response: UsersResponseDto = await remnawave.users.get_all_users()
     total_users: int = response.total
     users: list[UserResponseDto] = response.users
     print("Total users: ", total_users)

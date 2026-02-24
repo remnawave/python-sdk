@@ -32,6 +32,7 @@ from remnawave.controllers import (
     SnippetsController,
     RemnawaveSettingsController,
     SubscriptionPageConfigController,
+    IpControlController,
 )
     
 
@@ -96,6 +97,7 @@ class RemnawaveSDK:
         self.snippets = SnippetsController(self._client)
         self.remnawave_settings = RemnawaveSettingsController(self._client)
         self.subscription_page_config = SubscriptionPageConfigController(self._client)
+        self.ip_control = IpControlController(self._client)
 
     def _validate_params(self) -> None:
         if self._client is None:

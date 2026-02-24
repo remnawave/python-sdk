@@ -37,6 +37,7 @@ class UserTrafficDto(BaseModel):
 
 class BaseUserDto(BaseModel):
     uuid: UUID
+    id: int
     short_uuid: str
     username: str
     status: TUsersStatus
@@ -59,9 +60,12 @@ class BaseUserDto(BaseModel):
     tag: Optional[str] = None
     telegram_id: Optional[int] = None
     email: Optional[str] = None
+    external_squad_uuid: Optional[UUID] = None
 
     hwid_device_limit: Optional[int] = None
     last_triggered_threshold: int
+
+    subscription_url: str
 
     created_at: datetime
     updated_at: datetime
@@ -211,6 +215,14 @@ class InfraProviderDto(BaseModel):
     model_config = {"alias_generator": to_camel, "populate_by_name": True}
 
 
+class WebhookNodeConfigProfileDto(BaseModel):
+    """Nested config profile for node webhook events"""
+    active_config_profile_uuid: Optional[UUID] = None
+    active_inbounds: List[ConfigProfileInboundDto] = Field(default_factory=list)
+
+    model_config = {"alias_generator": to_camel, "populate_by_name": True}
+
+
 class NodeDto(BaseModel):
     uuid: UUID
     name: str
@@ -227,16 +239,18 @@ class NodeDto(BaseModel):
     xray_uptime: str
 
     users_online: Optional[int] = None
-    
+
     is_traffic_tracking_active: bool
     traffic_reset_day: Optional[int] = None
-    traffic_limit_bytes: Optional[int] = None
-    traffic_used_bytes: Optional[int] = None
+    traffic_limit_bytes: Optional[float] = None
+    traffic_used_bytes: Optional[float] = None
     notify_percent: Optional[int] = None
 
     view_position: int
     country_code: str
-    consumption_multiplier: int
+    consumption_multiplier: float
+
+    tags: List[str] = Field(default_factory=list)
 
     cpu_count: Optional[int] = None
     cpu_model: Optional[str] = None
@@ -245,13 +259,21 @@ class NodeDto(BaseModel):
     created_at: datetime
     updated_at: datetime
 
-    active_config_profile_uuid: Optional[UUID] = None
-    active_inbounds: List[ConfigProfileInboundDto] = Field(default_factory=list)
+    config_profile: WebhookNodeConfigProfileDto
 
     provider_uuid: Optional[UUID] = None
     provider: Optional[InfraProviderDto] = None
 
     model_config = {"alias_generator": to_camel, "populate_by_name": True}
+
+    # Backward-compat shims for code that used the flat fields directly
+    @property
+    def active_config_profile_uuid(self) -> Optional[UUID]:
+        return self.config_profile.active_config_profile_uuid
+
+    @property
+    def active_inbounds(self) -> List[ConfigProfileInboundDto]:
+        return self.config_profile.active_inbounds
 
 
 class NodeEventDto(BaseModel):

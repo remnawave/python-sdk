@@ -30,15 +30,15 @@ class ExternalSquadTemplateDto(BaseModel):
 
 class ExternalSquadSubscriptionSettingsDto(BaseModel):
     """External squad subscription settings"""
-    profile_title: str = Field(alias="profileTitle")
-    support_link: str = Field(alias="supportLink")
-    profile_update_interval: int = Field(alias="profileUpdateInterval", ge=1)
-    is_profile_webpage_url_enabled: bool = Field(alias="isProfileWebpageUrlEnabled")
-    serve_json_at_base_subscription: bool = Field(alias="serveJsonAtBaseSubscription")
-    is_show_custom_remarks: bool = Field(alias="isShowCustomRemarks")
+    profile_title: Optional[str] = Field(None, alias="profileTitle")
+    support_link: Optional[str] = Field(None, alias="supportLink")
+    profile_update_interval: Optional[int] = Field(None, alias="profileUpdateInterval", ge=1)
+    is_profile_webpage_url_enabled: Optional[bool] = Field(None, alias="isProfileWebpageUrlEnabled")
+    serve_json_at_base_subscription: Optional[bool] = Field(None, alias="serveJsonAtBaseSubscription")
+    is_show_custom_remarks: Optional[bool] = Field(None, alias="isShowCustomRemarks")
     happ_announce: Optional[str] = Field(None, alias="happAnnounce")
     happ_routing: Optional[str] = Field(None, alias="happRouting")
-    randomize_hosts: bool = Field(alias="randomizeHosts")
+    randomize_hosts: Optional[bool] = Field(None, alias="randomizeHosts")
 
 class ExternalSquadHostOverridesDto(BaseModel):
     """External squad host overrides"""

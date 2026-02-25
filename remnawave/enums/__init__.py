@@ -14,6 +14,7 @@ from .subscriptions_settings import (
     ResponseRuleOperator,
     ResponseRuleVersion,
     ResponseType,
+    SubscriptionType,
 )
 
 __all__ = [
@@ -30,6 +31,7 @@ __all__ = [
     "ResponseRuleOperator",
     "ResponseRuleVersion",
     "ResponseType",
+    "SubscriptionType",
     # Webhook enums
     "TNodeEvents",
     "TUserEvents",

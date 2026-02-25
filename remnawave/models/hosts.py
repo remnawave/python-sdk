@@ -3,7 +3,7 @@ from uuid import UUID
 
 from pydantic import BaseModel, Field, StringConstraints, RootModel
 
-from remnawave.enums import ALPN, Fingerprint, SecurityLayer
+from remnawave.enums import ALPN, Fingerprint, SecurityLayer, SubscriptionType
 
 
 class ReorderHostItem(BaseModel):
@@ -53,6 +53,11 @@ class UpdateHostRequestDto(BaseModel):
     nodes: Optional[List[UUID]] = None
     xray_json_template_uuid: Optional[UUID] = Field(None, serialization_alias="xrayJsonTemplateUuid")
     excluded_internal_squads: Optional[List[UUID]] = Field(None, serialization_alias="excludedInternalSquads")
+    exclude_from_subscription_types: Optional[List[SubscriptionType]] = Field(
+        None,
+        serialization_alias="excludeFromSubscriptionTypes",
+        description="Subscription types from which this host will be excluded.",
+    )
 
     @property
     def inbound_uuid(self) -> Optional[UUID]:
@@ -88,6 +93,11 @@ class HostResponseDto(BaseModel):
     allow_insecure: bool = Field(False, alias="allowInsecure")
     xray_json_template_uuid: UUID | None = Field(alias="xrayJsonTemplateUuid")
     excluded_internal_squads: List[UUID] = Field(default_factory=list, alias="excludedInternalSquads")
+    exclude_from_subscription_types: List[SubscriptionType] = Field(
+        default_factory=list,
+        alias="excludeFromSubscriptionTypes",
+        description="Subscription types from which this host is excluded.",
+    )
 
     @property
     def inbound_uuid(self) -> Optional[UUID]:
@@ -121,6 +131,11 @@ class CreateHostRequestDto(BaseModel):
     keep_blank_sni: bool = Field(False, serialization_alias="keepBlankSni")
     xray_json_template_uuid: Optional[UUID] = Field(None, serialization_alias="xrayJsonTemplateUuid")
     excluded_internal_squads: List[UUID] = Field(default_factory=list, serialization_alias="excludedInternalSquads")
+    exclude_from_subscription_types: List[SubscriptionType] = Field(
+        default_factory=list,
+        serialization_alias="excludeFromSubscriptionTypes",
+        description="Subscription types from which this host will be excluded.",
+    )
 
     @property
     def inbound_uuid(self) -> Optional[UUID]:

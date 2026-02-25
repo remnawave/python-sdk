@@ -38,3 +38,13 @@ class ResponseType(StrEnum):
 class ResponseRuleVersion(StrEnum):
     """Response rules config version"""
     V1 = "1"
+
+
+class SubscriptionType(StrEnum):
+    """Subscription output types (used e.g. to exclude hosts from specific types)"""
+    XRAY_JSON = "XRAY_JSON"
+    XRAY_BASE64 = "XRAY_BASE64"
+    MIHOMO = "MIHOMO"
+    STASH = "STASH"
+    CLASH = "CLASH"
+    SINGBOX = "SINGBOX"

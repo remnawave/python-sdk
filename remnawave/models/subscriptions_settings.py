@@ -9,6 +9,7 @@ from remnawave.enums import (
     ResponseRuleOperator,
     ResponseRuleVersion,
     ResponseType,
+    SubscriptionType,
 )
 
 
@@ -31,8 +32,32 @@ class ResponseModificationHeader(BaseModel):
 class ResponseModifications(BaseModel):
     """Response modifications to apply when rule matches"""
     headers: Optional[List[ResponseModificationHeader]] = None
+    apply_headers_to_end: Optional[bool] = Field(
+        None,
+        alias="applyHeadersToEnd",
+        description=(
+            "If True, SRR headers are appended at the very end of the response "
+            "and may override headers from other sections."
+        ),
+    )
     subscription_template: Optional[Annotated[str, StringConstraints(min_length=1)]] = Field(
         None, alias="subscriptionTemplate"
+    )
+    ignore_host_xray_json_template: Optional[bool] = Field(
+        None,
+        alias="ignoreHostXrayJsonTemplate",
+        description=(
+            "If True, the Host's own Xray Json Template is ignored and the "
+            "template defined by the SRR rule is used instead."
+        ),
+    )
+    ignore_serve_json_at_base_subscription: Optional[bool] = Field(
+        None,
+        alias="ignoreServeJsonAtBaseSubscription",
+        description=(
+            "If True, the Serve JSON at Base Subscription setting is ignored "
+            "(treated as False)."
+        ),
     )
 
 

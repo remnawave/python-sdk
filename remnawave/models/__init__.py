@@ -206,6 +206,8 @@ from .nodes import (
     NodeBulkActionType,
     NodesBulkActionsRequestDto,
     NodesBulkActionsResponseDto,
+    BulkNodesUpdateRequestDto,
+    BulkNodesUpdateResponseDto,
 )
 from .nodes_usage_history import (
     GetNodeUserUsageByRangeResponseDto,
@@ -225,6 +227,7 @@ from .subscription import (
     RawSettings,
     GetSubscriptionByShortUUIDResponseDto,
     GetSubscriptionByUUIDResponseDto,
+    GetConnectionKeysByUuidResponseDto,
 )
 from .subscriptions_settings import (
     GetSubscriptionSettingsResponseDto,
@@ -405,6 +408,42 @@ from .passkeys import (
     VerifyPasskeyRegistrationRequestDto,
     VerifyPasskeyRegistrationResponseDto,
 )
+from .metadata import (
+    GetMetadataResponseDto,
+    GetUserMetadataResponseDto,
+    UpsertUserMetadataRequestBodyDto,
+    UpsertUserMetadataResponseDto,
+    GetNodeMetadataResponseDto,
+    UpsertNodeMetadataRequestBodyDto,
+    UpsertNodeMetadataResponseDto,
+)
+from .node_plugins import (
+    GetTorrentBlockerReportsResponseDto,
+    GetTorrentBlockerReportsStatsResponseDto,
+    TruncateTorrentBlockerReportsResponseDto,
+    GetNodePluginsResponseDto,
+    GetNodePluginResponseDto,
+    UpdateNodePluginRequestDto,
+    UpdateNodePluginResponseDto,
+    DeleteNodePluginResponseDto,
+    CreateNodePluginRequestDto,
+    CreateNodePluginResponseDto,
+    ReorderNodePluginItem,
+    ReorderNodePluginsRequestDto,
+    ReorderNodePluginsResponseDto,
+    CloneNodePluginRequestDto,
+    CloneNodePluginResponseDto,
+    PluginExecutorRequestDto,
+    PluginExecutorResponseDto,
+    BlockIpsCommandDto,
+    UnblockIpsCommandDto,
+    RecreateTablesCommandDto,
+    BlockIpItemDto,
+    TorrentBlockerReportRecordDto,
+    NodePluginDto,
+    TargetAllNodesDto,
+    TargetSpecificNodesDto,
+)
 from .external_squads import (
     AddUsersToExternalSquadResponseDto,
     CreateExternalSquadRequestDto,
@@ -507,6 +546,11 @@ __all__ = [
     "VerifyPasskeyAuthenticationRequestDto",
     "VerifyPasskeyAuthenticationResponseDto",
     "GetPasskeyAuthenticationOptionsResponseDto",
+    "AuthenticationSettings",
+    "PasskeyAuthenticationSettings",
+    "OAuth2ProvidersSettings",
+    "PasswordAuthenticationSettings",
+    "BrandingSettings",
     # Nodes models
     "CreateNodeRequestDto",
     "CreateNodeResponseDto",
@@ -536,6 +580,8 @@ __all__ = [
     "NodeBulkActionType",
     "NodesBulkActionsRequestDto",
     "NodesBulkActionsResponseDto",
+    "BulkNodesUpdateRequestDto",
+    "BulkNodesUpdateResponseDto",
     # Hosts models
     "CreateHostRequestDto",
     "CreateHostResponseDto",
@@ -576,6 +622,7 @@ __all__ = [
     "UserSubscription",
     "GetRawSubscriptionByShortUuidResponseDto",
     "RawSettings",
+    "GetConnectionKeysByUuidResponseDto",
     # Subscription settings models
     "GetSubscriptionSettingsResponseDto",
     "SubscriptionSettingsResponseDto",
@@ -627,7 +674,7 @@ __all__ = [
     "DebugSrrMatcherResponseDto",
     "EncryptHappCryptoLinkRequestDto",
     "EncryptHappCryptoLinkResponseDto",
-    "GetMetadataResponseDto"
+    "GetMetadataResponseDto",
     # XRay config models
     "ConfigResponseDto",  # Legacy alias
     "GetConfigResponseDto",
@@ -955,4 +1002,40 @@ __all__ = [
     "FetchIpsResult",
     "FetchIpsResultData",
     "DropConnectionsResponseData",
+    
+    # Metadata models
+    "GetMetadataResponseDto",
+    "GetUserMetadataResponseDto",
+    "UpsertUserMetadataRequestBodyDto",
+    "UpsertUserMetadataResponseDto",
+    "GetNodeMetadataResponseDto",
+    "UpsertNodeMetadataRequestBodyDto",
+    "UpsertNodeMetadataResponseDto",
+
+    # Node plugins models
+    "GetTorrentBlockerReportsResponseDto",
+    "GetTorrentBlockerReportsStatsResponseDto",
+    "TruncateTorrentBlockerReportsResponseDto",
+    "GetNodePluginsResponseDto",
+    "GetNodePluginResponseDto",
+    "UpdateNodePluginRequestDto",
+    "UpdateNodePluginResponseDto",
+    "DeleteNodePluginResponseDto",
+    "CreateNodePluginRequestDto",
+    "CreateNodePluginResponseDto",
+    "ReorderNodePluginItem",
+    "ReorderNodePluginsRequestDto",
+    "ReorderNodePluginsResponseDto",
+    "CloneNodePluginRequestDto",
+    "CloneNodePluginResponseDto",
+    "PluginExecutorRequestDto",
+    "PluginExecutorResponseDto",
+    "BlockIpsCommandDto",
+    "UnblockIpsCommandDto",
+    "RecreateTablesCommandDto",
+    "BlockIpItemDto",
+    "TorrentBlockerReportRecordDto",
+    "NodePluginDto",
+    "TargetAllNodesDto",
+    "TargetSpecificNodesDto",
 ]

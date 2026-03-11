@@ -17,18 +17,35 @@ class LoginResponseDto(BaseModel):
     access_token: str = Field(alias="accessToken")
 
 
-class TelegramBotInfo(BaseModel):
-    bot_id: int = Field(alias="botId")
+class PasskeyAuthenticationSettings(BaseModel):
+    enabled: bool
 
 
-class StatusResponseData(BaseModel):
+class OAuth2ProvidersSettings(BaseModel):
+    providers: Dict[str, bool]
+
+
+class PasswordAuthenticationSettings(BaseModel):
+    enabled: bool
+
+
+class AuthenticationSettings(BaseModel):
+    passkey: PasskeyAuthenticationSettings
+    oauth2: OAuth2ProvidersSettings
+    password: PasswordAuthenticationSettings
+
+
+class BrandingSettings(BaseModel):
+    title: Optional[str] = None
+    logo_url: Optional[str] = Field(None, alias="logoUrl")
+
+
+class GetStatusResponseDto(BaseModel):
+    """Status response with authentication and branding settings"""
     is_login_allowed: bool = Field(alias="isLoginAllowed")
     is_register_allowed: bool = Field(alias="isRegisterAllowed")
-    tg_auth: Optional[TelegramBotInfo] = Field(None, alias="tgAuth")
-
-
-class GetStatusResponseDto(StatusResponseData):
-    pass
+    authentication: Optional[AuthenticationSettings] = None
+    branding: BrandingSettings
 
 
 class LoginRequestDto(BaseModel):
@@ -82,8 +99,8 @@ class OAuth2CallbackResponseDto(BaseModel):
 # Passkey Authentication models
 class GetPasskeyAuthenticationOptionsResponseDto(BaseModel):
     """Response with passkey authentication options"""
-    # Passkey options are complex WebAuthn objects, using Any for flexibility
-    response: Dict[str, Any]
+    # Passkey options are complex WebAuthn objects
+    pass
 
 
 class VerifyPasskeyAuthenticationRequestDto(BaseModel):

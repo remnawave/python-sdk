@@ -288,3 +288,13 @@ class NodesBulkActionsRequestDto(BaseModel):
 class NodesBulkActionsResponseDto(BaseModel):
     """Response after performing bulk actions on nodes"""
     event_sent: bool = Field(alias="eventSent")
+
+
+class BulkNodesUpdateRequestDto(NodesBulkActionsRequestDto):
+    """OpenAPI alias for bulk nodes update request"""
+    pass
+
+
+class BulkNodesUpdateResponseDto(NodesBulkActionsResponseDto):
+    """OpenAPI alias for bulk nodes update response"""
+    pass

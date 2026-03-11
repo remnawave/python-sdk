@@ -241,5 +241,9 @@ class GetSubscriptionByUUIDResponseDto(GetSubscriptionByUsernameResponseDto):
     pass
 
 
+class GetConnectionKeysByUuidResponseDto(BaseModel):
+    connection_keys: List[str] = Field(alias="connectionKeys")
+
+
 # Legacy alias for backward compatibility
 SubscriptionInfoResponseDto = GetSubscriptionInfoResponseDto

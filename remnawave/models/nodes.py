@@ -89,6 +89,9 @@ class CreateNodeRequestDto(BaseModel):
         serialization_alias="tags",
         max_length=10
     )
+    active_plugin_uuid: Optional[UUID] = Field(
+        None, serialization_alias="activePluginUuid"
+    )
 
 
 class UpdateNodeRequestDto(BaseModel):
@@ -125,6 +128,9 @@ class UpdateNodeRequestDto(BaseModel):
         None,
         serialization_alias="tags",
         max_length=10
+    )
+    active_plugin_uuid: Optional[UUID] = Field(
+        None, serialization_alias="activePluginUuid"
     )
 
 
@@ -163,6 +169,7 @@ class NodeResponseDto(BaseModel):
     provider_uuid: Optional[UUID] = Field(None, alias="providerUuid")
     provider: Optional[NodeProviderDto] = None
     tags: List[str] = Field(default_factory=list, alias="tags")
+    active_plugin_uuid: Optional[UUID] = Field(None, alias="activePluginUuid")
 
 
 class CreateNodeResponseDto(NodeResponseDto):

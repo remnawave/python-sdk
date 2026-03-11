@@ -139,7 +139,7 @@ class BulkAllExtendExpirationDateRequestDto(BaseModel):
 # Base Response DTOs (без обертки response)
 class BulkResponseData(BaseModel):
     """Common bulk response with affected rows"""
-    affected_rows: int = Field(alias="affectedRows")
+    affected_rows: float = Field(alias="affectedRows")
 
 
 class BulkEventResponseData(BaseModel):

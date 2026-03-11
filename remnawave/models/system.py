@@ -10,7 +10,7 @@ from remnawave.models.subscriptions_settings import ResponseRule, ResponseRules
 class NodeStatistic(BaseModel):
     node_name: str = Field(alias="nodeName")
     date: datetime.date
-    total_bytes: int = Field(alias="totalBytes")
+    total_bytes: str = Field(alias="totalBytes")
 
 
 class NodesStatisticResponseDto(BaseModel):
@@ -32,16 +32,16 @@ class BandwidthStatisticResponseDto(BaseModel):
 
 
 class CPUStatistic(BaseModel):
-    cores: int
-    physical_cores: int = Field(alias="physicalCores")
+    cores: float
+    physical_cores: float = Field(alias="physicalCores")
 
 
 class MemoryStatistic(BaseModel):
-    total: int
-    free: int
-    used: int
-    active: int
-    available: int
+    total: float
+    free: float
+    used: float
+    active: float
+    available: float
 
 
 class StatusCounts(BaseModel):
@@ -59,18 +59,18 @@ class StatusCounts(BaseModel):
 
 class UsersStatistic(BaseModel):
     status_counts: StatusCounts = Field(alias="statusCounts")
-    total_users: int = Field(alias="totalUsers")
+    total_users: float = Field(alias="totalUsers")
 
 
 class OnlineStatistic(BaseModel):
-    last_day: int = Field(alias="lastDay")
-    last_week: int = Field(alias="lastWeek")
-    never_online: int = Field(alias="neverOnline")
-    online_now: int = Field(alias="onlineNow")
+    last_day: float = Field(alias="lastDay")
+    last_week: float = Field(alias="lastWeek")
+    never_online: float = Field(alias="neverOnline")
+    online_now: float = Field(alias="onlineNow")
 
 
 class NodesStatistic(BaseModel):
-    total_online: int = Field(alias="totalOnline")
+    total_online: float = Field(alias="totalOnline")
     total_bytes_lifetime: str = Field(alias="totalBytesLifetime")
 
 
@@ -79,7 +79,7 @@ class StatisticResponseDto(BaseModel):
     cpu: CPUStatistic
     memory: MemoryStatistic
     uptime: float
-    timestamp: int
+    timestamp: float
     users: UsersStatistic
     online_stats: OnlineStatistic = Field(alias="onlineStats")
     nodes: NodesStatistic
@@ -116,21 +116,57 @@ class GetRemnawaveHealthResponseDto(BaseModel):
     pm2_stats: List[PM2Stat] = Field(alias="pm2Stats")
 
 
+class TrafficStatDto(BaseModel):
+    tag: str
+    upload: str
+    download: str
+
+
 class NodeMetric(BaseModel):
-    """Node metric data"""
-    uuid: str = Field(alias="nodeUuid")
-    name: Optional[str] = None
-    address: Optional[str] = None
-    is_online: Optional[bool] = Field(None, alias="isOnline")
-    cpu_usage: Optional[float] = Field(None, alias="cpuUsage")
-    memory_usage: Optional[float] = Field(None, alias="memoryUsage")
-    network_upload: Optional[int] = Field(None, alias="networkUpload")
-    network_download: Optional[int] = Field(None, alias="networkDownload")
-    uptime: Optional[int] = None
-    last_seen: Optional[datetime.datetime] = Field(None, alias="lastSeen")
-    connected_users: Optional[int] = Field(None, alias="connectedUsers")
-    upload: Optional[str] = None
-    download: Optional[str] = None
+    """Node metric data (API v1.10)"""
+    node_uuid: str = Field(alias="nodeUuid")
+    node_name: str = Field(alias="nodeName")
+    country_emoji: str = Field(alias="countryEmoji")
+    provider_name: str = Field(alias="providerName")
+    users_online: float = Field(alias="usersOnline")
+    inbounds_stats: List[TrafficStatDto] = Field(alias="inboundsStats")
+    outbounds_stats: List[TrafficStatDto] = Field(alias="outboundsStats")
+
+    @property
+    def uuid(self) -> str:
+        return self.node_uuid
+
+    @property
+    def name(self) -> str:
+        return self.node_name
+
+    @property
+    def connected_users(self) -> float:
+        return self.users_online
+
+    @property
+    def cpu_usage(self) -> None:
+        return None
+
+    @property
+    def memory_usage(self) -> None:
+        return None
+
+    @property
+    def network_upload(self) -> None:
+        return None
+
+    @property
+    def network_download(self) -> None:
+        return None
+
+    @property
+    def uptime(self) -> None:
+        return None
+
+    @property
+    def last_seen(self) -> None:
+        return None
 
 
 class GetNodesMetricsResponseDto(BaseModel):
@@ -143,7 +179,11 @@ class X25519KeyPair(BaseModel):
 
 
 class GetX25519KeyPairResponseDto(BaseModel):
-    key_pairs: List[X25519KeyPair] = Field(alias="keyPairs")
+    key_pairs: List[X25519KeyPair] = Field(alias="keypairs")
+
+
+# OpenAPI v1.10 schema name
+GenerateX25519ResponseDto = GetX25519KeyPairResponseDto
 
 
 class EncryptHappCryptoLinkRequestDto(BaseModel):

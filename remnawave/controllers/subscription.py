@@ -34,10 +34,10 @@ class SubscriptionController(BaseController):
         """None"""
         ...
 
-    @get("/sub/outline/{short_uuid}/{type}/{encoded_tag}", response_class=str)
+    @get("/sub/outline/{shortUuid}/{type}/{encodedTag}", response_class=str)
     async def get_subscription_with_type(
         self,
-        short_uuid: Annotated[str, Path(description="Short UUID of the user")],
+        short_uuid: Annotated[str, Path(description="Short UUID of the user", alias="shortUuid")],
         type: Annotated[
             str,
             Path(
@@ -47,7 +47,8 @@ class SubscriptionController(BaseController):
         encoded_tag: Annotated[
             str,
             Path(
-                description="Base64 encoded tag for Outline config. This paramter is optional. It is required only when type=ss."
+                description="Base64 encoded tag for Outline config. This paramter is optional. It is required only when type=ss.",
+                alias="encodedTag",
             ),
         ] = "VGVzdGVy",
     ) -> str:

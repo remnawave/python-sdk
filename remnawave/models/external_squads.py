@@ -58,6 +58,7 @@ class ExternalSquadDto(BaseModel):
     response_headers: Optional[Dict[str, str]] = Field(None, alias="responseHeaders")
     hwid_settings: Optional[HwidSettingsDto] = Field(None, alias="hwidSettings")
     custom_remarks: Optional[CustomRemarksDto] = Field(None, alias="customRemarks")
+    subpage_config_uuid: Optional[UUID] = Field(None, alias="subpageConfigUuid")
     created_at: datetime = Field(alias="createdAt")
     updated_at: datetime = Field(alias="updatedAt")
 
@@ -65,7 +66,7 @@ class ExternalSquadDto(BaseModel):
 # Request/Response models
 class GetExternalSquadsResponseDto(BaseModel):
     """Response with all external squads"""
-    total: int = Field(alias="total")
+    total: float = Field(alias="total")
     external_squads: List[ExternalSquadDto] = Field(alias="externalSquads")
 
 
@@ -94,6 +95,7 @@ class UpdateExternalSquadRequestDto(BaseModel):
     hwid_settings: Optional[HwidSettingsDto] = Field(None, alias="hwidSettings")
     custom_remarks: Optional[CustomRemarksDto] = Field(None, alias="customRemarks")
     response_headers: Optional[Dict[str, str]] = Field(None, serialization_alias="responseHeaders")
+    subpage_config_uuid: Optional[UUID] = Field(None, serialization_alias="subpageConfigUuid")
 
 
 class UpdateExternalSquadResponseDto(ExternalSquadDto):
@@ -117,13 +119,8 @@ class ReorderExternalSquadsRequestDto(BaseModel):
 
 class ReorderExternalSquadsResponseDto(BaseModel):
     """Response after reordering external squads"""
-    total: int = Field(alias="total")
+    total: float = Field(alias="total")
     external_squads: List[ExternalSquadDto] = Field(alias="externalSquads")
-
-
-class DeleteExternalSquadResponseDto(BaseModel):
-    """Response after deleting external squad"""
-    is_deleted: bool = Field(alias="isDeleted")
 
 
 class AddUsersToExternalSquadResponseDto(BaseModel):

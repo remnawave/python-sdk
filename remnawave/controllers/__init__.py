@@ -27,6 +27,8 @@ from .snippets import SnippetsController
 from .remnawave_settings import RemnawaveSettingsController
 from .subscription_page import SubscriptionPageConfigController
 from .ip_control import IpControlController
+from .node_plugins import NodePluginsController
+from .metadata import MetadataController
 
 __all__ = [
     "APITokensManagementController",
@@ -58,4 +60,6 @@ __all__ = [
     "RemnawaveSettingsController",
     "SubscriptionPageConfigController",
     "IpControlController",
+    "NodePluginsController",
+    "MetadataController",
 ]

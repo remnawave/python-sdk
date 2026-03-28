@@ -31,22 +31,22 @@ class HwidDeviceDto(BaseModel):
 
 
 class HwidDevicesData(BaseModel):
-    total: int
+    total: float
     devices: List[HwidDeviceDto]
 
 
 class CreateUserHwidDeviceResponseDto(BaseModel):
-    total: int
+    total: float
     devices: List[HwidDeviceDto]
 
 
 class DeleteUserHwidDeviceResponseDto(BaseModel):
-    total: int
+    total: float
     devices: List[HwidDeviceDto]
 
 
 class GetUserHwidDevicesResponseDto(BaseModel):
-    total: int
+    total: float
     devices: List[HwidDeviceDto]
 
 class PlatformStatItem(BaseModel):
@@ -82,13 +82,13 @@ class TopUserByHwidDevicesDto(BaseModel):
     user_uuid: UUID = Field(alias="userUuid")
     id: int
     username: str
-    devices_count: int = Field(alias="devicesCount")
+    devices_count: float = Field(alias="devicesCount")
 
 
 class TopUsersByHwidDevicesData(BaseModel):
     """Top users by HWID devices data"""
     users: list[TopUserByHwidDevicesDto]
-    total: int
+    total: float
 
 
 class GetTopUsersByHwidDevicesResponseDto(TopUsersByHwidDevicesData):

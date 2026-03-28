@@ -4,7 +4,7 @@ from uuid import UUID
 from pydantic import BaseModel, Field
 from pydantic.alias_generators import to_camel
 from remnawave.enums import (
-    TUsersStatus, TUserEvents, TUserHwidDevicesEvents, TServiceEvents, TNodeEvents, TErrorsEvents, TCRMEvents, TResetPeriods
+    TUsersStatus, TUserEvents, TUserHwidDevicesEvents, TServiceEvents, TNodeEvents, TErrorsEvents, TCRMEvents, TTorrentBlockerEvents, TResetPeriods
 )
 # ---------------- USER ---------------- #
 
@@ -223,6 +223,55 @@ class WebhookNodeConfigProfileDto(BaseModel):
     model_config = {"alias_generator": to_camel, "populate_by_name": True}
 
 
+class NodeSystemInfoDto(BaseModel):
+    arch: str
+    cpus: int
+    cpu_model: str
+    memory_total: float
+    hostname: str
+    platform: str
+    release: str
+    type: str
+    version: str
+    network_interfaces: List[str]
+
+    model_config = {"alias_generator": to_camel, "populate_by_name": True}
+
+
+class NodeSystemInterfaceDto(BaseModel):
+    interface: str
+    rx_bytes_per_sec: float
+    tx_bytes_per_sec: float
+    rx_total: float
+    tx_total: float
+
+    model_config = {"alias_generator": to_camel, "populate_by_name": True}
+
+
+class NodeSystemStatsDto(BaseModel):
+    memory_free: float
+    memory_used: float
+    uptime: float
+    load_avg: List[float]
+    interface: Optional[NodeSystemInterfaceDto] = None
+
+    model_config = {"alias_generator": to_camel, "populate_by_name": True}
+
+
+class NodeSystemDto(BaseModel):
+    info: NodeSystemInfoDto
+    stats: NodeSystemStatsDto
+
+    model_config = {"alias_generator": to_camel, "populate_by_name": True}
+
+
+class NodeVersionsDto(BaseModel):
+    xray: str
+    node: str
+
+    model_config = {"alias_generator": to_camel, "populate_by_name": True}
+
+
 class NodeDto(BaseModel):
     uuid: UUID
     name: str
@@ -234,11 +283,8 @@ class NodeDto(BaseModel):
     last_status_change: Optional[datetime] = None
     last_status_message: Optional[str] = None
 
-    xray_version: Optional[str] = None
-    node_version: Optional[str] = None
-    xray_uptime: str
-
-    users_online: Optional[int] = None
+    xray_uptime: float = 0
+    users_online: Optional[float] = None
 
     is_traffic_tracking_active: bool
     traffic_reset_day: Optional[int] = None
@@ -252,10 +298,6 @@ class NodeDto(BaseModel):
 
     tags: List[str] = Field(default_factory=list)
 
-    cpu_count: Optional[int] = None
-    cpu_model: Optional[str] = None
-    total_ram: Optional[str] = None
-
     created_at: datetime
     updated_at: datetime
 
@@ -263,6 +305,10 @@ class NodeDto(BaseModel):
 
     provider_uuid: Optional[UUID] = None
     provider: Optional[InfraProviderDto] = None
+
+    active_plugin_uuid: Optional[UUID] = None
+    system: Optional[NodeSystemDto] = None
+    versions: Optional[NodeVersionsDto] = None
 
     model_config = {"alias_generator": to_camel, "populate_by_name": True}
 
@@ -314,6 +360,21 @@ class BillingNodeDto(BaseModel):
 class CrmEventDto(BaseModel):
     event_name: TCRMEvents
     data: BillingNodeDto
+
+    model_config = {"alias_generator": to_camel, "populate_by_name": True}
+
+
+# ---------------- TORRENT BLOCKER EVENTS ---------------- #
+
+class TorrentBlockerReportDto(BaseModel):
+    node: NodeDto
+
+    model_config = {"alias_generator": to_camel, "populate_by_name": True}
+
+
+class TorrentBlockerEventDto(BaseModel):
+    event_name: TTorrentBlockerEvents
+    data: TorrentBlockerReportDto
 
     model_config = {"alias_generator": to_camel, "populate_by_name": True}
 

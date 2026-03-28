@@ -13,3 +13,4 @@ class TrafficLimitStrategy(StrEnum):
     DAY = "DAY"
     WEEK = "WEEK"
     MONTH = "MONTH"
+    MONTH_ROLLING = "MONTH_ROLLING"

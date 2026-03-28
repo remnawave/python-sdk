@@ -13,11 +13,11 @@ class InboundResponseDto(BaseModel):
     security: Optional[str] = None
     port: Optional[float] = None
     raw_inbound: Optional[Any] = Field(None, alias="rawInbound")
-    active_squads: Optional[list[UUID]] = Field(None, alias="activeSquads")
+    active_squads: List[UUID] = Field(default_factory=list, alias="activeSquads")
 
 
 class AllInboundsData(BaseModel):
-    total: int
+    total: float
     inbounds: List[InboundResponseDto]
 
 
@@ -26,7 +26,7 @@ class GetAllInboundsResponseDto(AllInboundsData):
 
 
 class InboundsByProfileData(BaseModel):
-    total: int
+    total: float
     inbounds: List[InboundResponseDto]
 
 

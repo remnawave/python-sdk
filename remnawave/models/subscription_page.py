@@ -16,7 +16,7 @@ class SubscriptionPageConfigDto(BaseModel):
 
 class GetSubscriptionPageConfigsData(BaseModel):
     """Data for getting all subscription page configs"""
-    total: int
+    total: float
     configs: List[SubscriptionPageConfigDto]
 
 

@@ -1,8 +1,8 @@
 from datetime import datetime
-from typing import Any, Dict, List, Optional
+from typing import Annotated, Any, Dict, List, Optional
 from uuid import UUID
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, StringConstraints
 
 
 class InboundDto(BaseModel):
@@ -32,7 +32,7 @@ class ConfigProfileDto(BaseModel):
 
 
 class CreateConfigProfileRequestDto(BaseModel):
-    name: str
+    name: Annotated[str, StringConstraints(min_length=2, max_length=30, pattern=r"^[A-Za-z0-9_\s-]+$")]
     config: Dict[str, Any]
 
 
@@ -42,7 +42,7 @@ class CreateConfigProfileResponseDto(ConfigProfileDto):
 
 class UpdateConfigProfileRequestDto(BaseModel):
     uuid: UUID
-    name: Optional[str] = Field(None, pattern=r"^[A-Za-z0-9_-]+$")
+    name: Optional[Annotated[str, StringConstraints(min_length=2, max_length=30, pattern=r"^[A-Za-z0-9_\s-]+$")]] = None
     config: Optional[Dict[str, Any]] = None
 
 
@@ -51,7 +51,7 @@ class UpdateConfigProfileResponseDto(ConfigProfileDto):
 
 
 class GetAllConfigProfilesResponsePaginated(BaseModel):
-    total: int
+    total: float
     config_profiles: List[ConfigProfileDto] = Field(alias="configProfiles")
 
 

@@ -11,7 +11,8 @@ from remnawave.models import (
     EncryptHappCryptoLinkResponseDto,
     DebugSrrMatcherRequestDto,
     DebugSrrMatcherResponseDto,
-    GetMetadataResponseDto
+    GetMetadataResponseDto,
+    GetRecapResponseDto,
 )
 from remnawave.rapid import BaseController, get, post
 
@@ -80,4 +81,11 @@ class SystemController(BaseController):
         body: Annotated[DebugSrrMatcherRequestDto, PydanticBody()],
     ) -> DebugSrrMatcherResponseDto:
         """Test SRR Matcher"""
+        ...
+
+    @get("/system/stats/recap", response_class=GetRecapResponseDto)
+    async def get_recap(
+        self,
+    ) -> GetRecapResponseDto:
+        """Get Recap"""
         ...

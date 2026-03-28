@@ -1,8 +1,8 @@
 from datetime import datetime
-from typing import List, Optional
+from typing import Annotated, List, Optional
 from uuid import UUID
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, StringConstraints
 
 
 class InboundsDto(BaseModel):
@@ -17,8 +17,8 @@ class InboundsDto(BaseModel):
 
 
 class InfoDto(BaseModel):
-    members_count: int = Field(alias="membersCount")
-    inbounds_count: int = Field(alias="inboundsCount")
+    members_count: float = Field(alias="membersCount")
+    inbounds_count: float = Field(alias="inboundsCount")
 
 
 class InternalSquadDto(BaseModel):
@@ -32,7 +32,7 @@ class InternalSquadDto(BaseModel):
 
 
 class CreateInternalSquadRequestDto(BaseModel):
-    name: str
+    name: Annotated[str, StringConstraints(min_length=2, max_length=30, pattern=r"^[A-Za-z0-9_\s-]+$")]
     inbounds: List[UUID] = Field(default_factory=list)
 
 
@@ -43,7 +43,7 @@ class CreateInternalSquadResponseDto(InternalSquadDto):
 class UpdateInternalSquadRequestDto(BaseModel):
     uuid: UUID
     inbounds: List[UUID] = Field(default_factory=list)
-    name: Optional[str] = Field(None, pattern=r"^[A-Za-z0-9_-]+$")
+    name: Optional[Annotated[str, StringConstraints(min_length=2, max_length=30, pattern=r"^[A-Za-z0-9_\s-]+$")]] = None
 
 
 class UpdateInternalSquadResponseDto(InternalSquadDto):
@@ -51,7 +51,7 @@ class UpdateInternalSquadResponseDto(InternalSquadDto):
 
 
 class GetAllInternalSquadsResponse(BaseModel):
-    total: int
+    total: float
     internal_squads: List[InternalSquadDto] = Field(alias="internalSquads")
 
 

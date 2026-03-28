@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Annotated, List, Literal, Optional, Union
 from uuid import UUID
 
@@ -112,6 +113,55 @@ TargetNodes = Annotated[
     Union[TargetAllNodes, TargetSpecificNodes],
     Field(discriminator="target"),
 ]
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Fetch Users IPs – step 1: start the job
+# ─────────────────────────────────────────────────────────────────────────────
+
+class FetchUsersIpsJobData(BaseModel):
+    """Returned job ID after requesting users IP fetch"""
+    job_id: str = Field(alias="jobId")
+
+
+class FetchUsersIpsResponseDto(FetchUsersIpsJobData):
+    """Response for POST /api/ip-control/fetch-users-ips/{nodeUuid}"""
+    pass
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Fetch Users IPs – step 2: poll the job result
+# ─────────────────────────────────────────────────────────────────────────────
+
+class FetchUsersIpsUserIp(BaseModel):
+    """IP entry with last seen timestamp"""
+    ip: str
+    last_seen: datetime = Field(alias="lastSeen")
+
+
+class FetchUsersIpsUser(BaseModel):
+    """Per-user IP list"""
+    user_id: str = Field(alias="userId")
+    ips: List[FetchUsersIpsUserIp]
+
+
+class FetchUsersIpsResult(BaseModel):
+    """Full result payload when the job is completed"""
+    success: bool
+    node_uuid: UUID = Field(alias="nodeUuid")
+    users: List[FetchUsersIpsUser]
+
+
+class FetchUsersIpsResultData(BaseModel):
+    """Job state + optional result"""
+    is_completed: bool = Field(alias="isCompleted")
+    is_failed: bool = Field(alias="isFailed")
+    result: Optional[FetchUsersIpsResult] = None
+
+
+class FetchUsersIpsResultResponseDto(FetchUsersIpsResultData):
+    """Response for GET /api/ip-control/fetch-users-ips/result/{jobId}"""
+    pass
 
 
 class DropConnectionsRequestDto(BaseModel):

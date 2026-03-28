@@ -74,10 +74,20 @@ class ResponseRule(BaseModel):
     )
 
 
+class ResponseRulesSettings(BaseModel):
+    """Settings for response rules"""
+    model_config = {"populate_by_name": True}
+
+    disable_subscription_access_by_path: Optional[bool] = Field(
+        None, alias="disableSubscriptionAccessByPath"
+    )
+
+
 class ResponseRules(BaseModel):
     """Response rules configuration"""
     version: ResponseRuleVersion
     rules: List[ResponseRule]
+    settings: Optional[ResponseRulesSettings] = None
 
 
 class CustomRemarksDto(BaseModel):

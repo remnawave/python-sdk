@@ -213,6 +213,27 @@ class DebugSrrMatcherData(BaseModel):
 class DebugSrrMatcherResponseDto(DebugSrrMatcherData):
     pass
 
+class RecapThisMonth(BaseModel):
+    users: float
+    traffic: str
+
+
+class RecapTotal(BaseModel):
+    users: float
+    nodes: float
+    traffic: str
+    nodes_ram: str = Field(alias="nodesRam")
+    nodes_cpu_cores: float = Field(alias="nodesCpuCores")
+    distinct_countries: float = Field(alias="distinctCountries")
+
+
+class GetRecapResponseDto(BaseModel):
+    this_month: RecapThisMonth = Field(alias="thisMonth")
+    total: RecapTotal
+    version: str
+    init_date: datetime.datetime = Field(alias="initDate")
+
+
 class BuildInfo(BaseModel):
     """Build information"""
     time: str

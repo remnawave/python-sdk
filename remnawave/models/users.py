@@ -203,6 +203,22 @@ class RevokeUserRequestDto(BaseModel):
         description="Optional. If true, only passwords will be revoked without changing the short UUID.",
     )
 
+class ResolveUserRequestBodyDto(BaseModel):
+    """Request DTO for resolving a user by any identifier"""
+    uuid: Optional[UUID] = None
+    id: Optional[int] = None
+    short_uuid: Optional[str] = Field(None, serialization_alias="shortUuid")
+    username: Optional[str] = None
+
+
+class ResolveUserResponseDto(BaseModel):
+    """Response DTO for resolved user"""
+    uuid: UUID
+    username: str
+    id: int
+    short_uuid: str = Field(alias="shortUuid")
+
+
 class SubscriptionRequestRecord(BaseModel):
     """Subscription request history record"""
     id: int

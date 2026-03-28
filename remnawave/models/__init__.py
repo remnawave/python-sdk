@@ -236,6 +236,7 @@ from .subscriptions_settings import (
     ResponseRule,
     ResponseRuleCondition,
     ResponseRules,
+    ResponseRulesSettings,
     SubscriptionSettingsResponseDto,
     SubscriptionType,
     UpdateSubscriptionSettingsRequestDto,
@@ -276,19 +277,24 @@ from .system import (
     StatusCounts,
     UsersStatistic,
     GetNodesMetricsResponseDto,
-    GetX25519KeyPairResponseDto, 
+    GetX25519KeyPairResponseDto,
     X25519KeyPair,
     DebugSrrMatcherRequestDto,
     DebugSrrMatcherResponseDto,
     EncryptHappCryptoLinkRequestDto,
     EncryptHappCryptoLinkResponseDto,
-    GetMetadataResponseDto
+    GetMetadataResponseDto,
+    GetRecapResponseDto,
+    RecapThisMonth,
+    RecapTotal,
 )
 from .users import (
     # Request DTOs
     CreateUserRequestDto,
     UpdateUserRequestDto,
     RevokeUserRequestDto,
+    ResolveUserRequestBodyDto,
+    ResolveUserResponseDto,
     
     # Response DTOs - Single User
     CreateUserResponseDto,
@@ -378,7 +384,7 @@ from .subscription_request_history import (
     SubscriptionRequestHistoryStatsData
 )
 from .webhook import (
-    UserEventDto, 
+    UserEventDto,
     UserHwidDeviceEventDto,
     HwidUserDeviceDto,
     LastConnectedNodeDto,
@@ -394,8 +400,15 @@ from .webhook import (
     NodeEventDto,
     CustomErrorEventDto,
     CrmEventDto,
+    TorrentBlockerEventDto,
+    TorrentBlockerReportDto,
     WebhookPayloadDto,
-    UserTrafficDto
+    UserTrafficDto,
+    NodeSystemDto,
+    NodeSystemInfoDto,
+    NodeSystemStatsDto,
+    NodeSystemInterfaceDto,
+    NodeVersionsDto,
 )
 from .passkeys import (
     DeletePasskeyRequestDto,
@@ -518,6 +531,8 @@ from .ip_control import (
     # Response DTOs
     FetchIpsResponseDto,
     FetchIpsResultResponseDto,
+    FetchUsersIpsResponseDto,
+    FetchUsersIpsResultResponseDto,
     DropConnectionsResponseDto,
     # Data models
     FetchIpsJobData,
@@ -525,6 +540,11 @@ from .ip_control import (
     FetchIpsNodeResult,
     FetchIpsResult,
     FetchIpsResultData,
+    FetchUsersIpsJobData,
+    FetchUsersIpsUserIp,
+    FetchUsersIpsUser,
+    FetchUsersIpsResult,
+    FetchUsersIpsResultData,
     DropConnectionsResponseData,
 )
 
@@ -546,10 +566,6 @@ __all__ = [
     "VerifyPasskeyAuthenticationRequestDto",
     "VerifyPasskeyAuthenticationResponseDto",
     "GetPasskeyAuthenticationOptionsResponseDto",
-    "AuthenticationSettings",
-    "PasskeyAuthenticationSettings",
-    "OAuth2ProvidersSettings",
-    "PasswordAuthenticationSettings",
     "BrandingSettings",
     # Nodes models
     "CreateNodeRequestDto",
@@ -639,6 +655,7 @@ __all__ = [
     "ResponseRule",
     "ResponseRuleCondition",
     "ResponseRules",
+    "ResponseRulesSettings",
     # Subscription template models
     "GetTemplateResponseDto",
     "TemplateResponseDto",
@@ -675,6 +692,9 @@ __all__ = [
     "EncryptHappCryptoLinkRequestDto",
     "EncryptHappCryptoLinkResponseDto",
     "GetMetadataResponseDto",
+    "GetRecapResponseDto",
+    "RecapThisMonth",
+    "RecapTotal",
     # XRay config models
     "ConfigResponseDto",  # Legacy alias
     "GetConfigResponseDto",
@@ -741,6 +761,8 @@ __all__ = [
     "CreateUserRequestDto",
     "UpdateUserRequestDto",
     "RevokeUserRequestDto",
+    "ResolveUserRequestBodyDto",
+    "ResolveUserResponseDto",
     "CreateUserResponseDto",
     "UpdateUserResponseDto",
     "GetUserByUuidResponseDto",
@@ -907,6 +929,17 @@ __all__ = [
     # CRM EVENTS
     "CrmEventDto",
 
+    # TORRENT BLOCKER EVENTS
+    "TorrentBlockerEventDto",
+    "TorrentBlockerReportDto",
+
+    # NODE SYSTEM/VERSIONS
+    "NodeSystemDto",
+    "NodeSystemInfoDto",
+    "NodeSystemStatsDto",
+    "NodeSystemInterfaceDto",
+    "NodeVersionsDto",
+
     # WEBHOOK PAYLOAD
     "WebhookPayloadDto",
     
@@ -1001,6 +1034,13 @@ __all__ = [
     "FetchIpsNodeResult",
     "FetchIpsResult",
     "FetchIpsResultData",
+    "FetchUsersIpsResponseDto",
+    "FetchUsersIpsResultResponseDto",
+    "FetchUsersIpsJobData",
+    "FetchUsersIpsUserIp",
+    "FetchUsersIpsUser",
+    "FetchUsersIpsResult",
+    "FetchUsersIpsResultData",
     "DropConnectionsResponseData",
     
     # Metadata models

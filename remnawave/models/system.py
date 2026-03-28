@@ -33,15 +33,15 @@ class BandwidthStatisticResponseDto(BaseModel):
 
 class CPUStatistic(BaseModel):
     cores: float
-    physical_cores: float = Field(alias="physicalCores")
+    physical_cores: Optional[float] = Field(None, alias="physicalCores")
 
 
 class MemoryStatistic(BaseModel):
     total: float
     free: float
     used: float
-    active: float
-    available: float
+    active: Optional[float] = None
+    available: Optional[float] = None
 
 
 class StatusCounts(BaseModel):
@@ -112,8 +112,20 @@ class GetNodesStatisticsResponseDto(BaseModel):
     last_seven_days: List[NodeStatistic] = Field(alias="lastSevenDays")
 
 
+class RuntimeMetric(BaseModel):
+    """Runtime metric from health endpoint"""
+    model_config = {"extra": "allow"}
+
+    rss: Optional[float] = None
+    heap_total: Optional[float] = Field(None, alias="heapTotal")
+    heap_used: Optional[float] = Field(None, alias="heapUsed")
+    external: Optional[float] = None
+    instance_type: Optional[str] = Field(None, alias="instanceType")
+
+
 class GetRemnawaveHealthResponseDto(BaseModel):
-    pm2_stats: List[PM2Stat] = Field(alias="pm2Stats")
+    pm2_stats: Optional[List[PM2Stat]] = Field(None, alias="pm2Stats")
+    runtime_metrics: Optional[List[RuntimeMetric]] = Field(None, alias="runtimeMetrics")
 
 
 class TrafficStatDto(BaseModel):

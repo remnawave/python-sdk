@@ -150,7 +150,7 @@ class NodeResponseDto(BaseModel):
     last_status_message: Optional[str] = Field(None, alias="lastStatusMessage")
     xray_version: Optional[str] = Field(None, alias="xrayVersion")
     node_version: Optional[str] = Field(None, alias="nodeVersion")
-    xray_uptime: str = Field(alias="xrayUptime")
+    xray_uptime: float = Field(0, alias="xrayUptime")
     is_traffic_tracking_active: bool = Field(alias="isTrafficTrackingActive")
     traffic_reset_day: Optional[int] = Field(None, alias="trafficResetDay")
     traffic_limit_bytes: Optional[float] = Field(None, alias="trafficLimitBytes")

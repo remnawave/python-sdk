@@ -166,7 +166,7 @@ class RawSubscriptionResponse(BaseModel):
     user: UserResponseDto
     converted_user_info: ConvertedUserInfo = Field(alias="convertedUserInfo")
     headers: Dict[str, str]
-    raw_hosts: List[RawHost] = Field(alias="rawHosts")
+    raw_hosts: Optional[List[RawHost]] = Field(None, alias="rawHosts")
 
 
 class GetRawSubscriptionByShortUuidResponseDto(RawSubscriptionResponse):

@@ -167,7 +167,10 @@ class WebhookUtility:
         """
         if not WebhookUtility.is_user_hwid_devices_event(payload.event):
             return None
-        
+
+        if isinstance(payload.data, UserHwidDeviceEventDto):
+            return (payload.data.user, payload.data.hwid_user_device)
+
         if isinstance(payload.data, dict):
             user_data = payload.data.get("user", {})
             hwid_data = payload.data.get("hwidUserDevice", {})

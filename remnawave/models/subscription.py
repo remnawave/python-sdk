@@ -166,7 +166,7 @@ class RawSubscriptionResponse(BaseModel):
     user: UserResponseDto
     converted_user_info: ConvertedUserInfo = Field(alias="convertedUserInfo")
     headers: Dict[str, str]
-    raw_hosts: List[RawHost] = Field(alias="rawHosts")
+    raw_hosts: Optional[List[RawHost]] = Field(None, alias="rawHosts")
 
 
 class GetRawSubscriptionByShortUuidResponseDto(RawSubscriptionResponse):
@@ -176,7 +176,7 @@ class GetRawSubscriptionByShortUuidResponseDto(RawSubscriptionResponse):
 class UserSubscription(BaseModel):
     short_uuid: str = Field(alias="shortUuid")
     username: str
-    days_left: int = Field(alias="daysLeft")
+    days_left: float = Field(alias="daysLeft")
     traffic_used: str = Field(alias="trafficUsed")
     traffic_limit: str = Field(alias="trafficLimit")
     lifetime_traffic_used: str = Field(alias="lifetimeTrafficUsed")
@@ -222,7 +222,7 @@ class SubscriptionWithoutHapp(BaseModel):
 
 class GetAllSubscriptionsResponseDto(BaseModel):
     subscriptions: List[SubscriptionWithoutHapp]
-    total: int
+    total: float
 
 
 class GetSubscriptionByUsernameResponseDto(BaseModel):
@@ -239,6 +239,17 @@ class GetSubscriptionByShortUUIDResponseDto(GetSubscriptionByUsernameResponseDto
 
 class GetSubscriptionByUUIDResponseDto(GetSubscriptionByUsernameResponseDto):
     pass
+
+
+class GetConnectionKeysByUuidResponseDto(BaseModel):
+    enabled_keys: List[str] = Field(alias="enabledKeys")
+    hidden_keys: List[str] = Field(alias="hiddenKeys")
+    disabled_keys: List[str] = Field(alias="disabledKeys")
+
+    @property
+    def connection_keys(self) -> List[str]:
+        """Backward compatibility: historically SDK exposed a flat list of keys."""
+        return self.enabled_keys
 
 
 # Legacy alias for backward compatibility

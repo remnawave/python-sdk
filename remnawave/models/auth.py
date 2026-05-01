@@ -1,6 +1,6 @@
 from typing import Annotated, Any, Dict, Optional
 
-from pydantic import BaseModel, Field, StringConstraints
+from pydantic import BaseModel, Field, StringConstraints, field_validator
 
 from remnawave.enums.auth import OAuth2Provider
 
@@ -17,18 +17,35 @@ class LoginResponseDto(BaseModel):
     access_token: str = Field(alias="accessToken")
 
 
-class TelegramBotInfo(BaseModel):
-    bot_id: int = Field(alias="botId")
+class PasskeyAuthenticationSettings(BaseModel):
+    enabled: bool
 
 
-class StatusResponseData(BaseModel):
+class OAuth2ProvidersSettings(BaseModel):
+    providers: Dict[str, bool]
+
+
+class PasswordAuthenticationSettings(BaseModel):
+    enabled: bool
+
+
+class AuthenticationSettings(BaseModel):
+    passkey: PasskeyAuthenticationSettings
+    oauth2: OAuth2ProvidersSettings
+    password: PasswordAuthenticationSettings
+
+
+class BrandingSettings(BaseModel):
+    title: Optional[str] = None
+    logo_url: Optional[str] = Field(None, alias="logoUrl")
+
+
+class GetStatusResponseDto(BaseModel):
+    """Status response with authentication and branding settings"""
     is_login_allowed: bool = Field(alias="isLoginAllowed")
     is_register_allowed: bool = Field(alias="isRegisterAllowed")
-    tg_auth: Optional[TelegramBotInfo] = Field(None, alias="tgAuth")
-
-
-class GetStatusResponseDto(StatusResponseData):
-    pass
+    authentication: Optional[AuthenticationSettings] = None
+    branding: BrandingSettings
 
 
 class LoginRequestDto(BaseModel):
@@ -39,6 +56,17 @@ class LoginRequestDto(BaseModel):
 class RegisterRequestDto(BaseModel):
     username: str
     password: Annotated[str, StringConstraints(min_length=24)]
+
+    @field_validator("password")
+    @classmethod
+    def validate_password_complexity(cls, v: str) -> str:
+        if not any(c.isupper() for c in v):
+            raise ValueError("Password must contain at least one uppercase letter")
+        if not any(c.islower() for c in v):
+            raise ValueError("Password must contain at least one lowercase letter")
+        if not any(c.isdigit() for c in v):
+            raise ValueError("Password must contain at least one digit")
+        return v
 
 
 class TelegramCallbackRequestDto(BaseModel):
@@ -82,8 +110,8 @@ class OAuth2CallbackResponseDto(BaseModel):
 # Passkey Authentication models
 class GetPasskeyAuthenticationOptionsResponseDto(BaseModel):
     """Response with passkey authentication options"""
-    # Passkey options are complex WebAuthn objects, using Any for flexibility
-    response: Dict[str, Any]
+    # Passkey options are complex WebAuthn objects
+    pass
 
 
 class VerifyPasskeyAuthenticationRequestDto(BaseModel):

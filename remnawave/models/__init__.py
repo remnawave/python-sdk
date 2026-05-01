@@ -206,6 +206,8 @@ from .nodes import (
     NodeBulkActionType,
     NodesBulkActionsRequestDto,
     NodesBulkActionsResponseDto,
+    BulkNodesUpdateRequestDto,
+    BulkNodesUpdateResponseDto,
 )
 from .nodes_usage_history import (
     GetNodeUserUsageByRangeResponseDto,
@@ -225,6 +227,7 @@ from .subscription import (
     RawSettings,
     GetSubscriptionByShortUUIDResponseDto,
     GetSubscriptionByUUIDResponseDto,
+    GetConnectionKeysByUuidResponseDto,
 )
 from .subscriptions_settings import (
     GetSubscriptionSettingsResponseDto,
@@ -233,6 +236,7 @@ from .subscriptions_settings import (
     ResponseRule,
     ResponseRuleCondition,
     ResponseRules,
+    ResponseRulesSettings,
     SubscriptionSettingsResponseDto,
     SubscriptionType,
     UpdateSubscriptionSettingsRequestDto,
@@ -273,19 +277,24 @@ from .system import (
     StatusCounts,
     UsersStatistic,
     GetNodesMetricsResponseDto,
-    GetX25519KeyPairResponseDto, 
+    GetX25519KeyPairResponseDto,
     X25519KeyPair,
     DebugSrrMatcherRequestDto,
     DebugSrrMatcherResponseDto,
     EncryptHappCryptoLinkRequestDto,
     EncryptHappCryptoLinkResponseDto,
-    GetMetadataResponseDto
+    GetMetadataResponseDto,
+    GetRecapResponseDto,
+    RecapThisMonth,
+    RecapTotal,
 )
 from .users import (
     # Request DTOs
     CreateUserRequestDto,
     UpdateUserRequestDto,
     RevokeUserRequestDto,
+    ResolveUserRequestBodyDto,
+    ResolveUserResponseDto,
     
     # Response DTOs - Single User
     CreateUserResponseDto,
@@ -375,7 +384,7 @@ from .subscription_request_history import (
     SubscriptionRequestHistoryStatsData
 )
 from .webhook import (
-    UserEventDto, 
+    UserEventDto,
     UserHwidDeviceEventDto,
     HwidUserDeviceDto,
     LastConnectedNodeDto,
@@ -391,8 +400,15 @@ from .webhook import (
     NodeEventDto,
     CustomErrorEventDto,
     CrmEventDto,
+    TorrentBlockerEventDto,
+    TorrentBlockerReportDto,
     WebhookPayloadDto,
-    UserTrafficDto
+    UserTrafficDto,
+    NodeSystemDto,
+    NodeSystemInfoDto,
+    NodeSystemStatsDto,
+    NodeSystemInterfaceDto,
+    NodeVersionsDto,
 )
 from .passkeys import (
     DeletePasskeyRequestDto,
@@ -404,6 +420,42 @@ from .passkeys import (
     UpdatePasskeyResponseDto,
     VerifyPasskeyRegistrationRequestDto,
     VerifyPasskeyRegistrationResponseDto,
+)
+from .metadata import (
+    GetMetadataResponseDto,
+    GetUserMetadataResponseDto,
+    UpsertUserMetadataRequestBodyDto,
+    UpsertUserMetadataResponseDto,
+    GetNodeMetadataResponseDto,
+    UpsertNodeMetadataRequestBodyDto,
+    UpsertNodeMetadataResponseDto,
+)
+from .node_plugins import (
+    GetTorrentBlockerReportsResponseDto,
+    GetTorrentBlockerReportsStatsResponseDto,
+    TruncateTorrentBlockerReportsResponseDto,
+    GetNodePluginsResponseDto,
+    GetNodePluginResponseDto,
+    UpdateNodePluginRequestDto,
+    UpdateNodePluginResponseDto,
+    DeleteNodePluginResponseDto,
+    CreateNodePluginRequestDto,
+    CreateNodePluginResponseDto,
+    ReorderNodePluginItem,
+    ReorderNodePluginsRequestDto,
+    ReorderNodePluginsResponseDto,
+    CloneNodePluginRequestDto,
+    CloneNodePluginResponseDto,
+    PluginExecutorRequestDto,
+    PluginExecutorResponseDto,
+    BlockIpsCommandDto,
+    UnblockIpsCommandDto,
+    RecreateTablesCommandDto,
+    BlockIpItemDto,
+    TorrentBlockerReportRecordDto,
+    NodePluginDto,
+    TargetAllNodesDto,
+    TargetSpecificNodesDto,
 )
 from .external_squads import (
     AddUsersToExternalSquadResponseDto,
@@ -479,6 +531,8 @@ from .ip_control import (
     # Response DTOs
     FetchIpsResponseDto,
     FetchIpsResultResponseDto,
+    FetchUsersIpsResponseDto,
+    FetchUsersIpsResultResponseDto,
     DropConnectionsResponseDto,
     # Data models
     FetchIpsJobData,
@@ -486,6 +540,11 @@ from .ip_control import (
     FetchIpsNodeResult,
     FetchIpsResult,
     FetchIpsResultData,
+    FetchUsersIpsJobData,
+    FetchUsersIpsUserIp,
+    FetchUsersIpsUser,
+    FetchUsersIpsResult,
+    FetchUsersIpsResultData,
     DropConnectionsResponseData,
 )
 
@@ -507,6 +566,7 @@ __all__ = [
     "VerifyPasskeyAuthenticationRequestDto",
     "VerifyPasskeyAuthenticationResponseDto",
     "GetPasskeyAuthenticationOptionsResponseDto",
+    "BrandingSettings",
     # Nodes models
     "CreateNodeRequestDto",
     "CreateNodeResponseDto",
@@ -536,6 +596,8 @@ __all__ = [
     "NodeBulkActionType",
     "NodesBulkActionsRequestDto",
     "NodesBulkActionsResponseDto",
+    "BulkNodesUpdateRequestDto",
+    "BulkNodesUpdateResponseDto",
     # Hosts models
     "CreateHostRequestDto",
     "CreateHostResponseDto",
@@ -576,6 +638,7 @@ __all__ = [
     "UserSubscription",
     "GetRawSubscriptionByShortUuidResponseDto",
     "RawSettings",
+    "GetConnectionKeysByUuidResponseDto",
     # Subscription settings models
     "GetSubscriptionSettingsResponseDto",
     "SubscriptionSettingsResponseDto",
@@ -592,6 +655,7 @@ __all__ = [
     "ResponseRule",
     "ResponseRuleCondition",
     "ResponseRules",
+    "ResponseRulesSettings",
     # Subscription template models
     "GetTemplateResponseDto",
     "TemplateResponseDto",
@@ -627,7 +691,10 @@ __all__ = [
     "DebugSrrMatcherResponseDto",
     "EncryptHappCryptoLinkRequestDto",
     "EncryptHappCryptoLinkResponseDto",
-    "GetMetadataResponseDto"
+    "GetMetadataResponseDto",
+    "GetRecapResponseDto",
+    "RecapThisMonth",
+    "RecapTotal",
     # XRay config models
     "ConfigResponseDto",  # Legacy alias
     "GetConfigResponseDto",
@@ -694,6 +761,8 @@ __all__ = [
     "CreateUserRequestDto",
     "UpdateUserRequestDto",
     "RevokeUserRequestDto",
+    "ResolveUserRequestBodyDto",
+    "ResolveUserResponseDto",
     "CreateUserResponseDto",
     "UpdateUserResponseDto",
     "GetUserByUuidResponseDto",
@@ -860,6 +929,17 @@ __all__ = [
     # CRM EVENTS
     "CrmEventDto",
 
+    # TORRENT BLOCKER EVENTS
+    "TorrentBlockerEventDto",
+    "TorrentBlockerReportDto",
+
+    # NODE SYSTEM/VERSIONS
+    "NodeSystemDto",
+    "NodeSystemInfoDto",
+    "NodeSystemStatsDto",
+    "NodeSystemInterfaceDto",
+    "NodeVersionsDto",
+
     # WEBHOOK PAYLOAD
     "WebhookPayloadDto",
     
@@ -954,5 +1034,48 @@ __all__ = [
     "FetchIpsNodeResult",
     "FetchIpsResult",
     "FetchIpsResultData",
+    "FetchUsersIpsResponseDto",
+    "FetchUsersIpsResultResponseDto",
+    "FetchUsersIpsJobData",
+    "FetchUsersIpsUserIp",
+    "FetchUsersIpsUser",
+    "FetchUsersIpsResult",
+    "FetchUsersIpsResultData",
     "DropConnectionsResponseData",
+    
+    # Metadata models
+    "GetMetadataResponseDto",
+    "GetUserMetadataResponseDto",
+    "UpsertUserMetadataRequestBodyDto",
+    "UpsertUserMetadataResponseDto",
+    "GetNodeMetadataResponseDto",
+    "UpsertNodeMetadataRequestBodyDto",
+    "UpsertNodeMetadataResponseDto",
+
+    # Node plugins models
+    "GetTorrentBlockerReportsResponseDto",
+    "GetTorrentBlockerReportsStatsResponseDto",
+    "TruncateTorrentBlockerReportsResponseDto",
+    "GetNodePluginsResponseDto",
+    "GetNodePluginResponseDto",
+    "UpdateNodePluginRequestDto",
+    "UpdateNodePluginResponseDto",
+    "DeleteNodePluginResponseDto",
+    "CreateNodePluginRequestDto",
+    "CreateNodePluginResponseDto",
+    "ReorderNodePluginItem",
+    "ReorderNodePluginsRequestDto",
+    "ReorderNodePluginsResponseDto",
+    "CloneNodePluginRequestDto",
+    "CloneNodePluginResponseDto",
+    "PluginExecutorRequestDto",
+    "PluginExecutorResponseDto",
+    "BlockIpsCommandDto",
+    "UnblockIpsCommandDto",
+    "RecreateTablesCommandDto",
+    "BlockIpItemDto",
+    "TorrentBlockerReportRecordDto",
+    "NodePluginDto",
+    "TargetAllNodesDto",
+    "TargetSpecificNodesDto",
 ]

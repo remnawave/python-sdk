@@ -25,6 +25,8 @@ from remnawave.models import (
     ProfileModificationResponseDto,
     NodesBulkActionsRequestDto,
     NodesBulkActionsResponseDto,
+    BulkNodesUpdateRequestDto,
+    BulkNodesUpdateResponseDto,
 )
 from remnawave.rapid import BaseController, delete, get, patch, post
 
@@ -146,4 +148,12 @@ class NodesController(BaseController):
         body: Annotated[NodesBulkActionsRequestDto, PydanticBody()],
     ) -> NodesBulkActionsResponseDto:
         """Perform actions for many nodes (ENABLE, DISABLE, RESTART, RESET_TRAFFIC)"""
+        ...
+
+    @post("/nodes/bulk-actions/update", response_class=BulkNodesUpdateResponseDto)
+    async def bulk_nodes_update(
+        self,
+        body: Annotated[BulkNodesUpdateRequestDto, PydanticBody()],
+    ) -> BulkNodesUpdateResponseDto:
+        """Update many nodes"""
         ...

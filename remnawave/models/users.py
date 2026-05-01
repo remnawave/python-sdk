@@ -109,8 +109,8 @@ class UpdateUserRequestDto(BaseModel):
 
 class UserTrafficDto(BaseModel):
     """User traffic information"""
-    used_traffic_bytes: int = Field(alias="usedTrafficBytes")
-    lifetime_used_traffic_bytes: int = Field(alias="lifetimeUsedTrafficBytes")
+    used_traffic_bytes: float = Field(alias="usedTrafficBytes")
+    lifetime_used_traffic_bytes: float = Field(alias="lifetimeUsedTrafficBytes")
     online_at: Optional[datetime] = Field(None, alias="onlineAt")
     first_connected_at: Optional[datetime] = Field(None, alias="firstConnectedAt")
     last_connected_node_uuid: Optional[UUID] = Field(None, alias="lastConnectedNodeUuid")
@@ -149,12 +149,12 @@ class UserResponseDto(BaseModel):
     user_traffic: UserTrafficDto = Field(alias="userTraffic")
     
     @property
-    def used_traffic_bytes(self) -> int:
+    def used_traffic_bytes(self) -> float:
         """Backward compatibility property"""
         return self.user_traffic.used_traffic_bytes
     
     @property
-    def lifetime_used_traffic_bytes(self) -> int:
+    def lifetime_used_traffic_bytes(self) -> float:
         """Backward compatibility property"""
         return self.user_traffic.lifetime_used_traffic_bytes
     
@@ -202,6 +202,22 @@ class RevokeUserRequestDto(BaseModel):
         serialization_alias="revokeOnlyPasswords",
         description="Optional. If true, only passwords will be revoked without changing the short UUID.",
     )
+
+class ResolveUserRequestBodyDto(BaseModel):
+    """Request DTO for resolving a user by any identifier"""
+    uuid: Optional[UUID] = None
+    id: Optional[int] = None
+    short_uuid: Optional[str] = Field(None, serialization_alias="shortUuid")
+    username: Optional[str] = None
+
+
+class ResolveUserResponseDto(BaseModel):
+    """Response DTO for resolved user"""
+    uuid: UUID
+    username: str
+    id: int
+    short_uuid: str = Field(alias="shortUuid")
+
 
 class SubscriptionRequestRecord(BaseModel):
     """Subscription request history record"""

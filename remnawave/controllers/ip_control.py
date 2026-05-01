@@ -8,6 +8,8 @@ from remnawave.models import (
     DropConnectionsResponseDto,
     FetchIpsResponseDto,
     FetchIpsResultResponseDto,
+    FetchUsersIpsResponseDto,
+    FetchUsersIpsResultResponseDto,
 )
 from remnawave.rapid import BaseController, get, post
 
@@ -38,6 +40,33 @@ class IpControlController(BaseController):
         ``is_completed`` is ``True`` the ``result`` field contains per-node
         IP lists.  When ``is_failed`` is ``True`` the job encountered an
         error.
+        """
+        ...
+
+    @post("/ip-control/fetch-users-ips/{nodeUuid}", response_class=FetchUsersIpsResponseDto)
+    async def fetch_users_ips(
+        self,
+        nodeUuid: Annotated[str, Path(description="UUID of the node")],
+    ) -> FetchUsersIpsResponseDto:
+        """Request IP List for all users on a node.
+
+        Starts a background job that queries the specified node for the IPs
+        of all connected users. The returned ``job_id`` must be passed to
+        :meth:`get_fetch_users_ips_result` to retrieve the actual list once
+        the job is complete.
+        """
+        ...
+
+    @get("/ip-control/fetch-users-ips/result/{jobId}", response_class=FetchUsersIpsResultResponseDto)
+    async def get_fetch_users_ips_result(
+        self,
+        jobId: Annotated[str, Path(description="Job ID returned by fetch_users_ips")],
+    ) -> FetchUsersIpsResultResponseDto:
+        """Get Users IP List Result by Job ID.
+
+        Poll this endpoint after calling :meth:`fetch_users_ips`. When
+        ``is_completed`` is ``True`` the ``result`` field contains per-user
+        IP lists.
         """
         ...
 

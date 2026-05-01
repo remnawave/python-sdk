@@ -15,6 +15,7 @@ REMNAWAVE_CONFIG_PROFILE_UUID = os.getenv("REMNAWAVE_CONFIG_PROFILE_UUID")
 REMNAWAVE_USER_UUID = os.getenv("REMNAWAVE_USER_UUID")
 REMNAWAVE_SHORT_UUID = os.getenv("REMNAWAVE_SHORT_UUID")
 REMNAWAVE_USER_USERNAME = os.getenv("REMNAWAVE_USER_USERNAME")
+REMNAWAVE_NODE_UUID = os.getenv("REMNAWAVE_NODE_UUID")
 
 @pytest.fixture
 async def remnawave() -> RemnawaveSDK:
@@ -44,4 +45,6 @@ async def remnawave() -> RemnawaveSDK:
     assert sdk.subscription_page_config is not None
     assert sdk.xray_config is not None
     assert sdk.hwid is not None
+    assert sdk.node_plugins is not None
+    assert sdk.metadata is not None
     return sdk

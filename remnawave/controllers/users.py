@@ -75,8 +75,8 @@ class UsersController(BaseController):
     async def revoke_user_subscription(
         self,
         uuid: Annotated[str, Path(description="UUID of the user")],
-        body: Optional[Annotated[RevokeUserRequestDto, PydanticBody()]] = None,
-    ) -> RevokeUserSubscriptionResponseDto:
+        body: Annotated[Optional[RevokeUserRequestDto], PydanticBody()] = None,
+    ) -> UpdateUserResponseDto:
         """Revoke User Subscription"""
         ...
 

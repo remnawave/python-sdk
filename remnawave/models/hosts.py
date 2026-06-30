@@ -3,7 +3,10 @@ from uuid import UUID
 
 from pydantic import BaseModel, Field, StringConstraints, RootModel
 
-from remnawave.enums import ALPN, Fingerprint, SecurityLayer, SubscriptionType
+from remnawave.enums import ALPN, MihomoIpVersion, SecurityLayer, SubscriptionType
+
+# Tag for a single host tag entry: uppercase alphanumeric, underscores and colons, max 36 chars
+HostTag = Annotated[str, StringConstraints(max_length=36, pattern=r"^[A-Z0-9_:]+$")]
 
 
 class ReorderHostItem(BaseModel):
@@ -35,21 +38,24 @@ class UpdateHostRequestDto(BaseModel):
     sni: Optional[str] = None
     host: Optional[str] = None
     alpn: Optional[ALPN] = None
-    fingerprint: Optional[Fingerprint] = None
-    allow_insecure: Optional[bool] = Field(None, serialization_alias="allowInsecure")
+    fingerprint: Optional[str] = None
     is_disabled: Optional[bool] = Field(None, serialization_alias="isDisabled")
     security_layer: Optional[SecurityLayer] = Field(None, serialization_alias="securityLayer")
     server_description: Optional[str] = Field(None, serialization_alias="serverDescription", max_length=30)
-    tag: Optional[Annotated[str, StringConstraints(max_length=32, pattern=r"^[A-Z0-9_:]+$")]] = None
+    tags: Optional[List[HostTag]] = Field(None, serialization_alias="tags", max_length=10)
     is_hidden: Optional[bool] = Field(None, serialization_alias="isHidden")
     override_sni_from_address: Optional[bool] = Field(None, serialization_alias="overrideSniFromAddress")
     keep_blank_sni: Optional[bool] = Field(None, serialization_alias="keepSniBlank")
     vless_route_id: Optional[int] = Field(None, serialization_alias="vlessRouteId", ge=0, le=65535)
+    pinned_peer_cert_sha256: Optional[str] = Field(None, serialization_alias="pinnedPeerCertSha256")
+    verify_peer_cert_by_name: Optional[str] = Field(None, serialization_alias="verifyPeerCertByName")
     shuffle_host: Optional[bool] = Field(None, serialization_alias="shuffleHost")
     mihomo_x25519: Optional[bool] = Field(None, serialization_alias="mihomoX25519")
-    x_http_extra_params: Optional[Dict[str, Any]] = Field(None, serialization_alias="xHttpExtraParams")
+    mihomo_ip_version: Optional[MihomoIpVersion] = Field(None, serialization_alias="mihomoIpVersion")
+    xhttp_extra_params: Optional[Dict[str, Any]] = Field(None, serialization_alias="xhttpExtraParams")
     mux_params: Optional[Dict[str, Any]] = Field(None, serialization_alias="muxParams")
     sockopt_params: Optional[Dict[str, Any]] = Field(None, serialization_alias="sockoptParams")
+    final_mask: Optional[Any] = Field(None, serialization_alias="finalMask")
     nodes: Optional[List[UUID]] = None
     xray_json_template_uuid: Optional[UUID] = Field(None, serialization_alias="xrayJsonTemplateUuid")
     excluded_internal_squads: Optional[List[UUID]] = Field(None, serialization_alias="excludedInternalSquads")
@@ -58,6 +64,28 @@ class UpdateHostRequestDto(BaseModel):
         serialization_alias="excludeFromSubscriptionTypes",
         description="Subscription types from which this host will be excluded.",
     )
+
+    def __init__(self, **data):
+        # Backward compatibility: `tag` (single value) was replaced by `tags` (list) in v2.8.0
+        if "tag" in data and "tags" not in data:
+            tag = data.pop("tag")
+            data["tags"] = [tag] if tag is not None else None
+        # Backward compatibility: `allow_insecure` was removed in v2.8.0 (use security_layer instead)
+        data.pop("allow_insecure", None)
+        # Backward compatibility: `xHttpExtraParams` alias was renamed to `xhttpExtraParams`
+        if "x_http_extra_params" in data and "xhttp_extra_params" not in data:
+            data["xhttp_extra_params"] = data.pop("x_http_extra_params")
+        super().__init__(**data)
+
+    @property
+    def x_http_extra_params(self) -> Optional[Dict[str, Any]]:
+        """Backward compatibility property (renamed to xhttp_extra_params in v2.8.0)"""
+        return self.xhttp_extra_params
+
+    @property
+    def tag(self) -> Optional[str]:
+        """Backward compatibility property (replaced by `tags` in v2.8.0)"""
+        return self.tags[0] if self.tags else None
 
     @property
     def inbound_uuid(self) -> Optional[UUID]:
@@ -75,22 +103,25 @@ class HostResponseDto(BaseModel):
     host: str | None = Field(alias="host")
     alpn: str | None = Field(alias="alpn")
     fingerprint: str | None = Field(alias="fingerprint")
-    x_http_extra_params: Dict[str, Any] | None = Field(alias="xHttpExtraParams")
+    xhttp_extra_params: Dict[str, Any] | None = Field(None, alias="xhttpExtraParams")
     mux_params: Dict[str, Any] | None = Field(alias="muxParams")
     sockopt_params: Dict[str, Any] | None = Field(alias="sockoptParams")
+    final_mask: Any | None = Field(None, alias="finalMask")
     inbound: HostInboundData
     server_description: str | None = Field(alias="serverDescription")
-    tag: str | None = Field(alias="tag")
+    tags: List[str] = Field(default_factory=list, alias="tags")
     vless_route_id: int | None = Field(alias="vlessRouteId")
+    pinned_peer_cert_sha256: str | None = Field(None, alias="pinnedPeerCertSha256")
+    verify_peer_cert_by_name: str | None = Field(None, alias="verifyPeerCertByName")
     shuffle_host: bool = Field(alias="shuffleHost")
     mihomo_x25519: bool = Field(alias="mihomoX25519")
+    mihomo_ip_version: str | None = Field(None, alias="mihomoIpVersion")
     nodes: List[UUID]
     is_disabled: bool = Field(False, alias="isDisabled")
     security_layer: SecurityLayer = Field(SecurityLayer.DEFAULT, alias="securityLayer")
     is_hidden: bool = Field(False, alias="isHidden")
     override_sni_from_address: bool = Field(False, alias="overrideSniFromAddress")
     keep_blank_sni: bool = Field(False, alias="keepSniBlank")
-    allow_insecure: bool = Field(False, alias="allowInsecure")
     xray_json_template_uuid: UUID | None = Field(alias="xrayJsonTemplateUuid")
     excluded_internal_squads: List[UUID] = Field(default_factory=list, alias="excludedInternalSquads")
     exclude_from_subscription_types: List[SubscriptionType] = Field(
@@ -103,6 +134,21 @@ class HostResponseDto(BaseModel):
     def inbound_uuid(self) -> Optional[UUID]:
         return self.inbound.config_profile_inbound_uuid
 
+    @property
+    def x_http_extra_params(self) -> Dict[str, Any] | None:
+        """Backward compatibility property (renamed to xhttp_extra_params in v2.8.0)"""
+        return self.xhttp_extra_params
+
+    @property
+    def tag(self) -> str | None:
+        """Backward compatibility property (replaced by `tags` in v2.8.0)"""
+        return self.tags[0] if self.tags else None
+
+    @property
+    def allow_insecure(self) -> bool:
+        """Backward compatibility property (removed in v2.8.0, derived from security_layer)"""
+        return self.security_layer == SecurityLayer.NONE
+
 
 class CreateHostRequestDto(BaseModel):
     inbound: CreateHostInboundData
@@ -113,17 +159,20 @@ class CreateHostRequestDto(BaseModel):
     sni: Optional[str] = None
     host: Optional[str] = None
     alpn: Optional[ALPN] = None
-    fingerprint: Optional[Fingerprint] = None
-    x_http_extra_params: Optional[Dict[str, Any]] = Field(None, serialization_alias="xHttpExtraParams")
+    fingerprint: Optional[str] = None
+    xhttp_extra_params: Optional[Dict[str, Any]] = Field(None, serialization_alias="xhttpExtraParams")
     mux_params: Optional[Dict[str, Any]] = Field(None, serialization_alias="muxParams")
     sockopt_params: Optional[Dict[str, Any]] = Field(None, serialization_alias="sockoptParams")
+    final_mask: Optional[Any] = Field(None, serialization_alias="finalMask")
     server_description: Optional[str] = Field(None, serialization_alias="serverDescription", max_length=30)
-    tag: Optional[Annotated[str, StringConstraints(max_length=32, pattern=r"^[A-Z0-9_:]+$")]] = None
+    tags: Optional[List[HostTag]] = Field(None, serialization_alias="tags", max_length=10)
     vless_route_id: Optional[int] = Field(None, serialization_alias="vlessRouteId", ge=0, le=65535)
+    pinned_peer_cert_sha256: Optional[str] = Field(None, serialization_alias="pinnedPeerCertSha256")
+    verify_peer_cert_by_name: Optional[str] = Field(None, serialization_alias="verifyPeerCertByName")
     shuffle_host: bool = Field(False, serialization_alias="shuffleHost")
     mihomo_x25519: bool = Field(False, serialization_alias="mihomoX25519")
+    mihomo_ip_version: Optional[MihomoIpVersion] = Field(None, serialization_alias="mihomoIpVersion")
     nodes: List[UUID] = Field(default_factory=list)
-    allow_insecure: bool = Field(False, serialization_alias="allowInsecure")
     is_disabled: bool = Field(False, serialization_alias="isDisabled")
     security_layer: SecurityLayer = Field(SecurityLayer.DEFAULT, serialization_alias="securityLayer")
     is_hidden: bool = Field(False, serialization_alias="isHidden")
@@ -141,6 +190,16 @@ class CreateHostRequestDto(BaseModel):
     def inbound_uuid(self) -> Optional[UUID]:
         return self.inbound.config_profile_inbound_uuid
 
+    @property
+    def x_http_extra_params(self) -> Optional[Dict[str, Any]]:
+        """Backward compatibility property (renamed to xhttp_extra_params in v2.8.0)"""
+        return self.xhttp_extra_params
+
+    @property
+    def tag(self) -> Optional[str]:
+        """Backward compatibility property (replaced by `tags` in v2.8.0)"""
+        return self.tags[0] if self.tags else None
+
     def __init__(
         self,
         inbound_uuid: Optional[UUID] = None,
@@ -157,6 +216,17 @@ class CreateHostRequestDto(BaseModel):
                 or UUID("107541f1-ae1a-4e2d-9dec-7297557b5125"),
                 config_profile_inbound_uuid=inbound_uuid,
             )
+
+        # Backward compatibility: `tag` (single value) was replaced by `tags` (list) in v2.8.0
+        if "tag" in data and "tags" not in data:
+            tag = data.pop("tag")
+            data["tags"] = [tag] if tag is not None else None
+        # Backward compatibility: `allow_insecure` was removed in v2.8.0 (use security_layer instead)
+        data.pop("allow_insecure", None)
+        # Backward compatibility: `xHttpExtraParams` alias was renamed to `xhttpExtraParams`
+        if "x_http_extra_params" in data and "xhttp_extra_params" not in data:
+            data["xhttp_extra_params"] = data.pop("x_http_extra_params")
+
         super().__init__(**data)
 
 

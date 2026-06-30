@@ -19,6 +19,7 @@ from remnawave.models import (
     UpdateNodeRequestDto,
     UpdateNodeResponseDto,
     RestartAllNodesRequestBodyDto,
+    RestartNodeRequestBodyDto,
     ResetNodeTrafficRequestDto,
     ResetNodeTrafficResponseDto,
     ProfileModificationRequestDto,
@@ -98,6 +99,7 @@ class NodesController(BaseController):
     async def restart_node(
         self,
         uuid: Annotated[str, Path(description="Node UUID")],
+        body: Annotated[RestartNodeRequestBodyDto, PydanticBody()] = RestartNodeRequestBodyDto(),
     ) -> RestartNodeResponseDto:
         """Restart Node"""
         ...

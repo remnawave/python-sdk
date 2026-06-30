@@ -9,6 +9,7 @@ from remnawave.models import (
     CreateApiTokenResponseDto,
     DeleteApiTokenResponseDto,
     FindAllApiTokensResponseDto,
+    GetApiTokenScopesResponseDto,
 )
 from remnawave.rapid import BaseController, delete, get, post
 
@@ -35,4 +36,11 @@ class APITokensManagementController(BaseController):
         self,
     ) -> FindAllApiTokensResponseDto:
         """Get all API tokens"""
+        ...
+
+    @get("/tokens/scopes", response_class=GetApiTokenScopesResponseDto)
+    async def get_scopes(
+        self,
+    ) -> GetApiTokenScopesResponseDto:
+        """Get available API token scopes"""
         ...

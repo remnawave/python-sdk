@@ -1,6 +1,7 @@
 from typing import Annotated
 
 from rapid_api_client import Path, Query
+from rapid_api_client.annotations import PydanticBody
 
 from remnawave.models.bandwidthstats import (
     GetLegacyStatsNodesUsersUsageResponseDto,
@@ -11,10 +12,12 @@ from remnawave.models.bandwidthstats import (
     GetStatsNodesRealtimeUsageResponseDto,
     GetStatsNodesUsageResponseDto,
     GetStatsNodeUsersUsageResponseDto,
+    GetStatsNodesUsersUsageRequestDto,
+    GetStatsNodesUsersUsageResponseDto,
     GetStatsUserUsageResponseDto,
     GetUserUsageByRangeResponseDto,
 )
-from remnawave.rapid import BaseController, get
+from remnawave.rapid import BaseController, get, post
 
 
 class BandWidthStatsController(BaseController):
@@ -68,6 +71,17 @@ class BandWidthStatsController(BaseController):
         end: Annotated[str, Query(description="End date")],
     ) -> GetStatsNodeUsersUsageResponseDto:
         """Get Node Users Usage by Node UUID"""
+        ...
+
+    @post("/bandwidth-stats/nodes/users", response_class=GetStatsNodesUsersUsageResponseDto)
+    async def get_stats_nodes_users_usage(
+        self,
+        body: Annotated[GetStatsNodesUsersUsageRequestDto, PydanticBody()],
+        top_users_limit: Annotated[int, Query(description="Limit of top users to return", alias="topUsersLimit")],
+        start: Annotated[str, Query(description="Start date (YYYY-MM-DD)")],
+        end: Annotated[str, Query(description="End date (YYYY-MM-DD)")],
+    ) -> GetStatsNodesUsersUsageResponseDto:
+        """Get Nodes Users Usage by Nodes UUIDs"""
         ...
 
     @get("/bandwidth-stats/users/{uuid}", response_class=GetStatsUserUsageResponseDto)

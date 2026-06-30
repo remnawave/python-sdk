@@ -7,8 +7,6 @@ from remnawave.models import (
     GetNodesMetricsResponseDto,
     GetRemnawaveHealthResponseDto,
     GetX25519KeyPairResponseDto,
-    EncryptHappCryptoLinkRequestDto,
-    EncryptHappCryptoLinkResponseDto,
     DebugSrrMatcherRequestDto,
     DebugSrrMatcherResponseDto,
     GetMetadataResponseDto,
@@ -67,14 +65,6 @@ class SystemController(BaseController):
         """Get X25519 Key Pair"""
         ...
         
-    @post("/system/tools/happ/encrypt", response_class=EncryptHappCryptoLinkResponseDto)
-    async def encrypt_happ_crypto_link(
-        self,
-        body: Annotated[EncryptHappCryptoLinkRequestDto, PydanticBody()],
-    ) -> EncryptHappCryptoLinkResponseDto:
-        """Encrypt Happ Crypto Link"""
-        ...
-
     @post("/system/testers/srr-matcher", response_class=DebugSrrMatcherResponseDto)
     async def debug_srr_matcher(
         self,

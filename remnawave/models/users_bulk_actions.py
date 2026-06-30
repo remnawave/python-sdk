@@ -38,9 +38,9 @@ class BulkResetTrafficUsersRequestDto(BaseModel):
 class UpdateUserFields(BaseModel):
     """Fields to update for users"""
     status: Optional[UserStatus] = None
-    traffic_limit_bytes: Optional[int] = Field(
-        None, 
-        serialization_alias="trafficLimitBytes", 
+    traffic_limit_bytes: Optional[float] = Field(
+        None,
+        serialization_alias="trafficLimitBytes",
         ge=0,
         description="Traffic limit in bytes. 0 - unlimited"
     )
@@ -98,7 +98,7 @@ class BulkExtendExpirationDateRequestDto(BaseModel):
 class BulkAllUpdateUsersRequestDto(BaseModel):
     """Request to update all users"""
     status: Optional[UserStatus] = Field(default=UserStatus.ACTIVE)
-    traffic_limit_bytes: Optional[int] = Field(
+    traffic_limit_bytes: Optional[float] = Field(
         None,
         serialization_alias="trafficLimitBytes",
         ge=0,

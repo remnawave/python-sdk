@@ -15,6 +15,7 @@ from remnawave.models import (
     GetUserByUuidResponseDto,
     GetUserAccessibleNodesResponseDto,
     GetUserSubscriptionRequestHistoryResponseDto,
+    GetUsersStreamResponseDto,
     TelegramUserResponseDto,
     EmailUserResponseDto,
     TagUserResponseDto,
@@ -56,11 +57,29 @@ class UsersController(BaseController):
             Query(default=None, description="Offset for pagination")
         ] = None,
         size: Annotated[
-            Optional[int], 
+            Optional[int],
             Query(default=None, description="Page size for pagination")
         ] = None,
     ) -> GetAllUsersResponseDto:
         """Get all users"""
+        ...
+
+    @get("/users/stream", response_class=GetUsersStreamResponseDto)
+    async def get_users_stream(
+        self,
+        size: Annotated[
+            Optional[int],
+            Query(default=None, description="Page size, no more than 1000 (default 250)"),
+        ] = None,
+        cursor: Annotated[
+            Optional[str],
+            Query(
+                default=None,
+                description="Cursor from the previous response (nextCursor). Omit on the first request",
+            ),
+        ] = None,
+    ) -> GetUsersStreamResponseDto:
+        """Get all users using cursor-based (keyset) pagination"""
         ...
 
     @delete("/users/{uuid}", response_class=DeleteUserResponseDto)
@@ -75,7 +94,7 @@ class UsersController(BaseController):
     async def revoke_user_subscription(
         self,
         uuid: Annotated[str, Path(description="UUID of the user")],
-        body: Optional[Annotated[RevokeUserRequestDto, PydanticBody()]] = None,
+        body: Annotated[Optional[RevokeUserRequestDto], PydanticBody()] = None,
     ) -> RevokeUserSubscriptionResponseDto:
         """Revoke User Subscription"""
         ...

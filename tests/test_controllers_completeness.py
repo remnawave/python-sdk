@@ -5,6 +5,9 @@ import inspect
 from remnawave.controllers.users import UsersController
 from remnawave.controllers.system import SystemController
 from remnawave.controllers.ip_control import IpControlController
+from remnawave.controllers.api_tokens_management import APITokensManagementController
+from remnawave.controllers.hosts_bulk_actions import HostsBulkActionsController
+from remnawave.controllers.bandwidthstats import BandWidthStatsController
 
 
 class TestUsersControllerEndpoints:
@@ -66,6 +69,10 @@ class TestUsersControllerEndpoints:
     def test_has_get_user_subscription_request_history(self):
         assert hasattr(UsersController, "get_user_subscription_request_history")
 
+    def test_has_get_users_stream(self):
+        assert hasattr(UsersController, "get_users_stream")
+        assert callable(getattr(UsersController, "get_users_stream"))
+
 
 class TestSystemControllerEndpoints:
     def test_has_get_recap(self):
@@ -93,11 +100,38 @@ class TestSystemControllerEndpoints:
     def test_has_get_x25519_key_pair(self):
         assert hasattr(SystemController, "get_x25519_key_pair")
 
-    def test_has_encrypt_happ_crypto_link(self):
-        assert hasattr(SystemController, "encrypt_happ_crypto_link")
-
     def test_has_debug_srr_matcher(self):
         assert hasattr(SystemController, "debug_srr_matcher")
+
+    def test_no_encrypt_happ_crypto_link(self):
+        # Removed in Remnawave API v2.8.0 (use client-side happ link generation instead)
+        assert not hasattr(SystemController, "encrypt_happ_crypto_link")
+
+
+class TestApiTokensControllerEndpoints:
+    def test_has_get_scopes(self):
+        assert hasattr(APITokensManagementController, "get_scopes")
+        assert callable(getattr(APITokensManagementController, "get_scopes"))
+
+
+class TestHostsBulkActionsControllerEndpoints:
+    def test_has_update_hosts(self):
+        assert hasattr(HostsBulkActionsController, "update_hosts")
+        assert callable(getattr(HostsBulkActionsController, "update_hosts"))
+
+    def test_no_set_inbound_to_hosts(self):
+        # Removed in Remnawave API v2.8.0 (replaced by update_hosts)
+        assert not hasattr(HostsBulkActionsController, "set_inbound_to_hosts")
+
+    def test_no_set_port_to_hosts(self):
+        # Removed in Remnawave API v2.8.0 (replaced by update_hosts)
+        assert not hasattr(HostsBulkActionsController, "set_port_to_hosts")
+
+
+class TestBandwidthStatsControllerEndpoints:
+    def test_has_get_stats_nodes_users_usage(self):
+        assert hasattr(BandWidthStatsController, "get_stats_nodes_users_usage")
+        assert callable(getattr(BandWidthStatsController, "get_stats_nodes_users_usage"))
 
 
 class TestIpControlControllerEndpoints:

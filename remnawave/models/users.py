@@ -62,7 +62,7 @@ class CreateUserRequestDto(BaseModel):
     ss_password: Optional[Annotated[str, StringConstraints(min_length=8, max_length=32)]] = Field(
         None, serialization_alias="ssPassword"
     )
-    traffic_limit_bytes: Optional[int] = Field(
+    traffic_limit_bytes: Optional[float] = Field(
         None, serialization_alias="trafficLimitBytes", ge=0
     )
     created_at: Optional[datetime] = Field(None, serialization_alias="createdAt")
@@ -97,7 +97,7 @@ class UpdateUserRequestDto(BaseModel):
     hwid_device_limit: Optional[int] = Field(None, serialization_alias="hwidDeviceLimit", ge=0)
     tag: Optional[Annotated[str, StringConstraints(max_length=16, pattern=r"^[A-Z0-9_]+$")]] = None
     telegram_id: Optional[int] = Field(None, serialization_alias="telegramId")
-    traffic_limit_bytes: Optional[int] = Field(None, serialization_alias="trafficLimitBytes", ge=0)
+    traffic_limit_bytes: Optional[float] = Field(None, serialization_alias="trafficLimitBytes", ge=0)
     traffic_limit_strategy: Optional[TrafficLimitStrategy] = Field(
         None, serialization_alias="trafficLimitStrategy"
     )
@@ -123,7 +123,7 @@ class UserResponseDto(BaseModel):
     short_uuid: str = Field(alias="shortUuid")
     username: str
     status: UserStatus = Field(default=UserStatus.ACTIVE)
-    traffic_limit_bytes: int = Field(0, alias="trafficLimitBytes")
+    traffic_limit_bytes: float = Field(0, alias="trafficLimitBytes")
     traffic_limit_strategy: TrafficLimitStrategy = Field(
         TrafficLimitStrategy.NO_RESET, alias="trafficLimitStrategy"
     )
@@ -297,6 +297,22 @@ class UsersResponseDto(BaseModel):
 
 class GetAllUsersResponseDto(UsersResponseDto):
     """Response for get all users"""
+    pass
+
+
+class UsersStreamData(BaseModel):
+    """Cursor-based (keyset) users stream page"""
+    users: list[UserResponseDto]
+    next_cursor: Optional[str] = Field(
+        None,
+        alias="nextCursor",
+        description="Cursor to fetch the next page, or null if there are no more results",
+    )
+    has_more: bool = Field(alias="hasMore", description="Whether there are more results to fetch")
+
+
+class GetUsersStreamResponseDto(UsersStreamData):
+    """Response for get all users using cursor-based (keyset) pagination"""
     pass
 
 

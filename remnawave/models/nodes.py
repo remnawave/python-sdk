@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import Annotated, List, Optional, Union, Literal
 from uuid import UUID
 
-from pydantic import BaseModel, Field, StringConstraints, RootModel
+from pydantic import BaseModel, ConfigDict, Field, StringConstraints, RootModel
 
 from remnawave.models.internal_squads import InboundsDto
 
@@ -61,7 +61,7 @@ class CreateNodeRequestDto(BaseModel):
         False, 
         serialization_alias="isTrafficTrackingActive",
     )
-    traffic_limit_bytes: Optional[int] = Field(
+    traffic_limit_bytes: Optional[float] = Field(
         None, serialization_alias="trafficLimitBytes", ge=0
     )
     notify_percent: Optional[int] = Field(
@@ -74,11 +74,20 @@ class CreateNodeRequestDto(BaseModel):
         None, serialization_alias="excludedInbounds"
     )
     country_code: Annotated[Optional[str], StringConstraints(max_length=2)] = Field(
-        "XX", 
+        "XX",
         serialization_alias="countryCode"
     )
     consumption_multiplier: Optional[float] = Field(
-        None, serialization_alias="consumptionMultiplier", ge=0.1
+        None, serialization_alias="consumptionMultiplier", ge=0, le=100
+    )
+    node_consumption_multiplier: Optional[float] = Field(
+        None, serialization_alias="nodeConsumptionMultiplier", ge=0, le=100
+    )
+    note: Optional[str] = Field(None, serialization_alias="note", max_length=255)
+    proxy_url: Optional[str] = Field(
+        None,
+        serialization_alias="proxyUrl",
+        pattern=r"^socks5://(?:[^:@/\s]+(?::[^@/\s]*)?@)?[^:@/\s]+:\d{1,5}$",
     )
     config_profile: NodeConfigProfileRequestDto = Field(
         serialization_alias="configProfile"
@@ -118,7 +127,16 @@ class UpdateNodeRequestDto(BaseModel):
         None, serialization_alias="countryCode"
     )
     consumption_multiplier: Optional[float] = Field(
-        None, serialization_alias="consumptionMultiplier", ge=0.1
+        None, serialization_alias="consumptionMultiplier", ge=0, le=100
+    )
+    node_consumption_multiplier: Optional[float] = Field(
+        None, serialization_alias="nodeConsumptionMultiplier", ge=0, le=100
+    )
+    note: Optional[str] = Field(None, serialization_alias="note", max_length=255)
+    proxy_url: Optional[str] = Field(
+        None,
+        serialization_alias="proxyUrl",
+        pattern=r"^socks5://(?:[^:@/\s]+(?::[^@/\s]*)?@)?[^:@/\s]+:\d{1,5}$",
     )
     config_profile: Optional[NodeConfigProfileRequestDto] = Field(
         None, serialization_alias="configProfile"
@@ -160,6 +178,9 @@ class NodeResponseDto(BaseModel):
     view_position: int = Field(alias="viewPosition")
     country_code: str = Field(alias="countryCode")
     consumption_multiplier: float = Field(alias="consumptionMultiplier")
+    node_consumption_multiplier: Optional[float] = Field(None, alias="nodeConsumptionMultiplier")
+    note: Optional[str] = Field(None, alias="note")
+    proxy_url: Optional[str] = Field(None, alias="proxyUrl")
     cpu_count: Optional[int] = Field(None, alias="cpuCount")
     cpu_model: Optional[str] = Field(None, alias="cpuModel")
     total_ram: Optional[str] = Field(None, alias="totalRam")
@@ -249,8 +270,16 @@ class DeleteNodeResponseDto(BaseModel):
 
 
 class RestartAllNodesRequestBodyDto(BaseModel):
+    model_config = ConfigDict(populate_by_name=True)
+
     force_restart: bool = Field(default=False, alias="forceRestart")
-    
+
+
+class RestartNodeRequestBodyDto(BaseModel):
+    model_config = ConfigDict(populate_by_name=True)
+
+    force_restart: bool = Field(default=False, alias="forceRestart")
+
 class ResetNodeTrafficRequestDto(BaseModel):
     uuid: Union[str, UUID] = Field(alias="uuid")
 

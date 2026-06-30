@@ -198,18 +198,6 @@ class GetX25519KeyPairResponseDto(BaseModel):
 GenerateX25519ResponseDto = GetX25519KeyPairResponseDto
 
 
-class EncryptHappCryptoLinkRequestDto(BaseModel):
-    link_to_encrypt: str = Field(serialization_alias="linkToEncrypt")
-
-
-class EncryptHappCryptoLinkData(BaseModel):
-    encrypted_link: str = Field(alias="encryptedLink")
-
-
-class EncryptHappCryptoLinkResponseDto(EncryptHappCryptoLinkData):
-    pass
-
-
 class DebugSrrMatcherRequestDto(BaseModel):
     response_rules: ResponseRules = Field(serialization_alias="responseRules")
 

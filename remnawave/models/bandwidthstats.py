@@ -277,6 +277,34 @@ class GetStatsNodeUsersUsageResponseDto(RootModel[StatsNodeUsersUsageData]):
         return self.root
 
 
+# Stats Nodes Users Usage by Nodes UUIDs (POST /bandwidth-stats/nodes/users)
+
+class GetStatsNodesUsersUsageRequestDto(BaseModel):
+    """Request for nodes users usage by nodes UUIDs"""
+    nodes_uuids: List[UUID] = Field(serialization_alias="nodesUuids", min_length=1)
+
+
+class TopNodesUserItem(BaseModel):
+    """Top user item for nodes users usage"""
+    color: str
+    username: str
+    total: float
+
+
+class StatsNodesUsersUsageData(BaseModel):
+    """Stats nodes users usage data"""
+    categories: List[str]
+    sparkline_data: List[float] = Field(alias="sparklineData")
+    top_users: List[TopNodesUserItem] = Field(alias="topUsers")
+
+
+class GetStatsNodesUsersUsageResponseDto(RootModel[StatsNodesUsersUsageData]):
+    """Response for stats nodes users usage by nodes UUIDs"""
+    @property
+    def response(self) -> StatsNodesUsersUsageData:
+        return self.root
+
+
 # Stats User Usage (with charts)
 
 class StatsUserUsageData(BaseModel):

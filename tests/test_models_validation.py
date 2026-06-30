@@ -3,6 +3,8 @@ import pytest
 from datetime import datetime, timezone
 from uuid import uuid4
 
+from pydantic import ValidationError
+
 from remnawave.models import (
     # Users
     ResolveUserRequestBodyDto,
@@ -180,12 +182,13 @@ class TestCreateInfraBillingHistoryRecordRequestDto:
 
 
 class TestCreateInfraBillingNodeRequestDto:
-    def test_next_billing_at_optional(self):
-        dto = CreateInfraBillingNodeRequestDto(
-            node_uuid=uuid4(),
-            provider_uuid=uuid4(),
-        )
-        assert dto.next_billing_at is None
+    def test_next_billing_at_required(self):
+        """next_billing_at became required in Remnawave API v2.8.0."""
+        with pytest.raises(ValidationError):
+            CreateInfraBillingNodeRequestDto(
+                node_uuid=uuid4(),
+                provider_uuid=uuid4(),
+            )
 
     def test_next_billing_at_provided(self):
         now = datetime.now(tz=timezone.utc)
@@ -195,6 +198,17 @@ class TestCreateInfraBillingNodeRequestDto:
             next_billing_at=now,
         )
         assert dto.next_billing_at == now
+
+    def test_name_supported_and_node_uuid_optional(self):
+        """name was added and node_uuid became nullable in Remnawave API v2.8.0."""
+        now = datetime.now(tz=timezone.utc)
+        dto = CreateInfraBillingNodeRequestDto(
+            provider_uuid=uuid4(),
+            name="My server",
+            next_billing_at=now,
+        )
+        assert dto.name == "My server"
+        assert dto.node_uuid is None
 
 
 class TestResponseRulesSettings:

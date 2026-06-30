@@ -12,6 +12,7 @@ class CreateUserHwidDeviceRequestDto(BaseModel):
     os_version: Optional[str] = Field(None, serialization_alias="osVersion")
     device_model: Optional[str] = Field(None, serialization_alias="deviceModel")
     user_agent: Optional[str] = Field(None, serialization_alias="userAgent")
+    request_ip: Optional[str] = Field(None, serialization_alias="requestIp")
 
 
 class DeleteUserHwidDeviceRequestDto(BaseModel):

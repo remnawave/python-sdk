@@ -2,6 +2,8 @@ from .alpn import ALPN
 from .client_type import ClientType
 from .error_code import ErrorCode
 from .fingerprint import Fingerprint
+from .mihomo import MihomoIpVersion
+from .scopes import Scope
 from .security_layer import SecurityLayer
 from .template_type import TemplateType
 from .users import TrafficLimitStrategy, UserStatus
@@ -25,6 +27,8 @@ __all__ = [
     "ClientType",
     "ALPN",
     "Fingerprint",
+    "MihomoIpVersion",
+    "Scope",
     "SecurityLayer",
     "TemplateType",
     "ResponseRuleConditionOperator",

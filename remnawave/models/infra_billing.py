@@ -146,9 +146,10 @@ class DeleteInfraBillingHistoryRecordByUuidResponseDto(BaseModel):
 
 # Billing Nodes models
 class CreateInfraBillingNodeRequestDto(BaseModel):
-    node_uuid: UUID = Field(serialization_alias="nodeUuid")
     provider_uuid: UUID = Field(serialization_alias="providerUuid")
-    next_billing_at: Optional[datetime] = Field(None, serialization_alias="nextBillingAt")
+    node_uuid: Optional[UUID] = Field(None, serialization_alias="nodeUuid")
+    name: Optional[str] = Field(None, serialization_alias="name", min_length=1, max_length=255)
+    next_billing_at: datetime = Field(serialization_alias="nextBillingAt")
 
 
 # ИСПРАВЛЕНО: API возвращает список всех billing nodes после создания, а не один созданный

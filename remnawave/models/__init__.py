@@ -1,8 +1,13 @@
 from .api_tokens_management import (
+    ApiTokenDto,
+    ApiTokenScopeEndpointDto,
+    ApiTokenScopeResourceDto,
     CreateApiTokenRequestDto,
     CreateApiTokenResponseDto,
     DeleteApiTokenResponseDto,
+    DocsInfoDto,
     FindAllApiTokensResponseDto,
+    GetApiTokenScopesResponseDto,
 )
 from .auth import (
     GetStatusResponseDto,
@@ -36,6 +41,8 @@ from .bandwidthstats import (
     GetStatsNodesRealtimeUsageResponseDto,
     GetStatsNodesUsageResponseDto,
     GetStatsNodeUsersUsageResponseDto,
+    GetStatsNodesUsersUsageRequestDto,
+    GetStatsNodesUsersUsageResponseDto,
     GetStatsUserUsageResponseDto,
 
     # Data Models
@@ -44,9 +51,11 @@ from .bandwidthstats import (
     NodeRealtimeUsageItem,
     TopNodeItem,
     TopUserItem,
+    TopNodesUserItem,
     NodeSeriesItem,
     StatsNodesUsageData,
     StatsNodeUsersUsageData,
+    StatsNodesUsersUsageData,
     StatsUserUsageData,
 )
 from .config_profiles import (
@@ -88,10 +97,8 @@ from .hosts_bulk_actions import (
     BulkDeleteHostsResponseDto,
     BulkDisableHostsResponseDto,
     BulkEnableHostsResponseDto,
-    SetInboundToManyHostsRequestDto,
-    SetInboundToManyHostsResponseDto,
-    SetPortToManyHostsResponseDto,
-    SetPortToManyHostsRequestDto
+    UpdateManyHostsRequestDto,
+    UpdateManyHostsResponseDto,
 )
 from .hwid import (
     CreateHWIDUser,  # Legacy alias
@@ -199,6 +206,7 @@ from .nodes import (
     UpdateNodeResponseDto,
     RestartAllNodesRequestDto, # Legacy alias,
     RestartAllNodesRequestBodyDto,
+    RestartNodeRequestBodyDto,
     ResetNodeTrafficRequestDto,
     ResetNodeTrafficResponseDto,
     ProfileModificationRequestDto,
@@ -281,8 +289,6 @@ from .system import (
     X25519KeyPair,
     DebugSrrMatcherRequestDto,
     DebugSrrMatcherResponseDto,
-    EncryptHappCryptoLinkRequestDto,
-    EncryptHappCryptoLinkResponseDto,
     GetMetadataResponseDto,
     GetRecapResponseDto,
     RecapThisMonth,
@@ -313,6 +319,8 @@ from .users import (
     GetAllUsersResponseDto,
     GetAllTagsResponseDto,
     GetUserSubscriptionRequestHistoryResponseDto,
+    GetUsersStreamResponseDto,
+    UsersStreamData,
     
     # Response DTOs - Arrays (RootModel)
     TelegramUserResponseDto,
@@ -589,6 +597,7 @@ __all__ = [
     "NodeConfigProfileRequestDto",
     "RestartAllNodesRequestDto",  # Legacy alias
     "RestartAllNodesRequestBodyDto",
+    "RestartNodeRequestBodyDto",
     "ResetNodeTrafficRequestDto",
     "ResetNodeTrafficResponseDto",
     "ProfileModificationRequestDto",
@@ -689,8 +698,6 @@ __all__ = [
     "X25519KeyPair",
     "DebugSrrMatcherRequestDto",
     "DebugSrrMatcherResponseDto",
-    "EncryptHappCryptoLinkRequestDto",
-    "EncryptHappCryptoLinkResponseDto",
     "GetMetadataResponseDto",
     "GetRecapResponseDto",
     "RecapThisMonth",
@@ -729,21 +736,30 @@ __all__ = [
     "GetStatsNodesRealtimeUsageResponseDto",
     "GetStatsNodesUsageResponseDto",
     "GetStatsNodeUsersUsageResponseDto",
+    "GetStatsNodesUsersUsageRequestDto",
+    "GetStatsNodesUsersUsageResponseDto",
     "GetStatsUserUsageResponseDto",
     "LegacyUserUsageItem",
     "LegacyNodeUserUsageItem",
     "NodeRealtimeUsageItem",
     "TopNodeItem",
     "TopUserItem",
+    "TopNodesUserItem",
     "NodeSeriesItem",
     "StatsNodesUsageData",
     "StatsNodeUsersUsageData",
+    "StatsNodesUsersUsageData",
     "StatsUserUsageData",
     # API Tokens models
+    "ApiTokenDto",
+    "ApiTokenScopeEndpointDto",
+    "ApiTokenScopeResourceDto",
     "CreateApiTokenRequestDto",
     "CreateApiTokenResponseDto",
     "DeleteApiTokenResponseDto",
+    "DocsInfoDto",
     "FindAllApiTokensResponseDto",
+    "GetApiTokenScopesResponseDto",
     # Inbound bulk actions models
     "AddInboundToNodesResponseDto",
     "AddInboundToUsersResponseDto",
@@ -753,10 +769,8 @@ __all__ = [
     "BulkDeleteHostsResponseDto",
     "BulkDisableHostsResponseDto",
     "BulkEnableHostsResponseDto",
-    "SetInboundToManyHostsRequestDto",
-    "SetInboundToManyHostsResponseDto",
-    "SetPortToManyHostsResponseDto",
-    "SetPortToManyHostsRequestDto",
+    "UpdateManyHostsRequestDto",
+    "UpdateManyHostsResponseDto",
     # Users models
     "CreateUserRequestDto",
     "UpdateUserRequestDto",
@@ -777,6 +791,8 @@ __all__ = [
     "GetAllUsersResponseDto",
     "GetAllTagsResponseDto",
     "GetUserSubscriptionRequestHistoryResponseDto",
+    "GetUsersStreamResponseDto",
+    "UsersStreamData",
     "TelegramUserResponseDto",
     "EmailUserResponseDto",
     "TagUserResponseDto",

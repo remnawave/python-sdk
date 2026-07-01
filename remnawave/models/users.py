@@ -222,7 +222,7 @@ class ResolveUserResponseDto(BaseModel):
 class SubscriptionRequestRecord(BaseModel):
     """Subscription request history record"""
     id: int
-    user_uuid: UUID = Field(alias="userUuid")
+    user_id: int = Field(alias="userId")
     request_at: datetime = Field(alias="requestAt")
     request_ip: Optional[str] = Field(alias="requestIp")
     user_agent: Optional[str] = Field(alias="userAgent")

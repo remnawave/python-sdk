@@ -22,7 +22,8 @@ class DeleteUserHwidDeviceRequestDto(BaseModel):
 
 class HwidDeviceDto(BaseModel):
     hwid: str
-    user_uuid: UUID = Field(alias="userUuid")
+    user_id: int = Field(alias="userId")
+    request_ip: Optional[str] = Field(None, alias="requestIp")
     platform: Optional[str] = None
     os_version: Optional[str] = Field(None, alias="osVersion")
     device_model: Optional[str] = Field(None, alias="deviceModel")

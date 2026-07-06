@@ -12,15 +12,19 @@ from remnawave.models import (
     GetTopUsersByHwidDevicesResponseDto
 )
 from rapid_api_client import Path, PydanticBody, Query
-from remnawave.rapid import AttributeBody, BaseController, post, get
+from remnawave.rapid import BaseController, post, get
 
 
 class HWIDUserController(BaseController):
     @get("/hwid/devices", response_class=GetUserHwidDevicesResponseDto)
     async def get_hwid_users(
         self,
-        size: Annotated[int | None, AttributeBody()] = None,
-        start: Annotated[int | None, AttributeBody()] = None,
+        size: Annotated[
+            Optional[int], Query(default=None, description="Page size for pagination")
+        ] = None,
+        start: Annotated[
+            Optional[int], Query(default=None, description="Offset for pagination")
+        ] = None,
     ) -> GetUserHwidDevicesResponseDto:
         """Get all user HWID devices"""
         ...

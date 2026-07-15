@@ -1,0 +1,156 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyBroadExceptionInspection" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
+    <inspection_tool class="PyInterpreterInspection" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <list>
+          <option value="aiofiles" />
+          <option value="aiogram" />
+          <option value="aiohappyeyeballs" />
+          <option value="aiohttp" />
+          <option value="aiohttp_socks" />
+          <option value="aiosignal" />
+          <option value="aiosqlite" />
+          <option value="annotated-types" />
+          <option value="anyio" />
+          <option value="apiclient" />
+          <option value="attrs" />
+          <option value="autocommand" />
+          <option value="babel" />
+          <option value="beautifulsoup4" />
+          <option value="black" />
+          <option value="bs4" />
+          <option value="cachetools" />
+          <option value="certifi" />
+          <option value="cffi" />
+          <option value="charset-normalizer" />
+          <option value="cheroot" />
+          <option value="CherryPy" />
+          <option value="click" />
+          <option value="cryptography" />
+          <option value="distro" />
+          <option value="docopt" />
+          <option value="et_xmlfile" />
+          <option value="Faker" />
+          <option value="fastapi" />
+          <option value="fastapi-csrf-protect" />
+          <option value="frozenlist" />
+          <option value="geographiclib" />
+          <option value="geopy" />
+          <option value="google-api-core" />
+          <option value="google-api-python-client" />
+          <option value="google-auth" />
+          <option value="google-auth-httplib2" />
+          <option value="google-auth-oauthlib" />
+          <option value="googleapis-common-protos" />
+          <option value="h11" />
+          <option value="httpcore" />
+          <option value="httplib2" />
+          <option value="httpx" />
+          <option value="idna" />
+          <option value="inflect" />
+          <option value="itsdangerous" />
+          <option value="jaraco.collections" />
+          <option value="jaraco.context" />
+          <option value="jaraco.functools" />
+          <option value="jaraco.text" />
+          <option value="Jinja2" />
+          <option value="jiter" />
+          <option value="loguru" />
+          <option value="lxml" />
+          <option value="magic-filter" />
+          <option value="MarkupSafe" />
+          <option value="more-itertools" />
+          <option value="multidict" />
+          <option value="mypy_extensions" />
+          <option value="num2words" />
+          <option value="numpy" />
+          <option value="oauth2client" />
+          <option value="oauthlib" />
+          <option value="openai" />
+          <option value="openpyxl" />
+          <option value="packaging" />
+          <option value="pandas" />
+          <option value="pathspec" />
+          <option value="pillow" />
+          <option value="platformdirs" />
+          <option value="portend" />
+          <option value="propcache" />
+          <option value="protobuf" />
+          <option value="psutil" />
+          <option value="pyaes" />
+          <option value="pyasn1" />
+          <option value="pyasn1-modules" />
+          <option value="pycparser" />
+          <option value="pydantic" />
+          <option value="pydantic-settings" />
+          <option value="pydantic_core" />
+          <option value="pyparsing" />
+          <option value="Pyrogram" />
+          <option value="PySocks" />
+          <option value="pyTelegramBotAPI" />
+          <option value="python-dateutil" />
+          <option value="python-docx" />
+          <option value="python-dotenv" />
+          <option value="python-multipart" />
+          <option value="python-socks" />
+          <option value="pytz" />
+          <option value="qrcode" />
+          <option value="redis" />
+          <option value="requests" />
+          <option value="requests-oauthlib" />
+          <option value="rsa" />
+          <option value="setuptools" />
+          <option value="shapely" />
+          <option value="six" />
+          <option value="sniffio" />
+          <option value="soupsieve" />
+          <option value="starlette" />
+          <option value="telebot" />
+          <option value="Telethon" />
+          <option value="tempora" />
+          <option value="TgCrypto" />
+          <option value="tqdm" />
+          <option value="typing-inspection" />
+          <option value="typing_extensions" />
+          <option value="tzdata" />
+          <option value="uritemplate" />
+          <option value="urllib3" />
+          <option value="uvicorn" />
+          <option value="xlrd" />
+          <option value="yadisk" />
+          <option value="yarl" />
+          <option value="zc.lockfile" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyPep8NamingInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="N803" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyShadowingBuiltinsInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredNames">
+        <list>
+          <option value="id" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyStubPackagesAdvertiser" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <list>
+          <option value="pandas" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyTypeCheckerInspection" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="ShellCheck" enabled="true" level="ERROR" enabled_by_default="true">
+      <shellcheck_settings value="SC2086" />
+    </inspection_tool>
+    <inspection_tool class="XmlDuplicatedId" enabled="false" level="ERROR" enabled_by_default="false" />
+  </profile>
+</component>

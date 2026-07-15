@@ -22,7 +22,8 @@ class DeleteUserHwidDeviceRequestDto(BaseModel):
 
 class HwidDeviceDto(BaseModel):
     hwid: str
-    user_uuid: UUID = Field(alias="userUuid")
+    user_uuid: Optional[UUID] = Field(default=None, alias="userUuid")  # Ваша версия кидает ошибку на новом API 2.8.0
+    user_id: Optional[int] = Field(default=None, alias="userId")  # Добавил для исключения ошибок указанных снизу
     platform: Optional[str] = None
     os_version: Optional[str] = Field(None, alias="osVersion")
     device_model: Optional[str] = Field(None, alias="deviceModel")
